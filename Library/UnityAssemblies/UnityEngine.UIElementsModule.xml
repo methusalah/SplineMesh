@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.UIElementsModule</name>
+    </assembly>
+    <member name="P:UnityEngine.Experimental.UIElements.EventBase.isDefaultPrevented">
+      <summary>
+        <para>Return true if the default actions should not be executed for this event.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.EventBase.PreventDefault">
+      <summary>
+        <para>Call this function to prevent the execution of the default actions for this event.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Experimental.UIElements.IStyle">
+      <summary>
+        <para>This interface provides access to a VisualElement style data.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.alignContent">
+      <summary>
+        <para>Alignment of the whole area of children on the cross axis if they span over multiple lines in this container.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.alignItems">
+      <summary>
+        <para>Alignment of children on the cross axis of this container.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.alignSelf">
+      <summary>
+        <para>Similar to align-items, but only for this specific element.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.backgroundColor">
+      <summary>
+        <para>Background color to paint in the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.backgroundImage">
+      <summary>
+        <para>Background image to paint in the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.backgroundSize">
+      <summary>
+        <para>Background image scaling in the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderBottom">
+      <summary>
+        <para>Space reserved for the bottom edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderBottomWidth">
+      <summary>
+        <para>Space reserved for the bottom edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderColor">
+      <summary>
+        <para>Color of the border to paint inside the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderLeft">
+      <summary>
+        <para>Space reserved for the left edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderLeftWidth">
+      <summary>
+        <para>Space reserved for the left edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderRadius">
+      <summary>
+        <para>Radius used to paint a rounded rectangle in the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderRight">
+      <summary>
+        <para>Space reserved for the right edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderRightWidth">
+      <summary>
+        <para>Space reserved for the right edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderTop">
+      <summary>
+        <para>Space reserved for the top edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.borderTopWidth">
+      <summary>
+        <para>Space reserved for the top edge of the border during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.flex">
+      <summary>
+        <para>Ration of this element in its parent during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.flexDirection">
+      <summary>
+        <para>Direction of the main axis to layout children in a container.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.flexWrap">
+      <summary>
+        <para>Placement of children over multiple lines if not enough space is available in this container.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.font">
+      <summary>
+        <para>Font to draw the element's text.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.fontSize">
+      <summary>
+        <para>Font size to draw the element's text.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.fontStyle">
+      <summary>
+        <para>Font style to draw the element's text.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.height">
+      <summary>
+        <para>Fixed height of an element for the layout.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.justifyContent">
+      <summary>
+        <para>Justification of children on the main axis of this container.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.marginBottom">
+      <summary>
+        <para>Space reserved for the bottom edge of the margin during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.marginLeft">
+      <summary>
+        <para>Space reserved for the left edge of the margin during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.marginRight">
+      <summary>
+        <para>Space reserved for the right edge of the margin during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.marginTop">
+      <summary>
+        <para>Space reserved for the top edge of the margin during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.maxHeight">
+      <summary>
+        <para>Maximum height for an element, when it is flexible or measures its own size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.maxWidth">
+      <summary>
+        <para>Maximum width for an element, when it is flexible or measures its own size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.minHeight">
+      <summary>
+        <para>Minimum height for an element, when it is flexible or measures its own size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.minWidth">
+      <summary>
+        <para>Minimum height for an element, when it is flexible or measures its own size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.paddingBottom">
+      <summary>
+        <para>Space reserved for the bottom edge of the padding during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.paddingLeft">
+      <summary>
+        <para>Space reserved for the left edge of the padding during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.paddingRight">
+      <summary>
+        <para>Space reserved for the right edge of the padding during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.paddingTop">
+      <summary>
+        <para>Space reserved for the top edge of the padding during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.positionBottom">
+      <summary>
+        <para>Bottom distance from the element's box during layout.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.positionLeft">
+      <summary>
+        <para>Left distance from the element's box during layout.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.positionRight">
+      <summary>
+        <para>Right distance from the element's box during layout.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.positionTop">
+      <summary>
+        <para>Top distance from the element's box during layout.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.positionType">
+      <summary>
+        <para>Element's positioning in its parent container.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.sliceBottom">
+      <summary>
+        <para>Size of the 9-slice's bottom edge when painting an element's background image.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.sliceLeft">
+      <summary>
+        <para>Size of the 9-slice's left edge when painting an element's background image.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.sliceRight">
+      <summary>
+        <para>Size of the 9-slice's right edge when painting an element's background image.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.sliceTop">
+      <summary>
+        <para>Size of the 9-slice's top edge when painting an element's background image.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.textAlignment">
+      <summary>
+        <para>Text alignment in the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.textClipping">
+      <summary>
+        <para>Clipping if the text does not fit in the element's box.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.textColor">
+      <summary>
+        <para>Color to use when drawing the text of an element.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.width">
+      <summary>
+        <para>Fixed width of an element for the layout.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.IStyle.wordWrap">
+      <summary>
+        <para>Word wrapping over multiple lines if not enough space is available to draw the text of an element.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.PropagationPhase">
+      <summary>
+        <para>The propagation phases of an event.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.PropagationPhase.AtTarget">
+      <summary>
+        <para>The event is being sent to the event target.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.PropagationPhase.BubbleUp">
+      <summary>
+        <para>The event is being sent to the event target parent element up to the root element.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.PropagationPhase.Capture">
+      <summary>
+        <para>The event is being sent to the root element down to the event target parent element.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.PropagationPhase.DefaultAction">
+      <summary>
+        <para>The event is being sent to the target element for it to execute its default actions for this event. Event handlers do not get the events in this phase. Instead, ExecuteDefaultAction is called on the target.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.PropagationPhase.None">
+      <summary>
+        <para>The event is not being propagated.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.StyleEnums.Align">
+      <summary>
+        <para>This enumeration contains values to control how an element is aligned in its parent during the layout phase.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Align.Auto">
+      <summary>
+        <para>Default value (currently FlexStart).</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Align.Center">
+      <summary>
+        <para>Items are centered on the cross axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Align.FlexEnd">
+      <summary>
+        <para>Items are aligned at the end on the cross axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Align.FlexStart">
+      <summary>
+        <para>Items are aligned at the beginning on the cross axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Align.Stretch">
+      <summary>
+        <para>Stretches items on the cross axis.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.StyleEnums.FlexDirection">
+      <summary>
+        <para>This enumeration defines values used to control in which direction a container will place its children during layout.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.FlexDirection.Column">
+      <summary>
+        <para>Vertical layout.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.FlexDirection.ColumnReverse">
+      <summary>
+        <para>Vertical layout in reverse order.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.FlexDirection.Row">
+      <summary>
+        <para>Horizontal layout.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.FlexDirection.RowReverse">
+      <summary>
+        <para>Horizontal layout in reverse order.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.StyleEnums.Justify">
+      <summary>
+        <para>This enumeration contains values to control how children are justified during layout.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Justify.Center">
+      <summary>
+        <para>Items are centered.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Justify.FlexEnd">
+      <summary>
+        <para>Items are justified towards the end of the layout direction.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Justify.FlexStart">
+      <summary>
+        <para>Items are justified towards the beginning of the main axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Justify.SpaceAround">
+      <summary>
+        <para>Items are evenly distributed in the line  with extra space on each end of the line.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Justify.SpaceBetween">
+      <summary>
+        <para>Items are evenly distributed in the line; first item is at the beginning of the line, last item is at the end.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.StyleEnums.PositionType">
+      <summary>
+        <para>This enumeration contains values to control how an element is positioned in its parent container.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.PositionType.Absolute">
+      <summary>
+        <para>The element is positioned in relation to its parent box and does not contribute to the layout anymore.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.PositionType.Relative">
+      <summary>
+        <para>The element is positioned in relation to its default box as calculated by layout.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.StyleEnums.Wrap">
+      <summary>
+        <para>This enumeration contains values to control how elements are placed in a container if not enough space is available.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Wrap.NoWrap">
+      <summary>
+        <para>All elements are placed on the same line.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleEnums.Wrap.Wrap">
+      <summary>
+        <para>Elements are placed over multiple lines.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle">
+      <summary>
+        <para>This interface exposes methods to read custom style properties applied from USS files to visual elements.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle.ApplyCustomProperty(System.String,UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1&lt;System.Single&gt;&amp;)">
+      <summary>
+        <para>Read a style property value into the specified StyleValue&lt;T&gt;.</para>
+      </summary>
+      <param name="propertyName">Name of the property in USS.</param>
+      <param name="target">Target StyleValue&lt;T&gt; field or variable to write to.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle.ApplyCustomProperty(System.String,UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1&lt;System.Int32&gt;&amp;)">
+      <summary>
+        <para>Read a style property value into the specified StyleValue&lt;T&gt;.</para>
+      </summary>
+      <param name="propertyName">Name of the property in USS.</param>
+      <param name="target">Target StyleValue&lt;T&gt; field or variable to write to.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle.ApplyCustomProperty(System.String,UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1&lt;System.Boolean&gt;&amp;)">
+      <summary>
+        <para>Read a style property value into the specified StyleValue&lt;T&gt;.</para>
+      </summary>
+      <param name="propertyName">Name of the property in USS.</param>
+      <param name="target">Target StyleValue&lt;T&gt; field or variable to write to.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle.ApplyCustomProperty(System.String,UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1&lt;UnityEngine.Color&gt;&amp;)">
+      <summary>
+        <para>Read a style property value into the specified StyleValue&lt;T&gt;.</para>
+      </summary>
+      <param name="propertyName">Name of the property in USS.</param>
+      <param name="target">Target StyleValue&lt;T&gt; field or variable to write to.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle.ApplyCustomProperty(System.String,UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1&lt;T&gt;&amp;)">
+      <summary>
+        <para>Read a style property value into the specified StyleValue&lt;T&gt;.</para>
+      </summary>
+      <param name="propertyName">Name of the property in USS.</param>
+      <param name="target">Target StyleValue&lt;T&gt; field or variable to write to.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle.ApplyCustomProperty(System.String,UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1&lt;System.String&gt;&amp;)">
+      <summary>
+        <para>Read a style property value into the specified StyleValue&lt;T&gt;.</para>
+      </summary>
+      <param name="propertyName">Name of the property in USS.</param>
+      <param name="target">Target StyleValue&lt;T&gt; field or variable to write to.</param>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.StyleSheets.StyleValue`1">
+      <summary>
+        <para>This generic structure encodes a value type that can come from USS or be specified programmatically.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.StyleSheets.StyleValue_1.nil">
+      <summary>
+        <para>This represents the default value for a StyleValue&lt;T&gt; of the according generic type.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.StyleSheets.StyleValue_1.value">
+      <summary>
+        <para>The actual value of the StyleValue&lt;T&gt;.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.StyleValue_1.Create(T)">
+      <summary>
+        <para>Creates a StyleValue of the according generic type directly from a value.</para>
+      </summary>
+      <param name="value">Value to be used as inline style.</param>
+      <returns>
+        <para>The result StyleValue&lt;T&gt;</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.StyleValue_1.#ctor(T)">
+      <summary>
+        <para>This constructor can be used to specified an alternate default value but it is recommended to use StyleValue&lt;T&gt;.nil.</para>
+      </summary>
+      <param name="value">Default starting value.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.StyleSheets.StyleValue_1.GetSpecifiedValueOrDefault(T)">
+      <summary>
+        <para>Utility function to be used when reading custom styles values and provide a default value in one step.</para>
+      </summary>
+      <param name="defaultValue">Default value to be returned if no value is set.</param>
+      <returns>
+        <para>The value to be used for the custom style.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.TextField">
+      <summary>
+        <para>A textfield is a rectangular area where the user can edit a string.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.cursorColor">
+      <summary>
+        <para>The color of the cursor.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.doubleClickSelectsWord">
+      <summary>
+        <para>Set this to true to allow double-clicks to select the word under the mouse and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.hasFocus">
+      <summary>
+        <para>Returns true if the textfield has the focus and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.isPasswordField">
+      <summary>
+        <para>Set this to true to mask the characters and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.maskChar">
+      <summary>
+        <para>The character used for masking in a password field.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.maxLength">
+      <summary>
+        <para>The maximum number of characters this textfield can hold. If 0, there is no limit.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.multiline">
+      <summary>
+        <para>Set this to true to allow multiple lines in the textfield and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.selectionColor">
+      <summary>
+        <para>The color of the text selection.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.TextField.tripleClickSelectsLine">
+      <summary>
+        <para>Set this to true to allow triple-clicks to select the line under the mouse and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.TextField.#ctor">
+      <summary>
+        <para>Creates a new textfield.</para>
+      </summary>
+      <param name="maxLength">The maximum number of characters this textfield can hold. If 0, there is no limit.</param>
+      <param name="multiline">Set this to true to allow multiple lines in the textfield and false if otherwise.</param>
+      <param name="isPasswordField">Set this to true to mask the characters and false if otherwise.</param>
+      <param name="maskChar">The character used for masking in a password field.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.TextField.#ctor(System.Int32,System.Boolean,System.Boolean,System.Char)">
+      <summary>
+        <para>Creates a new textfield.</para>
+      </summary>
+      <param name="maxLength">The maximum number of characters this textfield can hold. If 0, there is no limit.</param>
+      <param name="multiline">Set this to true to allow multiple lines in the textfield and false if otherwise.</param>
+      <param name="isPasswordField">Set this to true to mask the characters and false if otherwise.</param>
+      <param name="maskChar">The character used for masking in a password field.</param>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.TextField.OnTextChanged">
+      <summary>
+        <para>Action that is called whenever the text changes in the textfield.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.UIElements.TextField.OnTextChangeValidated">
+      <summary>
+        <para>Action that is called when the user validates the text in the textfield.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.UQuery">
+      <summary>
+        <para>UQuery is a set of extension methods allowing you to select individual or collection of visualElements inside a complex hierarchy.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder`1">
+      <summary>
+        <para>Utility Object that contructs a set of selection rules to be ran on a root visual element.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Active">
+      <summary>
+        <para>Selects all elements that are active.</para>
+      </summary>
+      <returns>
+        <para>A QueryBuilder with the selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.AtIndex(System.Int32)">
+      <summary>
+        <para>Convenience overload, shorthand for Build().AtIndex().</para>
+      </summary>
+      <param name="index"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Build">
+      <summary>
+        <para>Compiles the selection rules into a QueryState object.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Checked">
+      <summary>
+        <para>Selects all elements that are checked.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Children(System.String,System.String[])">
+      <summary>
+        <para>Selects all direct child elements of elements matching the previous rules.</para>
+      </summary>
+      <param name="name"></param>
+      <param name="classes"></param>
+      <param name="className"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Children(System.String,System.String)">
+      <summary>
+        <para>Selects all direct child elements of elements matching the previous rules.</para>
+      </summary>
+      <param name="name"></param>
+      <param name="classes"></param>
+      <param name="className"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Class(System.String)">
+      <summary>
+        <para>Selects all elements with the given class. Not to be confused with Type (see OfType&lt;&gt;()).</para>
+      </summary>
+      <param name="classname"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.#ctor(UnityEngine.Experimental.UIElements.VisualElement)">
+      <summary>
+        <para>Initializes a QueryBuilder.</para>
+      </summary>
+      <param name="visualElement">The root element on which to condfuct the search query.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Descendents(System.String,System.String[])">
+      <summary>
+        <para>Selects all elements that are descendants of currently matching ancestors.</para>
+      </summary>
+      <param name="name"></param>
+      <param name="classNames"></param>
+      <param name="classname"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Descendents(System.String,System.String)">
+      <summary>
+        <para>Selects all elements that are descendants of currently matching ancestors.</para>
+      </summary>
+      <param name="name"></param>
+      <param name="classNames"></param>
+      <param name="classname"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Enabled">
+      <summary>
+        <para>Selects all elements that are enabled.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.First">
+      <summary>
+        <para>Convenience overload, shorthand for Build().First().</para>
+      </summary>
+      <returns>
+        <para>The first element matching all the criteria, or null if none was found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Focused">
+      <summary>
+        <para>Selects all elements that are enabled.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.ForEach(System.Action`1&lt;T&gt;)">
+      <summary>
+        <para>Convenience overload, shorthand for Build().ForEach().</para>
+      </summary>
+      <param name="funcCall">The function to be invoked with each matching element.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.ForEach(System.Collections.Generic.List`1&lt;T2&gt;,System.Func`2&lt;T,T2&gt;)">
+      <summary>
+        <para>Convenience overload, shorthand for Build().ForEach().</para>
+      </summary>
+      <param name="funcCall">The function to be invoked with each matching element.</param>
+      <param name="result">Each return value will be added to this list.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.ForEach(System.Func`2&lt;T,T2&gt;)">
+      <summary>
+        <para>Convenience overload, shorthand for Build().ForEach().</para>
+      </summary>
+      <param name="funcCall">The function to be invoked with each matching element.</param>
+      <returns>
+        <para>Returns a list of all the results of the function calls.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Hovered">
+      <summary>
+        <para>Selects all elements that are hovered.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Last">
+      <summary>
+        <para>Convenience overload, shorthand for Build().Last().</para>
+      </summary>
+      <returns>
+        <para>The last element matching all the criteria, or null if none was found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Name(System.String)">
+      <summary>
+        <para>Selects element with this name.</para>
+      </summary>
+      <param name="id"></param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotActive">
+      <summary>
+        <para>Selects all elements that are not active.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotChecked">
+      <summary>
+        <para>Selects all elements that npot checked.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotEnabled">
+      <summary>
+        <para>Selects all elements that are not enabled.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotFocused">
+      <summary>
+        <para>Selects all elements that don't currently own the focus.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotHovered">
+      <summary>
+        <para>Selects all elements that are not hovered.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotSelected">
+      <summary>
+        <para>Selects all elements that are not selected.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.NotVisible">
+      <summary>
+        <para>Selects all elements that are not visible.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.OfType(System.String,System.String[])">
+      <summary>
+        <para>Selects all elements of the specified Type (eg: Label, Button, ScrollView, etc).</para>
+      </summary>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.OfType(System.String,System.String)">
+      <summary>
+        <para>Selects all elements of the specified Type (eg: Label, Button, ScrollView, etc).</para>
+      </summary>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Selected">
+      <summary>
+        <para>Selects all elements that are selected.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.ToList">
+      <summary>
+        <para>Convenience method. shorthand for Build().ToList.</para>
+      </summary>
+      <returns>
+        <para>Returns a list containing elements satisfying selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.ToList(System.Collections.Generic.List`1&lt;T&gt;)">
+      <summary>
+        <para>Convenience method. Shorthand gor Build().ToList().</para>
+      </summary>
+      <param name="results">Adds all elements satisfying selection rules to the list.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Visible">
+      <summary>
+        <para>Selects all elements that are visible.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryBuilder_1.Where(System.Func`2&lt;T,System.Boolean&gt;)">
+      <summary>
+        <para>Selects all elements satifying the predicate.</para>
+      </summary>
+      <param name="selectorPredicate">Predicate that must return true for selected elements.</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.UQuery.QueryState`1">
+      <summary>
+        <para>Query object containing all the selection rules. Can be saved and rerun later without re-allocating memory.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.AtIndex(System.Int32)">
+      <summary>
+        <para>Selects the n th element matching all the criteria, or null if not enough elements were found.</para>
+      </summary>
+      <param name="index">The index of the matched element.</param>
+      <returns>
+        <para>The match element at the specified index.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.First">
+      <summary>
+        <para>The first element matching all the criteria, or null if none was found.</para>
+      </summary>
+      <returns>
+        <para>The first element matching all the criteria, or null if none was found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.ForEach(System.Action`1&lt;T&gt;)">
+      <summary>
+        <para>Invokes function on all elements matching the query.</para>
+      </summary>
+      <param name="funcCall">The action to be invoked with each matching element.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.ForEach(System.Collections.Generic.List`1&lt;T2&gt;,System.Func`2&lt;T,T2&gt;)">
+      <summary>
+        <para>Invokes function on all elements matching the query.</para>
+      </summary>
+      <param name="result">Each return value will be added to this list.</param>
+      <param name="funcCall">The function to be invoked with each matching element.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.ForEach(System.Func`2&lt;T,T2&gt;)">
+      <summary>
+        <para>Invokes function on all elements matching the query. Overloaded for convenience.</para>
+      </summary>
+      <param name="funcCall">The function to be invoked with each matching element.</param>
+      <returns>
+        <para>Returns a list of all the results of the function calls.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.Last">
+      <summary>
+        <para>The last element matching all the criteria, or null if none was found.</para>
+      </summary>
+      <returns>
+        <para>The last element matching all the criteria, or null if none was found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.RebuildOn(UnityEngine.Experimental.UIElements.VisualElement)">
+      <summary>
+        <para>Creates a new QueryState with the same selection rules, applied on another VisualElement.</para>
+      </summary>
+      <param name="element">The element on which to apply the selection rules.</param>
+      <returns>
+        <para>A new QueryState with the same selection rules, applied on this element.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.ToList">
+      <summary>
+        <para>Returns a list containing elements satisfying selection rules.</para>
+      </summary>
+      <returns>
+        <para>Returns a list containing elements satisfying selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQuery.QueryState_1.ToList(System.Collections.Generic.List`1&lt;T&gt;)">
+      <summary>
+        <para>Adds all elements satisfying selection rules to the list.</para>
+      </summary>
+      <param name="results">Adds all elements satisfying selection rules to the list.</param>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.UQueryExtensions">
+      <summary>
+        <para>UQuery is a set of extension methods allowing you to select individual or collection of visualElements inside a complex hierarchy.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQueryExtensions.Q(UnityEngine.Experimental.UIElements.VisualElement,System.String,System.String)">
+      <summary>
+        <para>Convenience overload, shorthand for Query&lt;T&gt;.Build().First().</para>
+      </summary>
+      <param name="e">Root VisualElement on which the selector will be applied.</param>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>The first element matching all the criteria, or null if none was found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQueryExtensions.Q(UnityEngine.Experimental.UIElements.VisualElement,System.String,System.String[])">
+      <summary>
+        <para>Convenience overload, shorthand for Query&lt;T&gt;.Build().First().</para>
+      </summary>
+      <param name="e">Root VisualElement on which the selector will be applied.</param>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>The first element matching all the criteria, or null if none was found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQueryExtensions.Query(UnityEngine.Experimental.UIElements.VisualElement,System.String,System.String)">
+      <summary>
+        <para>Initializes a QueryBuilder with the specified selection rules.</para>
+      </summary>
+      <param name="e">Root VisualElement on which the selector will be applied.</param>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQueryExtensions.Query(UnityEngine.Experimental.UIElements.VisualElement,System.String,System.String[])">
+      <summary>
+        <para>Initializes a QueryBuilder with the specified selection rules.</para>
+      </summary>
+      <param name="e">Root VisualElement on which the selector will be applied.</param>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQueryExtensions.Query(UnityEngine.Experimental.UIElements.VisualElement,System.String,System.String[])">
+      <summary>
+        <para>Initializes a QueryBuilder with the specified selection rules. Template parameter specifies the type of elements the selector applies to (ie: Label, Button, etc).</para>
+      </summary>
+      <param name="e">Root VisualElement on which the selector will be applied.</param>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.UQueryExtensions.Query(UnityEngine.Experimental.UIElements.VisualElement,System.String,System.String)">
+      <summary>
+        <para>Initializes a QueryBuilder with the specified selection rules. Template parameter specifies the type of elements the selector applies to (ie: Label, Button, etc).</para>
+      </summary>
+      <param name="e">Root VisualElement on which the selector will be applied.</param>
+      <param name="name">If specified, will select elements with this name.</param>
+      <param name="classes">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <param name="className">If specified, will select elements with the given class (not to be confused with Type).</param>
+      <returns>
+        <para>QueryBuilder configured with the associated selection rules.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Experimental.UIElements.VisualElement">
+      <summary>
+        <para>Base class for objects that are part of the UIElements visual tree.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.UIElements.VisualElement.style">
+      <summary>
+        <para>Reference to the style object of this element.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.UIElements.VisualElement.OnStyleResolved(UnityEngine.Experimental.UIElements.StyleSheets.ICustomStyle)">
+      <summary>
+        <para>Callback when the styles of an object have changed.</para>
+      </summary>
+      <param name="style"></param>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,2656 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.VRModule</name>
+    </assembly>
+    <member name="T:UnityEngine.XR.InputTracking">
+      <summary>
+        <para>A collection of methods and properties for interacting with the XR tracking system.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.InputTracking.disablePositionalTracking">
+      <summary>
+        <para>Disables positional tracking in XR. This takes effect the next time the head pose is sampled.  If set to true the camera only tracks headset rotation state.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.nodeAdded(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node is added to the underlying XR system.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has been added.</param>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.nodeRemoved(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node is removed from the underlying XR system.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has been removed.</param>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.trackingAcquired(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node begins reporting tracking information.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has begun being tracked.</param>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.trackingLost(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node stops reporting tracking information.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has lost tracking.</param>
+      <param name="value"></param>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode)">
+      <summary>
+        <para>Gets the position of a specific node.</para>
+      </summary>
+      <param name="node">Specifies which node's position should be returned.</param>
+      <returns>
+        <para>The position of the node in its local tracking space.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode)">
+      <summary>
+        <para>Gets the rotation of a specific node.</para>
+      </summary>
+      <param name="node">Specifies which node's rotation should be returned.</param>
+      <returns>
+        <para>The rotation of the node in its local tracking space.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetNodeName(System.UInt64)">
+      <summary>
+        <para>Accepts the unique identifier for a tracked node and returns a friendly name for it.</para>
+      </summary>
+      <param name="uniqueID">The unique identifier for the Node index.</param>
+      <returns>
+        <para>The name of the tracked node if the given 64-bit identifier maps to a currently tracked node. Empty string otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetNodeStates">
+      <summary>
+        <para>Describes all presently connected XR nodes and provides available tracking state.</para>
+      </summary>
+      <param name="nodeStates">A list that is populated with XR.XRNodeState objects.</param>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.Recenter">
+      <summary>
+        <para>Center tracking to the current position and orientation of the HMD.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.TrackingSpaceType">
+      <summary>
+        <para>Represents the size of physical space available for XR.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.TrackingSpaceType.RoomScale">
+      <summary>
+        <para>Represents a space large enough for free movement.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.TrackingSpaceType.Stationary">
+      <summary>
+        <para>Represents a small space where movement may be constrained or positional tracking is unavailable.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.UserPresenceState">
+      <summary>
+        <para>Represents the current user presence state detected by the device.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.UserPresenceState.NotPresent">
+      <summary>
+        <para>The device does not detect that the user is present.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.UserPresenceState.Present">
+      <summary>
+        <para>The device detects that the user is present.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.UserPresenceState.Unknown">
+      <summary>
+        <para>The device is currently in a state where it cannot determine user presence.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.UserPresenceState.Unsupported">
+      <summary>
+        <para>The device does not support detecting user presence.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.HolographicSettings">
+      <summary>
+        <para>The Holographic Settings contain functions which effect the performance and presentation of Holograms on Windows Holographic platforms.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.ActivateLatentFramePresentation(System.Boolean)">
+      <summary>
+        <para>Option to allow developers to achieve higher framerate at the cost of high latency.  By default this option is off.</para>
+      </summary>
+      <param name="activated">True to enable or false to disable Low Latent Frame Presentation.</param>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.HolographicSettings.IsDisplayOpaque">
+      <summary>
+        <para>This method returns whether or not the display associated with the main camera reports as opaque.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.HolographicSettings.IsLatentFramePresentation">
+      <summary>
+        <para>Returns true if Holographic rendering is currently running with Latent Frame Presentation.  Default value is false.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.SetFocusPointForFrame(UnityEngine.Vector3)">
+      <summary>
+        <para>Sets a point in 3d space that is the focal point of the scene for the user for this frame. This helps improve the visual fidelity of content around this point. This must be set every frame.</para>
+      </summary>
+      <param name="position">The position of the focal point in the scene, relative to the camera.</param>
+      <param name="normal">Surface normal of the plane being viewed at the focal point.</param>
+      <param name="velocity">A vector that describes how the focus point is moving in the scene at this point in time. This allows the HoloLens to compensate for both your head movement and the movement of the object in the scene.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.SetFocusPointForFrame(UnityEngine.Vector3,UnityEngine.Vector3)">
+      <summary>
+        <para>Sets a point in 3d space that is the focal point of the scene for the user for this frame. This helps improve the visual fidelity of content around this point. This must be set every frame.</para>
+      </summary>
+      <param name="position">The position of the focal point in the scene, relative to the camera.</param>
+      <param name="normal">Surface normal of the plane being viewed at the focal point.</param>
+      <param name="velocity">A vector that describes how the focus point is moving in the scene at this point in time. This allows the HoloLens to compensate for both your head movement and the movement of the object in the scene.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.SetFocusPointForFrame(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+      <summary>
+        <para>Sets a point in 3d space that is the focal point of the scene for the user for this frame. This helps improve the visual fidelity of content around this point. This must be set every frame.</para>
+      </summary>
+      <param name="position">The position of the focal point in the scene, relative to the camera.</param>
+      <param name="normal">Surface normal of the plane being viewed at the focal point.</param>
+      <param name="velocity">A vector that describes how the focus point is moving in the scene at this point in time. This allows the HoloLens to compensate for both your head movement and the movement of the object in the scene.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureErrorEventArgs">
+      <summary>
+        <para>Contains fields that are relevant during an error event.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.GestureErrorEventArgs.error">
+      <summary>
+        <para>A readable error string (when possible).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.GestureErrorEventArgs.hresult">
+      <summary>
+        <para>The HRESULT code from the platform.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer">
+      <summary>
+        <para>Manager class with API for recognizing user gestures.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.CancelGestures">
+      <summary>
+        <para>Cancels any pending gesture events.  Additionally this will call StopCapturingGestures.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.#ctor">
+      <summary>
+        <para>Create a GestureRecognizer.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.Dispose">
+      <summary>
+        <para>Disposes the resources used by gesture recognizer.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.GestureError(System.Action`1&lt;UnityEngine.XR.WSA.Input.GestureErrorEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system encounters a warning or error.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.GestureErrorDelegate">
+      <summary>
+        <para>Callback indicating an error or warning occurred.</para>
+      </summary>
+      <param name="error">A readable error string (when possible).</param>
+      <param name="hresult">The HRESULT code from the platform.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.GestureErrorEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/GestureErrorDelegate)">
+      <summary>
+        <para>Fired when a warning or error is emitted by the GestureRecognizer.</para>
+      </summary>
+      <param name="value">Delegate to be triggered to report warnings and errors.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.GetRecognizableGestures">
+      <summary>
+        <para>Retrieve a mask of the currently enabled gestures.</para>
+      </summary>
+      <returns>
+        <para>A mask indicating which Gestures are currently recognizable.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCanceled(System.Action`1&lt;UnityEngine.XR.WSA.Input.HoldCanceledEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizers that a user has canceled a hold gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCanceledEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/HoldCanceledEventDelegate)">
+      <summary>
+        <para>Fired when the user does a cancel event either using their hands or in speech.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a cancel event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCanceledEventDelegate">
+      <summary>
+        <para>Callback indicating a cancel event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCompleted(System.Action`1&lt;UnityEngine.XR.WSA.Input.HoldCompletedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizers that a user has completed a hold gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCompletedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/HoldCompletedEventDelegate)">
+      <summary>
+        <para>Fired when users complete a hold gesture.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when the user completes a hold gesture.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCompletedEventDelegate">
+      <summary>
+        <para>Callback indicating a hold completed event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldStarted(System.Action`1&lt;UnityEngine.XR.WSA.Input.HoldStartedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has started a hold gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldStartedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/HoldStartedEventDelegate)">
+      <summary>
+        <para>Fired when users start a hold gesture.</para>
+      </summary>
+      <param name="value">The delegate to be triggered when a user starts a hold gesture.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.HoldStartedEventDelegate">
+      <summary>
+        <para>Callback indicating a hold started event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.IsCapturingGestures">
+      <summary>
+        <para>Used to query if the GestureRecognizer is currently receiving Gesture events.</para>
+      </summary>
+      <returns>
+        <para>True if the GestureRecognizer is receiving events or false otherwise.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationCanceled(System.Action`1&lt;UnityEngine.XR.WSA.Input.ManipulationCanceledEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has canceled a manipulation gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationCanceledEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/ManipulationCanceledEventDelegate)">
+      <summary>
+        <para>Fires when a Manipulation gesture is canceled.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a cancel event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationCanceledEventDelegate">
+      <summary>
+        <para>Callback indicating a cancel event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="cumulativeDelta">Total distance moved since the beginning of the manipulation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationCompleted(System.Action`1&lt;UnityEngine.XR.WSA.Input.ManipulationCompletedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has completed a manipulation gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationCompletedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/ManipulationCompletedEventDelegate)">
+      <summary>
+        <para>Fires when a Manipulation gesture is completed.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a completed event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationCompletedEventDelegate">
+      <summary>
+        <para>Callback indicating a completed event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="cumulativeDelta">Total distance moved since the beginning of the manipulation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationStarted(System.Action`1&lt;UnityEngine.XR.WSA.Input.ManipulationStartedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has started a manipulation gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationStartedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/ManipulationStartedEventDelegate)">
+      <summary>
+        <para>Fires when an interaction becomes a Manipulation gesture.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a started event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationStartedEventDelegate">
+      <summary>
+        <para>Callback indicating a started event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="cumulativeDelta">Total distance moved since the beginning of the manipulation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationUpdated(System.Action`1&lt;UnityEngine.XR.WSA.Input.ManipulationUpdatedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has updated a manipulation gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationUpdatedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/ManipulationUpdatedEventDelegate)">
+      <summary>
+        <para>Fires when a Manipulation gesture is updated due to hand movement.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a updated event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.ManipulationUpdatedEventDelegate">
+      <summary>
+        <para>Callback indicating a updated event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="cumulativeDelta">Total distance moved since the beginning of the manipulation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationCanceled(System.Action`1&lt;UnityEngine.XR.WSA.Input.NavigationCanceledEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has canceled a navigation gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationCanceledEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/NavigationCanceledEventDelegate)">
+      <summary>
+        <para>Fires when a Navigation gesture is canceled.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a cancel event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationCanceledEventDelegate">
+      <summary>
+        <para>Callback indicating a cancel event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="normalizedOffset">The last known normalized offset of the input within the unit cube for the navigation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationCompleted(System.Action`1&lt;UnityEngine.XR.WSA.Input.NavigationCompletedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a navigation gesture completes.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationCompletedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/NavigationCompletedEventDelegate)">
+      <summary>
+        <para>Fires when a Navigation gesture is completed.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a complete event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationCompletedEventDelegate">
+      <summary>
+        <para>Callback indicating a completed event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="normalizedOffset">The last known normalized offset, since the navigation gesture began, of the input within the unit cube for the navigation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationStarted(System.Action`1&lt;UnityEngine.XR.WSA.Input.NavigationStartedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has started a navigation gesture.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationStartedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/NavigationStartedEventDelegate)">
+      <summary>
+        <para>Fires when an interaction becomes a Navigation gesture.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a started event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationStartedEventDelegate">
+      <summary>
+        <para>Callback indicating a started event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="normalizedOffset">The normalized offset, since the navigation gesture began, of the input within the unit cube for the navigation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationUpdated(System.Action`1&lt;UnityEngine.XR.WSA.Input.NavigationUpdatedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that navigation gesture has updated.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationUpdatedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/NavigationUpdatedEventDelegate)">
+      <summary>
+        <para>Fires when a Navigation gesture is updated due to hand or controller movement.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a update event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.NavigationUpdatedEventDelegate">
+      <summary>
+        <para>Callback indicating a update event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="normalizedOffset">The last known normalized offset, since the navigation gesture began, of the input within the unit cube for the navigation gesture.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.RecognitionEnded(System.Action`1&lt;UnityEngine.XR.WSA.Input.RecognitionEndedEventArgs&gt;)">
+      <summary>
+        <para>Fires when recognition of gestures is done, either due to completion of a gesture or cancellation.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.RecognitionEndedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/RecognitionEndedEventDelegate)">
+      <summary>
+        <para>Fires when recognition of gestures is done, either due to completion of a gesture or cancellation.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when an end event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.RecognitionEndedEventDelegate">
+      <summary>
+        <para>Callback indicating the gesture event has completed.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time a gesture began.</param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.RecognitionStarted(System.Action`1&lt;UnityEngine.XR.WSA.Input.RecognitionStartedEventArgs&gt;)">
+      <summary>
+        <para>Fires when recognition of gestures begins.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.RecognitionStartedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/RecognitionStartedEventDelegate)">
+      <summary>
+        <para>Fires when recognition of gestures begins.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a start event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.RecognitionStartedEventDelegate">
+      <summary>
+        <para>Callback indicating the gesture event has started.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time a gesture began.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings)">
+      <summary>
+        <para>Set the recognizable gestures to the ones specified in newMaskValues and return the old settings.</para>
+      </summary>
+      <param name="newMaskValue">A mask indicating which gestures are now recognizable.</param>
+      <returns>
+        <para>The previous value.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.StartCapturingGestures">
+      <summary>
+        <para>Call to begin receiving gesture events on this recognizer.  No events will be received until this method is called.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.GestureRecognizer.StopCapturingGestures">
+      <summary>
+        <para>Call to stop receiving gesture events on this recognizer.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.Tapped(System.Action`1&lt;UnityEngine.XR.WSA.Input.TappedEventArgs&gt;)">
+      <summary>
+        <para>Fires when Microsoft's gesture-recognition system recognizes that a user has done a tap gesture and after the system voice command "Select" has been processed. For controllers, this event fires when the primary button is released after it was pressed.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.GestureRecognizer.TappedEvent(UnityEngine.XR.WSA.Input.GestureRecognizer/TappedEventDelegate)">
+      <summary>
+        <para>Occurs when a Tap gesture is recognized.</para>
+      </summary>
+      <param name="value">Delegate to be triggered when a tap event is triggered.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureRecognizer.TappedEventDelegate">
+      <summary>
+        <para>Callback indicating a tap event.</para>
+      </summary>
+      <param name="source">Indicates which input medium triggered this event.</param>
+      <param name="tapCount">The count of taps (1 for single tap, 2 for double tap).</param>
+      <param name="headRay">Ray (with normalized direction) from user at the time this event interaction began.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.GestureSettings">
+      <summary>
+        <para>This enumeration represents the set of gestures that may be recognized by GestureRecognizer.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.DoubleTap">
+      <summary>
+        <para>Enable support for the double-tap gesture.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.Hold">
+      <summary>
+        <para>Enable support for the hold gesture.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.ManipulationTranslate">
+      <summary>
+        <para>Enable support for the manipulation gesture which tracks changes to the hand's position.  This gesture is relative to the start position of the gesture and measures an absolute movement through the world.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.NavigationRailsX">
+      <summary>
+        <para>Enable support for the navigation gesture, in the horizontal axis using rails (guides).</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.NavigationRailsY">
+      <summary>
+        <para>Enable support for the navigation gesture, in the vertical axis using rails (guides).</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.NavigationRailsZ">
+      <summary>
+        <para>Enable support for the navigation gesture, in the depth axis using rails (guides).</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.NavigationX">
+      <summary>
+        <para>Enable support for the navigation gesture, in the horizontal axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.NavigationY">
+      <summary>
+        <para>Enable support for the navigation gesture, in the vertical axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.NavigationZ">
+      <summary>
+        <para>Enable support for the navigation gesture, in the depth axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.None">
+      <summary>
+        <para>Disable support for gestures.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.GestureSettings.Tap">
+      <summary>
+        <para>Enable support for the tap gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.HoldCanceledEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a user cancels a hold gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldCanceledEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldCanceledEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that canceled the hold gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldCanceledEventArgs.sourcePose">
+      <summary>
+        <para>Represents pose data of the input source, such as a hand or controller, when the gesture occurred.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.HoldCompletedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a hold gesture completes.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldCompletedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldCompletedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that completed the hold gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldCompletedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.HoldStartedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a hold gesture starts.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldStartedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldStartedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that started the hold gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.HoldStartedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionManager">
+      <summary>
+        <para>Provides access to user input from hands, controllers, and system voice commands.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionManager.numSourceStates">
+      <summary>
+        <para>(Read Only) The number of InteractionSourceState snapshots available for reading with InteractionManager.GetCurrentReading.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionManager.GetCurrentReading">
+      <summary>
+        <para>Get the current SourceState.</para>
+      </summary>
+      <returns>
+        <para>An array of InteractionSourceState snapshots.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionManager.GetCurrentReading(UnityEngine.XR.WSA.Input.InteractionSourceState[])">
+      <summary>
+        <para>Allows retrieving the current source states without allocating an array. The number of retrieved source states will be returned, up to a maximum of the size of the array.</para>
+      </summary>
+      <param name="sourceStates">An array for storing InteractionSourceState snapshots.</param>
+      <returns>
+        <para>The number of snapshots stored in the array, up to the size of the array.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceDetected(System.Action`1&lt;UnityEngine.XR.WSA.Input.InteractionSourceDetectedEventArgs&gt;)">
+      <summary>
+        <para>Occurs when a new hand, controller, or source of voice commands has been detected.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceDetectedLegacy(UnityEngine.XR.WSA.Input.InteractionManager/SourceEventHandler)">
+      <summary>
+        <para>Occurs when a new hand, controller, or source of voice commands has been detected.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceLost(System.Action`1&lt;UnityEngine.XR.WSA.Input.InteractionSourceLostEventArgs&gt;)">
+      <summary>
+        <para>Occurs when a hand, controller, or source of voice commands is no longer available.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceLostLegacy(UnityEngine.XR.WSA.Input.InteractionManager/SourceEventHandler)">
+      <summary>
+        <para>Occurs when a hand, controller, or source of voice commands is no longer available.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourcePressed(System.Action`1&lt;UnityEngine.XR.WSA.Input.InteractionSourcePressedEventArgs&gt;)">
+      <summary>
+        <para>Occurs when a hand or controller has entered the pressed state.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourcePressedLegacy(UnityEngine.XR.WSA.Input.InteractionManager/SourceEventHandler)">
+      <summary>
+        <para>Occurs when a hand or controller has entered the pressed state.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceReleased(System.Action`1&lt;UnityEngine.XR.WSA.Input.InteractionSourceReleasedEventArgs&gt;)">
+      <summary>
+        <para>Occurs when a hand or controller has exited the pressed state.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceReleasedLegacy(UnityEngine.XR.WSA.Input.InteractionManager/SourceEventHandler)">
+      <summary>
+        <para>Occurs when a hand or controller has exited the pressed state.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceUpdated(System.Action`1&lt;UnityEngine.XR.WSA.Input.InteractionSourceUpdatedEventArgs&gt;)">
+      <summary>
+        <para>Occurs when a hand or controller has experienced a change to its SourceState.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.Input.InteractionManager.InteractionSourceUpdatedLegacy(UnityEngine.XR.WSA.Input.InteractionManager/SourceEventHandler)">
+      <summary>
+        <para>Occurs when a hand or controller has experienced a change to its SourceState.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionManager.SourceEventHandler">
+      <summary>
+        <para>Callback to handle InteractionManager events.</para>
+      </summary>
+      <param name="state"></param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSource">
+      <summary>
+        <para>Represents one detected instance of an interaction source (hand, controller, or user's voice) that can cause interactions and gestures.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.handedness">
+      <summary>
+        <para>Denotes which hand was used as the input source.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.id">
+      <summary>
+        <para>The identifier for the interaction source (hand, controller, or user's voice).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.kind">
+      <summary>
+        <para>Specifies the kind of an interaction source.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.productId">
+      <summary>
+        <para>Following the make and model nomenclature of cars, this equates to the model number.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.productVersion">
+      <summary>
+        <para>Following the make and model nomenclature of cars, this would be a minor update to the model.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.supportsGrasp">
+      <summary>
+        <para>This property returns true when the interaction source has at least one grasp button, and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.supportsMenu">
+      <summary>
+        <para>This property returns true when the interaction source has a menu button, and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.supportsPointing">
+      <summary>
+        <para>This property returns true if the interaction source has a separate pose for the pointer, and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.supportsThumbstick">
+      <summary>
+        <para>Returns true if the interaction source has a thumbstick, and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.supportsTouchpad">
+      <summary>
+        <para>Returns true if the interaction source has a touchpad, and false if otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSource.vendorId">
+      <summary>
+        <para>All interaction sources developed by the same company will have the same vendor ID.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceDetectedEventArgs">
+      <summary>
+        <para>Contains fields that are relevent when an interaction source is detected.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceDetectedEventArgs.state">
+      <summary>
+        <para>The current state of the reported interaction source that was just detected.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceHandedness">
+      <summary>
+        <para>Denotes which hand was used as the input source.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceKind">
+      <summary>
+        <para>Specifies the kind of an interaction source.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourceKind.Controller">
+      <summary>
+        <para>The interaction source is of a kind not known in this version of the API.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourceKind.Hand">
+      <summary>
+        <para>The interaction source is one of the user's hands.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourceKind.Other">
+      <summary>
+        <para>The interaction source is of a kind not known in this version of the API.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourceKind.Voice">
+      <summary>
+        <para>The interaction source is the user's speech.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceLocation">
+      <summary>
+        <para>Represents the position and velocity of a hand or controller - this has been deprecated. Use InteractionSourcePose instead.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourceLocation.TryGetPosition(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Get the position of the interaction - this has been deprecated. Use InteractionSourcePose instead.</para>
+      </summary>
+      <param name="position">Supplied Vector3 to be populated with interaction position.</param>
+      <returns>
+        <para>True if the position is successfully returned.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourceLocation.TryGetVelocity(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Get the velocity of the interaction - this has been deprecated. Use InteractionSourcePose instead.</para>
+      </summary>
+      <param name="velocity">Supplied Vector3 to be populated with interaction velocity.</param>
+      <returns>
+        <para>True if the velocity is successfully returned.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceLostEventArgs">
+      <summary>
+        <para>Contains fields that are relevent when an interaction source is lost.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceLostEventArgs.state">
+      <summary>
+        <para>The current state of the reported interaction source that was just lost.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceNode">
+      <summary>
+        <para>Specifies which part of the controller to query pose information for.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourceNode.Grip">
+      <summary>
+        <para>The grip of the controller.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourceNode.Pointer">
+      <summary>
+        <para>The pointer of the controller.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of either the gesture or interaction.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourcePose.positionAccuracy">
+      <summary>
+        <para>The position-tracking accuracy of the interaction source.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetAngularVelocity(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Attempts to retrieve a Vector3 representing the current angular velocity of the tracked node.</para>
+      </summary>
+      <param name="angularVelocity">If the function returns true, this will be filled out with the angular velocity of the interaction source. If the function returns false, the value filled out should not be used.</param>
+      <returns>
+        <para>True if the angular velocity was set in the output parameter. False if the angular velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetForward(UnityEngine.Vector3&amp;,UnityEngine.XR.WSA.Input.InteractionSourceNode)">
+      <summary>
+        <para>Gets the forward vector of the interaction source, assuming rotation is valid.</para>
+      </summary>
+      <param name="forward">The forward vector of the interaction source, if the function returns true.</param>
+      <param name="node">Specifies which part of the controller to query for its forward vector.</param>
+      <returns>
+        <para>This method returns true when the rotation is valid and the Vector3 passed in was filled out correctly, and false if otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetPosition(UnityEngine.Vector3&amp;,UnityEngine.XR.WSA.Input.InteractionSourceNode)">
+      <summary>
+        <para>Gets the position of the interaction source, assuming the backing data is valid.</para>
+      </summary>
+      <param name="position">The position of the interaction source, is the function returns true.</param>
+      <param name="node">Specifies which part of the controller to query for its position.</param>
+      <returns>
+        <para>This method returns true when the Vector3 passed in was filled out correctly, and false if otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetRight(UnityEngine.Vector3&amp;,UnityEngine.XR.WSA.Input.InteractionSourceNode)">
+      <summary>
+        <para>Gets the right vector of the interaction source, assuming rotation is valid.</para>
+      </summary>
+      <param name="right">The right vector of the interaction source, if the function returns true.</param>
+      <param name="node">Specifies which part of the controller to query for its right vector.</param>
+      <returns>
+        <para>This method returns true if rotation is valid and the Vector3 passed in was filled out correctly, and false if otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetRotation(UnityEngine.Quaternion&amp;,UnityEngine.XR.WSA.Input.InteractionSourceNode)">
+      <summary>
+        <para>Gets the rotation of the interaction source, assuming the backing data is valid.</para>
+      </summary>
+      <param name="node">Specifies which part of the controller to query for its rotation.</param>
+      <param name="rotation">The rotation of the interaction source, if the function returns true.</param>
+      <returns>
+        <para>This method returns true if the Quaternion passed in was filled out correctly, and false if otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetUp(UnityEngine.Vector3&amp;,UnityEngine.XR.WSA.Input.InteractionSourceNode)">
+      <summary>
+        <para>Gets the up vector of the interaction source, assuming rotation is valid.</para>
+      </summary>
+      <param name="up">The up vector of the interaction source, if the function returns true.</param>
+      <param name="node">Specifies which part of the controller to query for its up vector.</param>
+      <returns>
+        <para>Returns true if the rotation is valid and the Vector3 passed in was filled out correctly, and false if otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Input.InteractionSourcePose.TryGetVelocity(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Gets the velocity of the interaction source, assuming the backing data is valid.</para>
+      </summary>
+      <param name="velocity">The velocity of the interaction source, if the function returns true.</param>
+      <returns>
+        <para>Returns true if the Vector3 passed in was filled out correctly, and false if otherwise.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourcePositionAccuracy">
+      <summary>
+        <para>Denotes the accuracy of tracking on the interaction source.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePositionAccuracy.Approximate">
+      <summary>
+        <para>A position accuracy of Approximate reports that you may not want to fully trust the positions reported, as the position is inferred or synthesized in some way, such as the controller leaving the sensors' field of view and forcing the API to rely on the device's IMU instead of visual tracking.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePositionAccuracy.High">
+      <summary>
+        <para>A position accuracy of High reports that you can fully trust the position, as the interaction source is within the sensors' visual field of view.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePositionAccuracy.None">
+      <summary>
+        <para>A position accuracy of None reports that there is no position accuracy, as the interaction source unlocatable.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourcePressedEventArgs">
+      <summary>
+        <para>Contains fields that are relevent when an interaction source enters the pressed state for one of its buttons.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourcePressedEventArgs.pressType">
+      <summary>
+        <para>Denotes the type of button that was just pressed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourcePressedEventArgs.state">
+      <summary>
+        <para>The current state of the reported interaction source that just had one of its buttons enter the pressed state.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourcePressType">
+      <summary>
+        <para>The type of button or controller feature pressed, if any.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePressType.Grasp">
+      <summary>
+        <para>These buttons are generally found on the side of the controller. Some hardware has more than one grasp button.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePressType.Menu">
+      <summary>
+        <para>This button is marked with three horizontal lines, same as you would fine on an Xbox One controller.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePressType.Select">
+      <summary>
+        <para>Depending on the InteractionSourceType of the interaction source, this could be a number of equivalent things: main button on a blicker, air-tap on a hand, and the trigger on a motion controller.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePressType.Thumbstick">
+      <summary>
+        <para>Similar to the touchpad, moving the thumbstick won't count as pressing it - a press will occur when pressing down on the thumbstick enough.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Input.InteractionSourcePressType.Touchpad">
+      <summary>
+        <para>A touchpad only counts as pressed when it's held down enough - otherwise, it's just touched, and will give a reading of the position through InteractionSourceState.touchpadPosition.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceProperties">
+      <summary>
+        <para>Represents the set of properties available to explore the current state of a hand or controller.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceProperties.location">
+      <summary>
+        <para>The position and velocity of the hand, expressed in the specified coordinate system - this has been deprecated. Use InteractionSourcePose instead.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceProperties.sourceLossMitigationDirection">
+      <summary>
+        <para>The direction you should suggest that the user move their hand if it is nearing the edge of the detection area.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceProperties.sourceLossRisk">
+      <summary>
+        <para>Gets the risk that detection of the hand will be lost as a value from 0.0 to 1.0.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceReleasedEventArgs">
+      <summary>
+        <para>Contains fields that are relevent when an interaction source exits the pressed state for one of its buttons.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceReleasedEventArgs.pressType">
+      <summary>
+        <para>Denotes the type of button that was just released.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceReleasedEventArgs.state">
+      <summary>
+        <para>The current state of the reported interaction source that just had one of its buttons exit the pressed state.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceState">
+      <summary>
+        <para>Represents a snapshot of the state of a spatial interaction source (hand, voice or controller) at a given time.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.anyPressed">
+      <summary>
+        <para>True if the source is in the pressed state.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.grasped">
+      <summary>
+        <para>Whether the controller is grasped.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the interaction.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.headRay">
+      <summary>
+        <para>The Ray at the time represented by this InteractionSourceState.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.menuPressed">
+      <summary>
+        <para>Whether or not the menu button is pressed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.pressed">
+      <summary>
+        <para>True if the source is in the pressed state, false otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.properties">
+      <summary>
+        <para>Additional properties to explore the state of the interaction source.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.selectPressed">
+      <summary>
+        <para>Depending on the InteractionSourceType of the interaction source, this returning true could represent a number of equivalent things: main button on a blicker, air-tap on a hand, and the trigger on a motion controller.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.selectPressedAmount">
+      <summary>
+        <para>Normalized amount ([0, 1]) representing how much select is pressed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.source">
+      <summary>
+        <para>The interaction source that this state describes.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the interaction.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.thumbstickPosition">
+      <summary>
+        <para>Normalized coordinates for the position of a thumbstick.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.thumbstickPressed">
+      <summary>
+        <para>Whether or not the thumbstick is pressed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.touchpadPosition">
+      <summary>
+        <para>Normalized coordinates for the position of a touchpad interaction.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.touchpadPressed">
+      <summary>
+        <para>Whether or not the touchpad is pressed, as if a button.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.touchpadTouched">
+      <summary>
+        <para>Whether or not the touchpad is touched.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.InteractionSourceUpdatedEventArgs">
+      <summary>
+        <para>Contains fields that are relevent when an interaction source updates.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceUpdatedEventArgs.state">
+      <summary>
+        <para>The current state of the reported interaction source that just updated.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.ManipulationCanceledEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a manipulation gesture is canceled.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCanceledEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCanceledEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that canceled the manipulation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCanceledEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.ManipulationCompletedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a manipulation gesture completes.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCompletedEventArgs.cumulativeDelta">
+      <summary>
+        <para>Total distance moved since the beginning of the manipulation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCompletedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCompletedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that completed the manipulation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationCompletedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.ManipulationStartedEventArgs">
+      <summary>
+        <para>Contains fields relevant when a manipulation gesture starts.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationStartedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationStartedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that started the manipulation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationStartedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.ManipulationUpdatedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a manipulation gesture gets updated.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationUpdatedEventArgs.cumulativeDelta">
+      <summary>
+        <para>Total distance moved since the beginning of the manipulation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationUpdatedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationUpdatedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) being used for the manipulation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.ManipulationUpdatedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.NavigationCanceledEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a navigation gesture is canceled.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCanceledEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCanceledEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that canceled the navigation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCanceledEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.NavigationCompletedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a navigation gesture completes.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCompletedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCompletedEventArgs.normalizedOffset">
+      <summary>
+        <para>The normalized offset, since the navigation gesture began, of the input within the unit cube for the navigation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCompletedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that completed the navigation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationCompletedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.NavigationStartedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a navigation gesture starts.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationStartedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationStartedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that started the navigation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationStartedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.NavigationUpdatedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a navigation gesture updates.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationUpdatedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationUpdatedEventArgs.normalizedOffset">
+      <summary>
+        <para>The normalized offset, since the navigation gesture began, of the input within the unit cube for the navigation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationUpdatedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) being used for the navigation gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.NavigationUpdatedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.RecognitionEndedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when recognition of a gesture event ends.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.RecognitionEndedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.RecognitionEndedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that ended the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.RecognitionEndedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.RecognitionStartedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when recognition of a gesture event begins.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.RecognitionStartedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.RecognitionStartedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that started the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.RecognitionStartedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Input.TappedEventArgs">
+      <summary>
+        <para>Contains fields that are relevant when a tap gesture occurs.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.TappedEventArgs.headPose">
+      <summary>
+        <para>Head pose of the user at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.TappedEventArgs.source">
+      <summary>
+        <para>The InteractionSource (hand, controller, or user's voice) that initiated the tap gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.TappedEventArgs.sourcePose">
+      <summary>
+        <para>Pose data of the interaction source at the time of the gesture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Input.TappedEventArgs.tapCount">
+      <summary>
+        <para>The number of taps (1 for single-tap, 2 for double-tap).</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Persistence.WorldAnchorStore">
+      <summary>
+        <para>The storage object for persisted WorldAnchors.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.anchorCount">
+      <summary>
+        <para>(Read Only) Gets the number of persisted world anchors in this WorldAnchorStore.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.Clear">
+      <summary>
+        <para>Clears all persisted WorldAnchors.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.Delete(System.String)">
+      <summary>
+        <para>Deletes a persisted WorldAnchor from the store.</para>
+      </summary>
+      <param name="id">The identifier of the WorldAnchor to delete.</param>
+      <returns>
+        <para>Whether or not the WorldAnchor was found and deleted.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.GetAllIds">
+      <summary>
+        <para>Gets all of the identifiers of the currently persisted WorldAnchors.</para>
+      </summary>
+      <returns>
+        <para>An array of string identifiers.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.GetAllIds(System.String[])">
+      <summary>
+        <para>Gets all of the identifiers of the currently persisted WorldAnchors.</para>
+      </summary>
+      <param name="ids">A target array to receive the identifiers of the currently persisted world anchors.</param>
+      <returns>
+        <para>The number of identifiers stored in the target array.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.GetAsync(UnityEngine.XR.WSA.Persistence.WorldAnchorStore/GetAsyncDelegate)">
+      <summary>
+        <para>Gets the WorldAnchorStore instance.</para>
+      </summary>
+      <param name="onCompleted">The handler to be called when the WorldAnchorStore is loaded.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.GetAsyncDelegate">
+      <summary>
+        <para>The handler for when getting the WorldAnchorStore from GetAsync.</para>
+      </summary>
+      <param name="store">The instance of the WorldAnchorStore once loaded.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.Load(System.String,UnityEngine.GameObject)">
+      <summary>
+        <para>Loads a WorldAnchor from disk for given identifier and attaches it to the GameObject. If the GameObject has a WorldAnchor, that WorldAnchor will be updated. If the anchor is not found, null will be returned and the GameObject and any existing WorldAnchor attached to it will not be modified.</para>
+      </summary>
+      <param name="id">The identifier of the WorldAnchor to load.</param>
+      <param name="go">The object to attach the WorldAnchor to if found.</param>
+      <returns>
+        <para>The WorldAnchor loaded by the identifier or null if not found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Persistence.WorldAnchorStore.Save(System.String,UnityEngine.XR.WSA.WorldAnchor)">
+      <summary>
+        <para>Saves the provided WorldAnchor with the provided identifier. If the identifier is already in use, the method will return false.</para>
+      </summary>
+      <param name="id">The identifier to save the anchor with. This needs to be unique for your app.</param>
+      <param name="anchor">The anchor to save.</param>
+      <returns>
+        <para>Whether or not the save was successful. Will return false if the id conflicts with another already saved anchor's id.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.PositionalLocatorState">
+      <summary>
+        <para>Indicates the lifecycle state of the device's spatial location system.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Activating">
+      <summary>
+        <para>The device is reporting its orientation and is preparing to locate its position in the user's surroundings.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Active">
+      <summary>
+        <para>The device is reporting its orientation and position in the user's surroundings.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Inhibited">
+      <summary>
+        <para>The device is reporting its orientation but cannot locate its position in the user's surroundings due to external factors like poor lighting conditions.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.OrientationOnly">
+      <summary>
+        <para>The device is reporting its orientation and has not been asked to report its position in the user's surroundings.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Unavailable">
+      <summary>
+        <para>The device's spatial location system is not available.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Sharing.SerializationCompletionReason">
+      <summary>
+        <para>This enum represents the result of a WorldAnchorTransferBatch operation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Sharing.SerializationCompletionReason.AccessDenied">
+      <summary>
+        <para>The operation has failed because access was denied.  This occurs typically because the transfer batch was not readable when deserializing or writable when serializing.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Sharing.SerializationCompletionReason.NotSupported">
+      <summary>
+        <para>The operation has failed because it was not supported.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Sharing.SerializationCompletionReason.Succeeded">
+      <summary>
+        <para>The operation has completed successfully.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.Sharing.SerializationCompletionReason.UnknownError">
+      <summary>
+        <para>The operation has failed in an unexpected way.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch">
+      <summary>
+        <para>A batch of WorldAnchors which can be exported and imported between apps.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.anchorCount">
+      <summary>
+        <para>(Read Only) Gets the number of world anchors in this WorldAnchorTransferBatch.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.AddWorldAnchor(System.String,UnityEngine.XR.WSA.WorldAnchor)">
+      <summary>
+        <para>Adds a WorldAnchor to the batch with the specified identifier.</para>
+      </summary>
+      <param name="id">The identifier associated with this anchor in the batch. This must be unique per batch.</param>
+      <param name="anchor">The anchor to add to the batch.</param>
+      <returns>
+        <para>Whether or not the anchor was added successfully.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.DeserializationCompleteDelegate">
+      <summary>
+        <para>The handler for when deserialization has completed.</para>
+      </summary>
+      <param name="completionReason">The reason the deserialization completed (success or failure reason).</param>
+      <param name="deserializedTransferBatch">The resulting transfer batch which is empty on error.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.Dispose">
+      <summary>
+        <para>Cleans up the WorldAnchorTransferBatch and releases memory.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.ExportAsync(UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch,UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch/SerializationDataAvailableDelegate,UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch/SerializationCompleteDelegate)">
+      <summary>
+        <para>Exports the input WorldAnchorTransferBatch into a byte array which can be passed to WorldAnchorTransferBatch.ImportAsync to restore the original WorldAnchorTransferBatch.</para>
+      </summary>
+      <param name="transferBatch">The WorldAnchorTransferBatch to export into a byte buffer.</param>
+      <param name="onDataAvailable">The callback when some data is available.</param>
+      <param name="onCompleted">The callback after the last bit of data was provided via onDataAvailable with a completion reason (success or failure reason).</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.GetAllIds">
+      <summary>
+        <para>Gets all of the identifiers currently mapped in this WorldAnchorTransferBatch.</para>
+      </summary>
+      <returns>
+        <para>The identifiers of all of the WorldAnchors in this WorldAnchorTransferBatch.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.GetAllIds(System.String[])">
+      <summary>
+        <para>Gets all of the identifiers currently mapped in this WorldAnchorTransferBatch. If the target array is not large enough to contain all the identifiers, then only those identifiers that fit within the array will be stored and the return value will equal the size of the array. You can detect this condition by checking for a return value less than WorldAnchorTransferBatch.anchorCount.</para>
+      </summary>
+      <param name="ids">A target array to receive the identifiers of the currently mapped world anchors.</param>
+      <returns>
+        <para>The number of identifiers stored in the target array.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.ImportAsync(System.Byte[],UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch/DeserializationCompleteDelegate)">
+      <summary>
+        <para>Imports the provided bytes into a WorldAnchorTransferBatch.</para>
+      </summary>
+      <param name="serializedData">The complete data to import.</param>
+      <param name="onComplete">The handler when the data import is complete.</param>
+      <param name="offset">The offset in the array from which to start reading.</param>
+      <param name="length">The length of the data in the array.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.ImportAsync(System.Byte[],System.Int32,System.Int32,UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch/DeserializationCompleteDelegate)">
+      <summary>
+        <para>Imports the provided bytes into a WorldAnchorTransferBatch.</para>
+      </summary>
+      <param name="serializedData">The complete data to import.</param>
+      <param name="onComplete">The handler when the data import is complete.</param>
+      <param name="offset">The offset in the array from which to start reading.</param>
+      <param name="length">The length of the data in the array.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.LockObject(System.String,UnityEngine.GameObject)">
+      <summary>
+        <para>Locks the provided GameObject to the world by loading and applying the WorldAnchor from the TransferBatch for the provided id.</para>
+      </summary>
+      <param name="id">The identifier for the WorldAnchor to load and apply to the GameObject.</param>
+      <param name="go">The GameObject to apply the WorldAnchor to. If the GameObject already has a WorldAnchor, it will be updated.</param>
+      <returns>
+        <para>The loaded WorldAnchor or null if the id does not map to a WorldAnchor.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.SerializationCompleteDelegate">
+      <summary>
+        <para>The handler for when serialization is completed.</para>
+      </summary>
+      <param name="completionReason">Why the serialization completed (success or failure reason).</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.Sharing.WorldAnchorTransferBatch.SerializationDataAvailableDelegate">
+      <summary>
+        <para>The handler for when some data is available from serialization.</para>
+      </summary>
+      <param name="data">A set of bytes from the exported transfer batch.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.SurfaceChange">
+      <summary>
+        <para>Enumeration of the different types of SurfaceChange events.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceChange.Added">
+      <summary>
+        <para>Surface was Added.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceChange.Removed">
+      <summary>
+        <para>Surface was removed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceChange.Updated">
+      <summary>
+        <para>Surface was updated.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.SurfaceData">
+      <summary>
+        <para>SurfaceData is a container struct used for requesting baked spatial mapping data and receiving that data once baked.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceData.bakeCollider">
+      <summary>
+        <para>Set this field to true when requesting data to bake collider data.  This field will be set to true when receiving baked data if it was requested.  Setting this field to true requires that a valid outputCollider is also specified.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceData.id">
+      <summary>
+        <para>This is the ID for the surface to be baked or the surface that was baked and being returned to the user.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceData.outputAnchor">
+      <summary>
+        <para>This WorldAnchor is used to lock the surface into place relative to real world objects.  It will be filled in when calling RequestMeshAsync to generate data for a surface and returned with the SurfaceDataReadyDelegate.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceData.outputCollider">
+      <summary>
+        <para>This MeshCollider will receive the baked physics mesh prepared by the system when requesting baked surface data through RequestMeshAsync.  The MeshCollider is returned in the SurfaceDataReadyDelegate for those users requiring advanced workflows.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceData.outputMesh">
+      <summary>
+        <para>This MeshFilter will receive the baked mesh prepared by the system when requesting baked surface data.  The MeshFilter is returned in the SurfaceDataReadyDelegate for those users requiring advanced workflows.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceData.trianglesPerCubicMeter">
+      <summary>
+        <para>This value controls the basic resolution of baked mesh data and is returned with the SurfaceDataReadyDelegate.  The device will deliver up to this number of triangles per cubic meter.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceData.#ctor(UnityEngine.XR.WSA.SurfaceId,UnityEngine.MeshFilter,UnityEngine.XR.WSA.WorldAnchor,UnityEngine.MeshCollider,System.Single,System.Boolean)">
+      <summary>
+        <para>Constructor for conveniently filling out a SurfaceData struct.</para>
+      </summary>
+      <param name="_id">ID for the surface in question.</param>
+      <param name="_outputMesh">MeshFilter to write Mesh data to.</param>
+      <param name="_outputAnchor">WorldAnchor receiving the anchor point for the surface.</param>
+      <param name="_outputCollider">MeshCollider to write baked physics data to (optional).</param>
+      <param name="_trianglesPerCubicMeter">Requested resolution for the computed Mesh.  Actual resolution may be less than this value.</param>
+      <param name="_bakeCollider">Set to true if collider baking is/has been requested.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.SurfaceId">
+      <summary>
+        <para>SurfaceId is a structure wrapping the unique ID used to denote Surfaces.  SurfaceIds are provided through the onSurfaceChanged callback in Update and returned after a RequestMeshAsync call has completed.  SurfaceIds are guaranteed to be unique though Surfaces are sometimes replaced with a new Surface in the same location with a different ID.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.SurfaceId.handle">
+      <summary>
+        <para>The actual integer ID referring to a single surface.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.SurfaceObserver">
+      <summary>
+        <para>SurfaceObserver is the main API portal for spatial mapping functionality in Unity.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.#ctor">
+      <summary>
+        <para>Basic constructor for SurfaceObserver.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.Dispose">
+      <summary>
+        <para>Call Dispose when the SurfaceObserver is no longer needed.  This will ensure that the object is cleaned up appropriately but will not affect any Meshes, components, or objects returned by RequestMeshAsync.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.RequestMeshAsync(UnityEngine.XR.WSA.SurfaceData,UnityEngine.XR.WSA.SurfaceObserver/SurfaceDataReadyDelegate)">
+      <summary>
+        <para>Call RequestMeshAsync to start the process of baking mesh data for the specified surface.  This data may take several frames to create.  Baked data will be delivered through the specified SurfaceDataReadyDelegate.  This method will throw ArgumentNullExcpetion and ArgumentException if parameters specified in the dataRequest are invalid.</para>
+      </summary>
+      <param name="dataRequest">Bundle of request data used to bake the specified surface.</param>
+      <param name="onDataReady">Callback called when the baking of this surface is complete.</param>
+      <returns>
+        <para>Returns false if the request has failed, typically due to specifying a bad surface ID.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.SetVolumeAsAxisAlignedBox(UnityEngine.Vector3,UnityEngine.Vector3)">
+      <summary>
+        <para>This method sets the observation volume as an axis aligned box at the requested location.  Successive calls can be used to reshape the observation volume and/or to move it in the scene as needed.  Extents are the distance from the center of the box to its edges along each axis.</para>
+      </summary>
+      <param name="origin">The origin of the requested observation volume.</param>
+      <param name="extents">The extents in meters of the requested observation volume.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.SetVolumeAsFrustum(UnityEngine.Plane[])">
+      <summary>
+        <para>This method sets the observation volume as a frustum at the requested location.  Successive calls can be used to reshape the observation volume and/or to move it in the scene as needed.</para>
+      </summary>
+      <param name="planes">Planes defining the frustum as returned from GeometryUtility.CalculateFrustumPlanes.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.SetVolumeAsOrientedBox(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Quaternion)">
+      <summary>
+        <para>This method sets the observation volume as an oriented box at the requested location.  Successive calls can be used to reshape the observation volume and/or to move it in the scene as needed.  Extents are the distance from the center of the box to its edges along each axis.</para>
+      </summary>
+      <param name="origin">The origin of the requested observation volume.</param>
+      <param name="extents">The extents in meters of the requested observation volume.</param>
+      <param name="orientation">The orientation of the requested observation volume.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.SetVolumeAsSphere(UnityEngine.Vector3,System.Single)">
+      <summary>
+        <para>This method sets the observation volume as a sphere at the requested location.  Successive calls can be used to reshape the observation volume and/or to move it in the scene as needed.</para>
+      </summary>
+      <param name="origin">The origin of the requested observation volume.</param>
+      <param name="radiusMeters">The radius in meters of the requested observation volume.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.SurfaceObserver.SurfaceChangedDelegate">
+      <summary>
+        <para>The SurfaceChanged delegate handles SurfaceChanged events as generated by calling Update on a SurfaceObserver.  Applications can use the bounds, changeType, and updateTime to selectively generate mesh data for the set of known surfaces.</para>
+      </summary>
+      <param name="surfaceId">The ID of the surface that has changed.</param>
+      <param name="changeType">The type of change this event represents (Added, Updated, Removed).</param>
+      <param name="bounds">The bounds of the surface as reported by the device.</param>
+      <param name="updateTime">The update time of the surface as reported by the device.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.SurfaceObserver.SurfaceDataReadyDelegate">
+      <summary>
+        <para>The SurfaceDataReadyDelegate handles events generated when the engine has completed generating a mesh.  Mesh generation is requested through GetMeshAsync and may take many frames to complete.</para>
+      </summary>
+      <param name="bakedData">Struct containing output data.</param>
+      <param name="outputWritten">Set to true if output has been written and false otherwise.</param>
+      <param name="elapsedBakeTimeSeconds">Elapsed seconds between mesh bake request and propagation of this event.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.SurfaceObserver.Update(UnityEngine.XR.WSA.SurfaceObserver/SurfaceChangedDelegate)">
+      <summary>
+        <para>Update generates SurfaceChanged events which are propagated through the specified callback.  If no callback is specified, the system will throw an ArgumentNullException.  Generated callbacks are synchronous with this call.  Scenes containing multiple SurfaceObservers should consider using different callbacks so that events can be properly routed.</para>
+      </summary>
+      <param name="onSurfaceChanged">Callback called when SurfaceChanged events are detected.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.CameraParameters">
+      <summary>
+        <para>When calling PhotoCapture.StartPhotoModeAsync, you must pass in a CameraParameters object that contains the various settings that the web camera will use.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.CameraParameters.cameraResolutionHeight">
+      <summary>
+        <para>A valid height resolution for use with the web camera.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.CameraParameters.cameraResolutionWidth">
+      <summary>
+        <para>A valid width resolution for use with the web camera.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.CameraParameters.frameRate">
+      <summary>
+        <para>The framerate at which to capture video.  This is only for use with VideoCapture.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.CameraParameters.hologramOpacity">
+      <summary>
+        <para>The opacity of captured holograms.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.CameraParameters.pixelFormat">
+      <summary>
+        <para>The pixel format used to capture and record your image data.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.CapturePixelFormat">
+      <summary>
+        <para>The encoded image or video pixel format to use for PhotoCapture and VideoCapture.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.CapturePixelFormat.BGRA32">
+      <summary>
+        <para>8 bits per channel (blue, green, red, and alpha).</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.CapturePixelFormat.JPEG">
+      <summary>
+        <para>Encode photo in JPEG format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.CapturePixelFormat.NV12">
+      <summary>
+        <para>8-bit Y plane followed by an interleaved U/V plane with 2x2 subsampling.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.CapturePixelFormat.PNG">
+      <summary>
+        <para>Portable Network Graphics Format.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture">
+      <summary>
+        <para>Captures a photo from the web camera and stores it in memory or on disk.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.CaptureResultType">
+      <summary>
+        <para>Contains the result of the capture request.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.PhotoCapture.CaptureResultType.Success">
+      <summary>
+        <para>Specifies that the desired operation was successful.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.PhotoCapture.CaptureResultType.UnknownError">
+      <summary>
+        <para>Specifies that an unknown error occurred.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.CreateAsync(System.Boolean,UnityEngine.XR.WSA.WebCam.PhotoCapture/OnCaptureResourceCreatedCallback)">
+      <summary>
+        <para>Asynchronously creates an instance of a PhotoCapture object that can be used to capture photos.</para>
+      </summary>
+      <param name="showHolograms">Will allow you to capture holograms in your photo.</param>
+      <param name="onCreatedCallback">This callback will be invoked when the PhotoCapture instance is created and ready to be used.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.Dispose">
+      <summary>
+        <para>Dispose must be called to shutdown the PhotoCapture instance.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.GetUnsafePointerToVideoDeviceController">
+      <summary>
+        <para>Provides a COM pointer to the native IVideoDeviceController.</para>
+      </summary>
+      <returns>
+        <para>A native COM pointer to the IVideoDeviceController.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.OnCapturedToDiskCallback">
+      <summary>
+        <para>Called when a photo has been saved to the file system.</para>
+      </summary>
+      <param name="result">Indicates whether or not the photo was successfully saved to the file system.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.OnCapturedToMemoryCallback">
+      <summary>
+        <para>Called when a photo has been captured to memory.</para>
+      </summary>
+      <param name="result">Indicates whether or not the photo was successfully captured to memory.</param>
+      <param name="photoCaptureFrame">Contains the target texture.  If available, the spatial information will be accessible through this structure as well.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.OnCaptureResourceCreatedCallback">
+      <summary>
+        <para>Called when a PhotoCapture resource has been created.</para>
+      </summary>
+      <param name="captureObject">The PhotoCapture instance.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.OnPhotoModeStartedCallback">
+      <summary>
+        <para>Called when photo mode has been started.</para>
+      </summary>
+      <param name="result">Indicates whether or not photo mode was successfully activated.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.OnPhotoModeStoppedCallback">
+      <summary>
+        <para>Called when photo mode has been stopped.</para>
+      </summary>
+      <param name="result">Indicates whether or not photo mode was successfully deactivated.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCapture.PhotoCaptureResult">
+      <summary>
+        <para>A data container that contains the result information of a photo capture operation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.PhotoCapture.PhotoCaptureResult.hResult">
+      <summary>
+        <para>The specific HResult value.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.PhotoCapture.PhotoCaptureResult.resultType">
+      <summary>
+        <para>A generic result that indicates whether or not the PhotoCapture operation succeeded.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.PhotoCapture.PhotoCaptureResult.success">
+      <summary>
+        <para>Indicates whether or not the operation was successful.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.StartPhotoModeAsync">
+      <summary>
+        <para>Asynchronously starts photo mode.</para>
+      </summary>
+      <param name="setupParams">The various settings that should be applied to the web camera.</param>
+      <param name="onPhotoModeStartedCallback">This callback will be invoked once photo mode has been activated.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.StopPhotoModeAsync(UnityEngine.XR.WSA.WebCam.PhotoCapture/OnPhotoModeStoppedCallback)">
+      <summary>
+        <para>Asynchronously stops photo mode.</para>
+      </summary>
+      <param name="onPhotoModeStoppedCallback">This callback will be invoked once photo mode has been deactivated.</param>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.PhotoCapture.SupportedResolutions">
+      <summary>
+        <para>A list of all the supported device resolutions for taking pictures.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.TakePhotoAsync(System.String,UnityEngine.XR.WSA.WebCam.PhotoCaptureFileOutputFormat,UnityEngine.XR.WSA.WebCam.PhotoCapture/OnCapturedToDiskCallback)">
+      <summary>
+        <para>Asynchronously captures a photo from the web camera and saves it to disk.</para>
+      </summary>
+      <param name="filename">The location where the photo should be saved.  The filename must end with a png or jpg file extension.</param>
+      <param name="fileOutputFormat">The encoding format that should be used.</param>
+      <param name="onCapturedPhotoToDiskCallback">Invoked once the photo has been saved to disk.</param>
+      <param name="onCapturedPhotoToMemoryCallback">Invoked once the photo has been copied to the target texture.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCapture.TakePhotoAsync(UnityEngine.XR.WSA.WebCam.PhotoCapture/OnCapturedToMemoryCallback)">
+      <summary>
+        <para>Asynchronously captures a photo from the web camera and saves it to disk.</para>
+      </summary>
+      <param name="filename">The location where the photo should be saved.  The filename must end with a png or jpg file extension.</param>
+      <param name="fileOutputFormat">The encoding format that should be used.</param>
+      <param name="onCapturedPhotoToDiskCallback">Invoked once the photo has been saved to disk.</param>
+      <param name="onCapturedPhotoToMemoryCallback">Invoked once the photo has been copied to the target texture.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCaptureFileOutputFormat">
+      <summary>
+        <para>Image Encoding Format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.PhotoCaptureFileOutputFormat.JPG">
+      <summary>
+        <para>JPEG Encoding.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.PhotoCaptureFileOutputFormat.PNG">
+      <summary>
+        <para>PNG Encoding.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame">
+      <summary>
+        <para>Contains information captured from the web camera.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.dataLength">
+      <summary>
+        <para>The length of the raw IMFMediaBuffer which contains the image captured.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.hasLocationData">
+      <summary>
+        <para>Specifies whether or not spatial data was captured.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.pixelFormat">
+      <summary>
+        <para>The raw image data pixel format.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.CopyRawImageDataIntoBuffer(System.Collections.Generic.List`1&lt;System.Byte&gt;)">
+      <summary>
+        <para>Will copy the raw IMFMediaBuffer image data into a byte list.</para>
+      </summary>
+      <param name="byteBuffer">The destination byte list to which the raw captured image data will be copied to.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.Dispose">
+      <summary>
+        <para>Disposes the PhotoCaptureFrame and any resources it uses.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.GetUnsafePointerToBuffer">
+      <summary>
+        <para>Provides a COM pointer to the native IMFMediaBuffer that contains the image data.</para>
+      </summary>
+      <returns>
+        <para>A native COM pointer to the IMFMediaBuffer which contains the image data.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.TryGetCameraToWorldMatrix(UnityEngine.Matrix4x4&amp;)">
+      <summary>
+        <para>This method will return the camera to world matrix at the time the photo was captured if location data if available.</para>
+      </summary>
+      <param name="cameraToWorldMatrix">A matrix to be populated by the Camera to world Matrix.</param>
+      <returns>
+        <para>True if a valid matrix is returned or false otherwise.  This will be false if the frame has no location data.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.TryGetProjectionMatrix(System.Single,System.Single,UnityEngine.Matrix4x4&amp;)">
+      <summary>
+        <para>This method will return the projection matrix at the time the photo was captured if location data if available.</para>
+      </summary>
+      <param name="nearClipPlane">The near clip plane distance.</param>
+      <param name="farClipPlane">The far clip plane distance.</param>
+      <param name="projectionMatrix">A matrix to be populated by the Projection Matrix.</param>
+      <returns>
+        <para>True if a valid matrix is returned or false otherwise.  This will be false if the frame has no location data.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.TryGetProjectionMatrix(UnityEngine.Matrix4x4&amp;)">
+      <summary>
+        <para>This method will return the projection matrix at the time the photo was captured if location data if available.</para>
+      </summary>
+      <param name="nearClipPlane">The near clip plane distance.</param>
+      <param name="farClipPlane">The far clip plane distance.</param>
+      <param name="projectionMatrix">A matrix to be populated by the Projection Matrix.</param>
+      <returns>
+        <para>True if a valid matrix is returned or false otherwise.  This will be false if the frame has no location data.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.PhotoCaptureFrame.UploadImageDataToTexture(UnityEngine.Texture2D)">
+      <summary>
+        <para>This method will copy the captured image data into a user supplied texture for use in Unity.</para>
+      </summary>
+      <param name="targetTexture">The target texture that the captured image data will be copied to.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture">
+      <summary>
+        <para>Records a video from the web camera directly to disk.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.AudioState">
+      <summary>
+        <para>Specifies what audio sources should be recorded while recording the video.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.AudioState.ApplicationAndMicAudio">
+      <summary>
+        <para>Include both the application audio as well as the mic audio in the video recording.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.AudioState.ApplicationAudio">
+      <summary>
+        <para>Only include the application audio in the video recording.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.AudioState.MicAudio">
+      <summary>
+        <para>Only include the mic audio in the video recording.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.AudioState.None">
+      <summary>
+        <para>Do not include any audio in the video recording.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.CaptureResultType">
+      <summary>
+        <para>Contains the result of the capture request.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.CaptureResultType.Success">
+      <summary>
+        <para>Specifies that the desired operation was successful.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.CaptureResultType.UnknownError">
+      <summary>
+        <para>Specifies that an unknown error occurred.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.CreateAsync(System.Boolean,UnityEngine.XR.WSA.WebCam.VideoCapture/OnVideoCaptureResourceCreatedCallback)">
+      <summary>
+        <para>Asynchronously creates an instance of a VideoCapture object that can be used to record videos from the web camera to disk.</para>
+      </summary>
+      <param name="showHolograms">Will allow you to capture holograms in your video.</param>
+      <param name="onCreatedCallback">This callback will be invoked when the VideoCapture instance is created and ready to be used.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.Dispose">
+      <summary>
+        <para>Dispose must be called to shutdown the PhotoCapture instance.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.GetSupportedFrameRatesForResolution(UnityEngine.Resolution)">
+      <summary>
+        <para>Returns the supported frame rates at which a video can be recorded given a resolution.</para>
+      </summary>
+      <param name="resolution">A recording resolution.</param>
+      <returns>
+        <para>The frame rates at which the video can be recorded.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.GetUnsafePointerToVideoDeviceController">
+      <summary>
+        <para>Provides a COM pointer to the native IVideoDeviceController.</para>
+      </summary>
+      <returns>
+        <para>A native COM pointer to the IVideoDeviceController.</para>
+      </returns>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.VideoCapture.IsRecording">
+      <summary>
+        <para>Indicates whether or not the VideoCapture instance is currently recording video.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.OnStartedRecordingVideoCallback">
+      <summary>
+        <para>Called when the web camera begins recording the video.</para>
+      </summary>
+      <param name="result">Indicates whether or not video recording started successfully.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.OnStoppedRecordingVideoCallback">
+      <summary>
+        <para>Called when the video recording has been saved to the file system.</para>
+      </summary>
+      <param name="result">Indicates whether or not video recording was saved successfully to the file system.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.OnVideoCaptureResourceCreatedCallback">
+      <summary>
+        <para>Called when a VideoCapture resource has been created.</para>
+      </summary>
+      <param name="captureObject">The VideoCapture instance.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.OnVideoModeStartedCallback">
+      <summary>
+        <para>Called when video mode has been started.</para>
+      </summary>
+      <param name="result">Indicates whether or not video mode was successfully activated.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.OnVideoModeStoppedCallback">
+      <summary>
+        <para>Called when video mode has been stopped.</para>
+      </summary>
+      <param name="result">Indicates whether or not video mode was successfully deactivated.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.StartRecordingAsync(System.String,UnityEngine.XR.WSA.WebCam.VideoCapture/OnStartedRecordingVideoCallback)">
+      <summary>
+        <para>Asynchronously records a video from the web camera to the file system.</para>
+      </summary>
+      <param name="filename">The name of the video to be recorded to.</param>
+      <param name="onStartedRecordingVideoCallback">Invoked as soon as the video recording begins.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.StartVideoModeAsync(UnityEngine.XR.WSA.WebCam.CameraParameters,UnityEngine.XR.WSA.WebCam.VideoCapture/AudioState,UnityEngine.XR.WSA.WebCam.VideoCapture/OnVideoModeStartedCallback)">
+      <summary>
+        <para>Asynchronously starts video mode.</para>
+      </summary>
+      <param name="setupParams">The various settings that should be applied to the web camera.</param>
+      <param name="audioState">Indicates how audio should be recorded.</param>
+      <param name="onVideoModeStartedCallback">This callback will be invoked once video mode has been activated.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.StopRecordingAsync(UnityEngine.XR.WSA.WebCam.VideoCapture/OnStoppedRecordingVideoCallback)">
+      <summary>
+        <para>Asynchronously stops recording a video from the web camera to the file system.</para>
+      </summary>
+      <param name="onStoppedRecordingVideoCallback">Invoked as soon as video recording has finished.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WebCam.VideoCapture.StopVideoModeAsync(UnityEngine.XR.WSA.WebCam.VideoCapture/OnVideoModeStoppedCallback)">
+      <summary>
+        <para>Asynchronously stops video mode.</para>
+      </summary>
+      <param name="onVideoModeStoppedCallback">This callback will be invoked once video mode has been deactivated.</param>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.VideoCapture.SupportedResolutions">
+      <summary>
+        <para>A list of all the supported device resolutions for recording videos.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.VideoCapture.VideoCaptureResult">
+      <summary>
+        <para>A data container that contains the result information of a video recording operation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.VideoCaptureResult.hResult">
+      <summary>
+        <para>The specific HResult value.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.VideoCapture.VideoCaptureResult.resultType">
+      <summary>
+        <para>A generic result that indicates whether or not the VideoCapture operation succeeded.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.VideoCapture.VideoCaptureResult.success">
+      <summary>
+        <para>Indicates whether or not the operation was successful.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.WebCam">
+      <summary>
+        <para>Contains general information about the current state of the web camera.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WebCam.WebCam.Mode">
+      <summary>
+        <para>Specifies what mode the Web Camera is currently in.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WebCam.WebCamMode">
+      <summary>
+        <para>Describes the active mode of the Web Camera resource.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.WebCamMode.None">
+      <summary>
+        <para>Resource is not in use.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.WebCamMode.PhotoMode">
+      <summary>
+        <para>Resource is in Photo Mode.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.WebCam.WebCamMode.VideoMode">
+      <summary>
+        <para>Resource is in Video Mode.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WorldAnchor">
+      <summary>
+        <para>The WorldAnchor component allows a GameObject's position to be locked in physical space.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WorldAnchor.isLocated">
+      <summary>
+        <para>Returns true if this WorldAnchor is located (read only).  A return of false typically indicates a loss of tracking.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WorldAnchor.GetNativeSpatialAnchorPtr">
+      <summary>
+        <para>Retrieve a native pointer to the &lt;a href="https:msdn.microsoft.comen-uslibrarywindowsappswindows.perception.spatial.spatialanchor.aspx"&gt;Windows.Perception.Spatial.SpatialAnchor&lt;a&gt; COM object.
+This function calls &lt;a href=" https:msdn.microsoft.comen-uslibrarywindowsdesktopms691379.aspx"&gt;IUnknown::AddRef&lt;a&gt; on the pointer before returning it. The pointer must be released by calling &lt;a href=" https:msdn.microsoft.comen-uslibrarywindowsdesktopms682317.aspx"&gt;IUnknown::Release&lt;a&gt;.</para>
+      </summary>
+      <returns>
+        <para>The native pointer to the &lt;a href=" https:msdn.microsoft.comen-uslibrarywindowsappswindows.perception.spatial.spatialanchor.aspx"&gt;Windows.Perception.Spatial.SpatialAnchor&lt;a&gt; COM object.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.WorldAnchor.OnTrackingChanged(UnityEngine.XR.WSA.WorldAnchor/OnTrackingChangedDelegate)">
+      <summary>
+        <para>OnTrackingChanged notifies listeners when this object's tracking state changes.</para>
+      </summary>
+      <param name="value">Event that fires when this object's tracking state changes.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WorldAnchor.OnTrackingChangedDelegate">
+      <summary>
+        <para>Event that is fired when this object's tracking state changes.</para>
+      </summary>
+      <param name="located">Set to true if the object is locatable.</param>
+      <param name="self">The WorldAnchor reporting the tracking state change.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WorldAnchor.SetNativeSpatialAnchorPtr(System.IntPtr)">
+      <summary>
+        <para>Assigns the &lt;a href="https:msdn.microsoft.comen-uslibrarywindowsappswindows.perception.spatial.spatialanchor.aspx"&gt;Windows.Perception.Spatial.SpatialAnchor&lt;a&gt; COM pointer maintained by this WorldAnchor.</para>
+      </summary>
+      <param name="spatialAnchorPtr">A live &lt;a href="https:msdn.microsoft.comen-uslibrarywindowsappswindows.perception.spatial.spatialanchor.aspx"&gt;Windows.Perception.Spatial.SpatialAnchor&lt;a&gt; COM pointer.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WorldManager">
+      <summary>
+        <para>This class represents the state of the real world tracking system.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.WorldManager.state">
+      <summary>
+        <para>The current state of the world tracking systems.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.WorldManager.GetNativeISpatialCoordinateSystemPtr">
+      <summary>
+        <para>Return the native pointer to Windows::Perception::Spatial::ISpatialCoordinateSystem which was retrieved from an Windows::Perception::Spatial::ISpatialStationaryFrameOfReference object underlying the Unity World Origin.</para>
+      </summary>
+      <returns>
+        <para>Pointer to Windows::Perception::Spatial::ISpatialCoordinateSystem.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.XR.WSA.WorldManager.OnPositionalLocatorStateChanged(UnityEngine.XR.WSA.WorldManager/OnPositionalLocatorStateChangedDelegate)">
+      <summary>
+        <para>Event fired when the world tracking systems state has changed.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.WorldManager.OnPositionalLocatorStateChangedDelegate">
+      <summary>
+        <para>Callback on when the world tracking systems state has changed.</para>
+      </summary>
+      <param name="oldState">The previous state of the world tracking systems.</param>
+      <param name="newState">The new state of the world tracking systems.</param>
+    </member>
+    <member name="T:UnityEngine.XR.XRDevice">
+      <summary>
+        <para>Contains all functionality related to a XR device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRDevice.family">
+      <summary>
+        <para>The name of the family of the loaded XR device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRDevice.fovZoomFactor">
+      <summary>
+        <para>Zooms the XR projection.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRDevice.isPresent">
+      <summary>
+        <para>Successfully detected a XR device in working order.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRDevice.model">
+      <summary>
+        <para>Specific model of loaded XR device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRDevice.refreshRate">
+      <summary>
+        <para>Refresh rate of the display in Hertz.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRDevice.userPresence">
+      <summary>
+        <para>Indicates whether the user is present and interacting with the device.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.XRDevice.DisableAutoXRCameraTracking">
+      <summary>
+        <para>Sets whether the camera passed in the first parameter is controlled implicitly by the XR Device</para>
+      </summary>
+      <param name="Camera">The camera that we wish to change behavior on</param>
+      <param name="Disabled">True if the camera's transform is set externally. False if the camera is to be driven implicitly by XRDevice, </param>
+      <returns>
+        <para>Nothing.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRDevice.GetNativePtr">
+      <summary>
+        <para>This method returns an IntPtr representing the native pointer to the XR device if one is available, otherwise the value will be IntPtr.Zero.</para>
+      </summary>
+      <returns>
+        <para>The native pointer to the XR device.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRDevice.GetTrackingSpaceType">
+      <summary>
+        <para>Returns the device's current TrackingSpaceType. This value determines how the camera is positioned relative to its starting position. For more, see the section "Understanding the camera" in.</para>
+      </summary>
+      <returns>
+        <para>The device's current TrackingSpaceType.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType)">
+      <summary>
+        <para>Sets the device's current TrackingSpaceType. Returns true on success. Returns false if the given TrackingSpaceType is not supported or the device fails to switch.</para>
+      </summary>
+      <param name="TrackingSpaceType">The TrackingSpaceType the device should switch to.</param>
+      <param name="trackingSpaceType"></param>
+      <returns>
+        <para>True on success. False if the given TrackingSpaceType is not supported or the device fails to switch.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.XRNode">
+      <summary>
+        <para>Enumeration of tracked XR nodes which can be updated by XR input.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.CenterEye">
+      <summary>
+        <para>Node representing a point between the left and right eyes.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.GameController">
+      <summary>
+        <para>Represents a tracked game Controller not associated with a specific hand.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.HardwareTracker">
+      <summary>
+        <para>Represents a physical device that provides tracking data for objects to which it is attached.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.Head">
+      <summary>
+        <para>Node representing the user's head.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.LeftEye">
+      <summary>
+        <para>Node representing the left eye.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.LeftHand">
+      <summary>
+        <para>Node representing the left hand.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.RightEye">
+      <summary>
+        <para>Node representing the right eye.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.RightHand">
+      <summary>
+        <para>Node representing the right hand.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.TrackingReference">
+      <summary>
+        <para>Represents a stationary physical device that can be used as a point of reference in the tracked area.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.acceleration">
+      <summary>
+        <para>Sets the vector representing the current acceleration of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.angularAcceleration">
+      <summary>
+        <para>Sets the vector representing the current angular acceleration of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.angularVelocity">
+      <summary>
+        <para>Sets the vector representing the current angular velocity of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.nodeType">
+      <summary>
+        <para>The type of the tracked node as specified in XR.XRNode.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.position">
+      <summary>
+        <para>Sets the vector representing the current position of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.rotation">
+      <summary>
+        <para>Sets the quaternion representing the current rotation of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.tracked">
+      <summary>
+        <para>
+          Set to true if the node is presently being tracked by the underlying XR system,
+and false if the node is not presently being tracked by the underlying XR system.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.uniqueID">
+      <summary>
+        <para>The unique identifier of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.velocity">
+      <summary>
+        <para>Sets the vector representing the current velocity of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetAcceleration">
+      <summary>
+        <para>Attempt to retrieve a vector representing the current acceleration of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the acceleration was set in the output parameter. False if the acceleration is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetAngularAcceleration(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Attempt to retrieve a Vector3 representing the current angular acceleration of the tracked node.</para>
+      </summary>
+      <param name="angularAcceleration"></param>
+      <returns>
+        <para>True if the angular acceleration was set in the output parameter. False if the angular acceleration is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetAngularVelocity(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Attempt to retrieve a Vector3 representing the current angular velocity of the tracked node.</para>
+      </summary>
+      <param name="angularVelocity"></param>
+      <returns>
+        <para>True if the angular velocity was set in the output parameter. False if the angular velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetPosition">
+      <summary>
+        <para>Attempt to retrieve a vector representing the current position of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the position was set in the output parameter. False if the position is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetRotation">
+      <summary>
+        <para>Attempt to retrieve a quaternion representing the current rotation of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the rotation was set in the output parameter. False if the rotation is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetVelocity">
+      <summary>
+        <para>Attempt to retrieve a vector representing the current velocity of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the velocity was set in the output parameter. False if the velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.XRSettings">
+      <summary>
+        <para>Global XR related settings.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.enabled">
+      <summary>
+        <para>Globally enables or disables XR for the application.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.eyeTextureDesc">
+      <summary>
+        <para>Fetch the eye texture RenderTextureDescriptor from the active stereo device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.eyeTextureHeight">
+      <summary>
+        <para>The current height of an eye texture for the loaded device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.eyeTextureResolutionScale">
+      <summary>
+        <para>Controls the actual size of eye textures as a multiplier of the device's default resolution.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.eyeTextureWidth">
+      <summary>
+        <para>The current width of an eye texture for the loaded device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.isDeviceActive">
+      <summary>
+        <para>Read-only value that can be used to determine if the XR device is active.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.loadedDeviceName">
+      <summary>
+        <para>Type of XR device that is currently loaded.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.occlusionMaskScale">
+      <summary>
+        <para>A scale applied to the standard occulsion mask for each platform.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.renderScale">
+      <summary>
+        <para>This field has been deprecated. Use XRSettings.eyeTextureResolutionScale instead.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.renderViewportScale">
+      <summary>
+        <para>Controls how much of the allocated eye texture should be used for rendering.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.showDeviceView">
+      <summary>
+        <para>Mirror what is shown on the device to the main display, if possible.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.supportedDevices">
+      <summary>
+        <para>Returns a list of supported XR devices that were included at build time.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.XRSettings.LoadDeviceByName(System.String)">
+      <summary>
+        <para>Loads the requested device at the beginning of the next frame.</para>
+      </summary>
+      <param name="deviceName">Name of the device from XRSettings.supportedDevices.</param>
+      <param name="prioritizedDeviceNameList">Prioritized list of device names from XRSettings.supportedDevices.</param>
+    </member>
+    <member name="M:UnityEngine.XR.XRSettings.LoadDeviceByName(System.String[])">
+      <summary>
+        <para>Loads the requested device at the beginning of the next frame.</para>
+      </summary>
+      <param name="deviceName">Name of the device from XRSettings.supportedDevices.</param>
+      <param name="prioritizedDeviceNameList">Prioritized list of device names from XRSettings.supportedDevices.</param>
+    </member>
+    <member name="T:UnityEngine.XR.XRStats">
+      <summary>
+        <para>Timing and other statistics from the XR subsystem.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRStats.gpuTimeLastFrame">
+      <summary>
+        <para>Total GPU time utilized last frame as measured by the XR subsystem.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.XRStats.TryGetDroppedFrameCount(System.Int32&amp;)">
+      <summary>
+        <para>Retrieves the number of dropped frames reported by the XR SDK.</para>
+      </summary>
+      <param name="droppedFrameCount">Outputs the number of frames dropped since the last update.</param>
+      <returns>
+        <para>True if the dropped frame count is available, false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRStats.TryGetFramePresentCount(System.Int32&amp;)">
+      <summary>
+        <para>Retrieves the number of times the current frame has been drawn to the device as reported by the XR SDK.</para>
+      </summary>
+      <param name="framePresentCount">Outputs the number of times the current frame has been presented.</param>
+      <returns>
+        <para>True if the frame present count is available, false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRStats.TryGetGPUTimeLastFrame(System.Single&amp;)">
+      <summary>
+        <para>Retrieves the time spent by the GPU last frame, in seconds, as reported by the XR SDK.</para>
+      </summary>
+      <param name="gpuTimeLastFrame">Outputs the time spent by the GPU last frame.</param>
+      <returns>
+        <para>True if the GPU time spent last frame is available, false otherwise.</para>
+      </returns>
+    </member>
+  </members>
+</doc>

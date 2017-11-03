@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEditor.Timeline</name>
+    </assembly>
+    <member name="T:UnityEditor.Timeline.TimelineEditor">
+      <summary>
+        <para>Information currently being edited in the Timeline Editor Window.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Timeline.TimelineEditor.playableDirector">
+      <summary>
+        <para>The PlayableDirector currently being shown in the Timeline Editor Window.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Timeline.TimelineEditor.timelineAsset">
+      <summary>
+        <para>The TimelineAsset currently being shown in the Timeline Editor Window.</para>
+      </summary>
+    </member>
+  </members>
+</doc>
