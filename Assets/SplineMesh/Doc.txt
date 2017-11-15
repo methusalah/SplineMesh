@@ -1,0 +1,42 @@
+
+
+* SplineMesh documentation *
+
+// What is it?
+    A spline is a set of nodes connected by bezier curves. Each node is defined by a position and a direction.
+	The MeshBender component create a mesh from a source mesh by moving its vertices accordingly to a bezier curve.
+
+// How to create a spline object?
+    Menu -> GameObject -> 3D Object -> Spline
+     - or -
+	on any object, add the component Spline
+
+// How to draw a spline?
+    select an object with Spline component (and make sure the component is opened)
+	a basic 2-nodes spline is created by default
+	select a node and move it
+	when a node is selected, the directions appear. Select one of them and move it
+	hold alt key and drag a node to duplicate it
+	use delete button in the inspector to delete selected node (you can't have less than two nodes)
+
+// How to bend a mesh?
+    you will probably need a script to create the GameObjects holding curved meshes
+	every usecase is unique and you will have to create your own script to suit you specific needs
+	Don't worry, it's easy : explore exemple scripts in the showcase scene to see what you can do and how
+
+// What else can I do?
+    anything that is curved, from road to tentacle to footprint track to bat trajectory to...
+
+
+Troubleshooting :
+ - My bended mesh is not smooth
+Your mesh probably lack vertices along the axis to bend : SplineMesh doesn't add vertices to the mesh, it only move existing ones.
+Try adding vertices on the mesh along the axis to bend
+Try to have more smaller curves on your spline
+
+ - My mesh seems broken
+The MeshBender only bend along X axis. Your mesh is probably not oriented this way. You can specify a rotation (see ExemplePipe)
+
+ - Mesh or extrusion generation is slow in the editor
+More vertices means less performances. Try to reduce the vertex count.
+Very long splines can lead to performance issues too. Try many splines with less nodes.
