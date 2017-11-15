@@ -1,24 +1,27 @@
-# SplineMesh
+![please report broken links](https://postimg.org/image/4pcx0gf1z/)
 
-Inspired by Unreal Engine 4 spline component, SplineMesh is a Unity plugin allowing creation of curved content :
- - a bezier curve editor
- - complete math toolset for coordinates and tangents
- - a mesh deformer
- - a shape extruder
- - exemple contents
+**<a href="https://twitter.com/dumas181" target="_blank">Follow me on twitter !</a>**
+
+# What is SplineMesh?
+
+Inspired by Unreal Engine 4 spline component, SplineMesh is a Unity 3D plugin that allow you to create curved content:
+ - Generalistic spline component
+ - Mesh bending along spline
+ - 2D shape extrusion along spline
+ - Easy-to-use editor
+ - Complete mathematical Bézier curves
+ - Strong performances
  
-Spline component is independant and can be used for anything like camera motion.
+## How to use it?
+SplineMesh is currently in validation process by Unity team and will be hopefully released soon on the asset store. Links will be available here soon.
 
-## How to use it
-Add the Spline component to an empty object and draw you spline by dragging nodes and directions. Keyboard shortcuts and more are visible in the editor.
+The plugin includes doc, comments and a complete showcase with exemples in action for your convienence.
 
-Add an exemple like Tentacle or Pipe to get some deformed mesh, inspire from their source code to build your own.
+## How to contribute?
+SplineMesh is free and open-source. A strictly identical paid version will be available for 5$ to support the author if you wish.
 
-Shape extruder exemple comes with it's own editor for 2d shape drawing.
+You can also contribute to the code itself by sending code or your own exemple components, the author will be glad to include your work.
 
-## How to contribute
-SplineMesh is release freely and open-source. The author consider that such a feature should be available to all.
+![please report broken links](https://postimg.org/image/c08fctnt3/)
 
-You can contribute by buying the paid version of SplineMesh, which contains nothing more
-
-You can also contribute to the code itself by sending code or your own exemple components.
+![please report broken links](https://postimg.org/image/gyvxrf4hj/)
