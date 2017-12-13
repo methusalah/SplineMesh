@@ -13,14 +13,16 @@ Inspired by Unreal Engine 4 spline component, SplineMesh is a Unity 3D plugin th
  - Strong performances
  
 ## How to use it?
-SplineMesh is currently in validation process by Unity team and will be hopefully released soon on the asset store. Links will be available here soon.
+Get the asset on the Asset Store [here](https://assetstore.unity.com/packages/tools/modeling/splinemesh-104989). It includes doc, comments and a complete showcase with exemples in action for your convienence.
 
-The plugin includes doc, comments and a complete showcase with exemples in action for your convienence.
+Don't hesitate to contact the author via the store or github issue page.
 
 ## How to contribute?
-SplineMesh is free and open-source. A strictly identical paid version will be available for 5$ to support the author if you wish.
+SplineMesh is free and open-source. You can support the author by buying [the 5$ paid version](https://assetstore.unity.com/packages/tools/modeling/splinemesh-paid-version-104998), which contains no additional feature.
 
-You can also contribute to the code itself by sending code or your own exemple components, the author will be glad to include your work.
+Asset reviews, github stars and twitter followers are very appricated.
+
+You can also contribute to the code itself by sending code, pull request or your own exemple components, the author will be glad to include your work on the store.
 
 ![please report broken links](https://s7.postimg.org/ryh52yi17/Showcase.png)
 
