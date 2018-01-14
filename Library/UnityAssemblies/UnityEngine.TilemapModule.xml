@@ -475,7 +475,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="P:UnityEngine.Tilemaps.TileData.transform">
       <summary>
-        <para>.</para>
+        <para>Matrix4x4|Transform matrix of the Tile.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Tilemaps.TileFlags">
@@ -540,12 +540,12 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="P:UnityEngine.Tilemaps.Tilemap.layoutGrid">
       <summary>
-        <para>Gets the associated with this tile map.</para>
+        <para>Gets the Grid associated with this tile map.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Tilemaps.Tilemap.layoutGrid">
       <summary>
-        <para>Gets the associated with this tile map.</para>
+        <para>Gets the Grid associated with this tile map.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Tilemaps.Tilemap.localBounds">
@@ -585,7 +585,7 @@ Only one class at any one time should set defaultBrush to true.</para>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <param name="flags">TileFlags to add (with bitwise or) onto the flags provided by Tile.TileBase.</param>
     </member>
-    <member name="M:UnityEngine.Tilemaps.Tilemap.BoxFill">
+    <member name="M:UnityEngine.Tilemaps.Tilemap.BoxFill(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase,System.Int32,System.Int32,System.Int32,System.Int32)">
       <summary>
         <para>Does a box fill with the given. Starts from given coordinates and fills the limits from start to end (inclusive).</para>
       </summary>
@@ -620,14 +620,25 @@ Only one class at any one time should set defaultBrush to true.</para>
         <para>Whether the Tilemap contains the tile.</para>
       </returns>
     </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.EditorPreviewBoxFill(UnityEngine.Vector3Int,UnityEngine.Object,System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+        <para>Does an editor preview of a box fill with the given. Starts from given coordinates and fills the limits from start to end (inclusive).</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemap.</param>
+      <param name="tile"> to place.</param>
+      <param name="startX">The start X coordinate limit to fill to.</param>
+      <param name="startY">The start Y coordinate limit to fill to.</param>
+      <param name="endX">The ending X coordinate limit to fill to.</param>
+      <param name="endY">The ending Y coordinate limit to fill to.</param>
+    </member>
     <member name="M:UnityEngine.Tilemaps.Tilemap.EditorPreviewFloodFill(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase)">
       <summary>
         <para>Does an editor preview of a flood fill with the given starting from the given coordinates.</para>
       </summary>
       <param name="position">Start position of the flood fill on the Tilemap.</param>
-      <param name="tile"> to place.</param>
+      <param name="tile">TileBase to place.</param>
     </member>
-    <member name="M:UnityEngine.Tilemaps.Tilemap.FloodFill">
+    <member name="M:UnityEngine.Tilemaps.Tilemap.FloodFill(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase)">
       <summary>
         <para>Does a flood fill with the given starting from the given coordinates.</para>
       </summary>
@@ -672,7 +683,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewColor(UnityEngine.Vector3Int)">
       <summary>
-        <para>Gets the color of an editor preview.</para>
+        <para>Gets the Color of an editor preview.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
@@ -748,7 +759,7 @@ Only one class at any one time should set defaultBrush to true.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
-        <para> placed at the cell.</para>
+        <para>Tilemaps.TileBase placed at the cell.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.Tilemaps.Tilemap.GetTile(UnityEngine.Vector3Int)">
@@ -757,7 +768,7 @@ Only one class at any one time should set defaultBrush to true.</para>
       </summary>
       <param name="position">Position of the Tile on the Tilemap.</param>
       <returns>
-        <para> placed at the cell.</para>
+        <para>Tilemaps.TileBase|Tile of type T placed at the cell.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileFlags(UnityEngine.Vector3Int)">
@@ -957,7 +968,7 @@ Only one class at any one time should set defaultBrush to true.</para>
     </member>
     <member name="M:UnityEngine.Tilemaps.Tilemap.SwapTile(UnityEngine.Tilemaps.TileBase,UnityEngine.Tilemaps.TileBase)">
       <summary>
-        <para>Swaps all existing tiles of and refreshes all the swapped tiles.</para>
+        <para>Swaps all existing tiles of changeTile to newTile and refreshes all the swapped tiles.</para>
       </summary>
       <param name="changeTile">Tile to swap.</param>
       <param name="newTile">Tile to swap to.</param>

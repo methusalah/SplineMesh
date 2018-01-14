@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Showcase.unity
+- path: Assets/SplineMesh/Showcase.unity
   isLoaded: 1
   isActive: 1

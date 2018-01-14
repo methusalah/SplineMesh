@@ -9,6 +9,17 @@
         <para>An implementation of IPlayable that controls an AudioClip.</para>
       </summary>
     </member>
+    <member name="M:UnityEngine.Audio.AudioClipPlayable.Create(UnityEngine.Playables.PlayableGraph,UnityEngine.AudioClip,System.Boolean)">
+      <summary>
+        <para>Creates an AudioClipPlayable in the PlayableGraph.</para>
+      </summary>
+      <param name="graph">The PlayableGraph that will contain the new AnimationLayerMixerPlayable.</param>
+      <param name="clip">The AudioClip that will be added in the PlayableGraph.</param>
+      <param name="looping">True if the clip should loop, false otherwise.</param>
+      <returns>
+        <para>A AudioClipPlayable linked to the PlayableGraph.</para>
+      </returns>
+    </member>
     <member name="T:UnityEngine.Audio.AudioMixer">
       <summary>
         <para>AudioMixer asset.</para>
@@ -84,11 +95,6 @@
         <para>Object representing a group in the mixer.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.Audio.AudioMixerPlayable">
-      <summary>
-        <para>An implementation of IPlayable that controls an audio mixer.</para>
-      </summary>
-    </member>
     <member name="T:UnityEngine.Audio.AudioMixerSnapshot">
       <summary>
         <para>Object representing a snapshot in the mixer.</para>
@@ -119,6 +125,17 @@
       <summary>
         <para>A IPlayableOutput implementation that will be used to play audio.</para>
       </summary>
+    </member>
+    <member name="M:UnityEngine.Audio.AudioPlayableOutput.Create(UnityEngine.Playables.PlayableGraph,System.String,UnityEngine.AudioSource)">
+      <summary>
+        <para>Creates an AudioPlayableOutput in the PlayableGraph.</para>
+      </summary>
+      <param name="graph">The PlayableGraph that will contain the AnimationPlayableOutput.</param>
+      <param name="name">The name of the output.</param>
+      <param name="target">The AudioSource that will play the AudioPlayableOutput source Playable.</param>
+      <returns>
+        <para>A new AudioPlayableOutput attached to the PlayableGraph.</para>
+      </returns>
     </member>
     <member name="P:UnityEngine.Audio.AudioPlayableOutput.Null">
       <summary>

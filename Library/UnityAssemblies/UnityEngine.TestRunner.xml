@@ -14,6 +14,16 @@
         <para>Indicates when the test is considered finished.</para>
       </summary>
     </member>
+    <member name="?:UnityEngine.TestTools.IPostBuildCleanup">
+      <summary>
+        <para>Interface for the method that implements the postbuild step.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TestTools.IPostBuildCleanup.Cleanup">
+      <summary>
+        <para>Cleanup method that is automatically called after all the test have run.</para>
+      </summary>
+    </member>
     <member name="?:UnityEngine.TestTools.IPrebuildSetup">
       <summary>
         <para>Interface for the method that implements the prebuild step.</para>
@@ -58,6 +68,25 @@
         <para>Wrapper for running tests that are imlpemented as MonoBehaviours.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.TestTools.PostBuildCleanupAttribute">
+      <summary>
+        <para>Allows you to define a cleanup method for the test that is invoked after all tests are run.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TestTools.PostBuildCleanupAttribute.#ctor(System.Type)">
+      <summary>
+        <para>Points to a class that implements TestTools.IPostbuildCleanup. The method from TestTools.IPostbuildCleanup is executed after all tests are run.</para>
+      </summary>
+      <param name="targetClass">Type of the class implementing TestTools.IPostbuildCleanup.</param>
+      <param name="targetClassName">Name of the class implementing TestTools.IPostbuildCleanup.</param>
+    </member>
+    <member name="M:UnityEngine.TestTools.PostBuildCleanupAttribute.#ctor(System.String)">
+      <summary>
+        <para>Points to a class that implements TestTools.IPostbuildCleanup. The method from TestTools.IPostbuildCleanup is executed after all tests are run.</para>
+      </summary>
+      <param name="targetClass">Type of the class implementing TestTools.IPostbuildCleanup.</param>
+      <param name="targetClassName">Name of the class implementing TestTools.IPostbuildCleanup.</param>
+    </member>
     <member name="T:UnityEngine.TestTools.PrebuildSetupAttribute">
       <summary>
         <para>Allows to define a setup method for the test that will be invoked before the test run is started.</para>
@@ -65,9 +94,17 @@
     </member>
     <member name="M:UnityEngine.TestTools.PrebuildSetupAttribute.#ctor(System.Type)">
       <summary>
-        <para>Points to a class that imlpements TestTools.IPrebuildSetup. The method from TestTools.IPrebuildSetup will be executed before the test run is initiated.</para>
+        <para>Points to a class that implements TestTools.IPrebuildSetup. The method from TestTools.IPrebuildSetup is executed before the test run is initiated.</para>
       </summary>
-      <param name="setupClass">Type of the class implementing TestTools.IPrebuildSetup.</param>
+      <param name="targetClass">Type of the class implementing TestTools.IPrebuildSetup.</param>
+      <param name="targetClassName">Name of the class implementing TestTools.IPrebuildSetup.</param>
+    </member>
+    <member name="M:UnityEngine.TestTools.PrebuildSetupAttribute.#ctor(System.String)">
+      <summary>
+        <para>Points to a class that implements TestTools.IPrebuildSetup. The method from TestTools.IPrebuildSetup is executed before the test run is initiated.</para>
+      </summary>
+      <param name="targetClass">Type of the class implementing TestTools.IPrebuildSetup.</param>
+      <param name="targetClassName">Name of the class implementing TestTools.IPrebuildSetup.</param>
     </member>
     <member name="T:UnityEngine.TestTools.TestPlatform">
       <summary>

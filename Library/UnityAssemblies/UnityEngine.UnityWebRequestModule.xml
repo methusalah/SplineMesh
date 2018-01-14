@@ -565,6 +565,20 @@
         <para>Signals that this [UnityWebRequest] is no longer being used, and should clean up any resources it is using.</para>
       </summary>
     </member>
+    <member name="M:UnityEngine.Networking.UnityWebRequest.EscapeURL(System.String)">
+      <summary>
+        <para>Escapes characters in a string to ensure they are URL-friendly.</para>
+      </summary>
+      <param name="s">A string with characters to be escaped.</param>
+      <param name="e">The text encoding to use.</param>
+    </member>
+    <member name="M:UnityEngine.Networking.UnityWebRequest.EscapeURL(System.String,System.Text.Encoding)">
+      <summary>
+        <para>Escapes characters in a string to ensure they are URL-friendly.</para>
+      </summary>
+      <param name="s">A string with characters to be escaped.</param>
+      <param name="e">The text encoding to use.</param>
+    </member>
     <member name="M:UnityEngine.Networking.UnityWebRequest.GenerateBoundary">
       <summary>
         <para>Generate a random 40-byte array for use as a multipart form boundary.</para>
@@ -709,7 +723,7 @@ Analogous to the version parameter for WWW.LoadFromCacheOrDownload.</param>
         <para>Create a UnityWebRequest configured to send form data to a server via HTTP POST.</para>
       </summary>
       <param name="uri">The target URI to which form data will be transmitted.</param>
-      <param name="postData">Form body data. Will be URLEncoded via WWWTranscoder.URLEncode prior to transmission.</param>
+      <param name="postData">Form body data. Will be URLEncoded prior to transmission.</param>
       <returns>
         <para>A UnityWebRequest configured to send form data to uri via POST.</para>
       </returns>
@@ -825,6 +839,20 @@ This method returns a WebRequestAsyncOperation object. Yielding the WebRequestAs
       <param name="name">The key of the header to be set. Case-sensitive.</param>
       <param name="value">The header's intended value.</param>
     </member>
+    <member name="M:UnityEngine.Networking.UnityWebRequest.UnEscapeURL(System.String)">
+      <summary>
+        <para>Converts URL-friendly escape sequences back to normal text.</para>
+      </summary>
+      <param name="s">A string containing escaped characters.</param>
+      <param name="e">The text encoding to use.</param>
+    </member>
+    <member name="M:UnityEngine.Networking.UnityWebRequest.UnEscapeURL(System.String,System.Text.Encoding)">
+      <summary>
+        <para>Converts URL-friendly escape sequences back to normal text.</para>
+      </summary>
+      <param name="s">A string containing escaped characters.</param>
+      <param name="e">The text encoding to use.</param>
+    </member>
     <member name="T:UnityEngine.Networking.UnityWebRequestAsyncOperation">
       <summary>
         <para>Asynchronous operation object returned from UnityWebRequest.SendWebRequest().
@@ -875,7 +903,7 @@ You can yield until it continues, register an event handler with AsyncOperation.
     </member>
     <member name="T:UnityEngine.WWWForm">
       <summary>
-        <para>Helper class to generate form data to post to web servers using the WWW class.</para>
+        <para>Helper class to generate form data to post to web servers using the UnityWebRequest or WWW classes.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.WWWForm.data">

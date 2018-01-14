@@ -199,7 +199,7 @@
     </member>
     <member name="P:UnityEngine.Collider.enabled">
       <summary>
-        <para>Enabled Colliders will collide with other colliders, disabled Colliders won't.</para>
+        <para>Enabled Colliders will collide with other Colliders, disabled Colliders won't.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Collider.isTrigger">
@@ -260,7 +260,7 @@
     </member>
     <member name="P:UnityEngine.Collision.gameObject">
       <summary>
-        <para>The GameObject whose collider we are colliding with. (Read Only).</para>
+        <para>The GameObject whose collider you are colliding with. (Read Only).</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Collision.impulse">
@@ -634,7 +634,7 @@ Sometimes it is not possible to project (for example when the joints form a cycl
     </member>
     <member name="T:UnityEngine.ForceMode">
       <summary>
-        <para>Option for how to apply a force using Rigidbody.AddForce.</para>
+        <para>Use ForceMode to specify how to apply a force using Rigidbody.AddForce.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.ForceMode.Acceleration">
@@ -922,6 +922,11 @@ Sometimes it is not possible to project (for example when the joints form a cycl
         <para>Use a convex collider from the mesh.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.MeshCollider.cookingOptions">
+      <summary>
+        <para>Options used to enable or disable certain features in mesh cooking.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.MeshCollider.inflateMesh">
       <summary>
         <para>Allow the physics engine to increase the volume of the input mesh in attempt to generate a valid convex mesh.</para>
@@ -940,6 +945,36 @@ Sometimes it is not possible to project (for example when the joints form a cycl
     <member name="P:UnityEngine.MeshCollider.smoothSphereCollisions">
       <summary>
         <para>Uses interpolated normals for sphere collisions instead of flat polygonal normals.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.MeshColliderCookingOptions">
+      <summary>
+        <para>Cooking options that are available with MeshCollider.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.MeshColliderCookingOptions.CookForFasterSimulation">
+      <summary>
+        <para>Toggle between cooking for faster simulation or faster cooking time.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.MeshColliderCookingOptions.EnableMeshCleaning">
+      <summary>
+        <para>Toggle cleaning of the mesh.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.MeshColliderCookingOptions.InflateConvexMesh">
+      <summary>
+        <para>Allow the physics engine to increase the volume of the input mesh in attempt to generate a valid convex mesh.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.MeshColliderCookingOptions.None">
+      <summary>
+        <para>No optional cooking steps will be run.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.MeshColliderCookingOptions.WeldColocatedVertices">
+      <summary>
+        <para>Toggle the removal of equal vertices.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.PhysicMaterial">
@@ -1067,6 +1102,16 @@ Note that there is a special case when the two overlapping colliders have physic
     <member name="P:UnityEngine.Physics.gravity">
       <summary>
         <para>The gravity applied to all rigid bodies in the scene.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Physics.interCollisionDistance">
+      <summary>
+        <para>Sets the minimum separation distance for cloth inter-collision.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Physics.interCollisionStiffness">
+      <summary>
+        <para>Sets the cloth inter-collision stiffness.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Physics.maxAngularVelocity">
@@ -1519,6 +1564,13 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
       <returns>
         <para>The amount of hits stored into the results buffer.</para>
       </returns>
+    </member>
+    <member name="M:UnityEngine.Physics.RebuildBroadphaseRegions(UnityEngine.Bounds,System.Int32)">
+      <summary>
+        <para>Rebuild the broadphase interest regions as well as set the world boundaries.</para>
+      </summary>
+      <param name="worldBounds">Boundaries of the physics world.</param>
+      <param name="subdivisions">How many cells to create along x and z axis.</param>
     </member>
     <member name="M:UnityEngine.Physics.Simulate(System.Single)">
       <summary>

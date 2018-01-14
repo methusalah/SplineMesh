@@ -6,9 +6,11 @@
     </assembly>
     <member name="T:UnityEngine.SpatialTracking.TrackedPoseDriver">
       <summary>
-        <para>The TrackedPoseDriver component applies the current Pose value of a tracked device to the transform of the Game Object.
+        <para>
+                The TrackedPoseDriver component applies the current Pose value of a tracked device to the transform of the GameObject.
 
-            There are multiple different types of devices that can be tracked by the TrackedPoseDriver, these include XR HMD's, Controllers and Remotes.</para>
+                TrackedPoseDriver can track multiple types of devices including XR HMDs, controllers, and remotes.
+            </para>
       </summary>
     </member>
     <member name="P:UnityEngine.SpatialTracking.TrackedPoseDriver.deviceType">

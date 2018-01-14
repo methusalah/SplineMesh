@@ -208,7 +208,7 @@
     </member>
     <member name="F:UnityEditor.AndroidBuildSystem.ADT">
       <summary>
-        <para>Export ADT (legacy) project.</para>
+        <para>Export ADT (legacy) project. This option is obsolete and no longer supported - please use AndroidBuildSystem.Gradle export instead.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.AndroidBuildSystem.Gradle">
@@ -239,6 +239,51 @@
     <member name="F:UnityEditor.AndroidBuildType.Release">
       <summary>
         <para>Build configuration set to Release for the generated project.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.AndroidETC2Fallback">
+      <summary>
+        <para>This enumeration has values for different qualities to decompress ETC2 textures on Android devices that don't support the ETC2 texture format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2Fallback.Quality16Bit">
+      <summary>
+        <para>Textures are decompressed to a suitable 16-bit format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2Fallback.Quality32Bit">
+      <summary>
+        <para>Textures are decompressed to the TextureFormat.RGBA32 format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2Fallback.Quality32BitDownscaled">
+      <summary>
+        <para>Textures are decompressed to the TextureFormat.RGBA32 format and downscaled to half of the original texture width and height.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.AndroidETC2FallbackOverride">
+      <summary>
+        <para>This enumeration has values for different qualities to decompress an ETC2 texture on Android devices that don't support the ETC2 texture format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2FallbackOverride.Quality16Bit">
+      <summary>
+        <para>Texture is decompressed to a suitable 16-bit format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2FallbackOverride.Quality32Bit">
+      <summary>
+        <para>Texture is decompressed to the TextureFormat.RGBA32 format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2FallbackOverride.Quality32BitDownscaled">
+      <summary>
+        <para>Texture is decompressed to the TextureFormat.RGBA32 format and downscaled to half of the original texture width and height.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.AndroidETC2FallbackOverride.UseBuildSettings">
+      <summary>
+        <para>Use the value defined in Player build settings.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.AndroidGamepadSupportLevel">
@@ -2086,7 +2131,7 @@ Transitions with exit times greater than one will be evaluated only once, so the
     </member>
     <member name="F:UnityEditor.ApiCompatibilityLevel.NET_Web">
       <summary>
-        <para>Web profile, used only by Samsung TV.</para>
+        <para>Web profile, formerly used only by Samsung TV.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.ArrayUtility">
@@ -2463,6 +2508,27 @@ Transitions with exit times greater than one will be evaluated only once, so the
         <para>Array of matching asset. Note that GUIDs will be returned.</para>
       </returns>
     </member>
+    <member name="M:UnityEditor.AssetDatabase.ForceReserializeAssets">
+      <summary>
+        <para>Forcibly load and re-serialize the given assets, flushing any outstanding data changes to disk.</para>
+      </summary>
+      <param name="assetPaths">The paths to the assets that should be reserialized. If omitted, will reserialize all assets in the project.</param>
+      <param name="options">Specify whether you want to reserialize the assets themselves, their .meta files, or both. If omitted, defaults to both.</param>
+    </member>
+    <member name="M:UnityEditor.AssetDatabase.ForceReserializeAssets">
+      <summary>
+        <para>Forcibly load and re-serialize the given assets, flushing any outstanding data changes to disk.</para>
+      </summary>
+      <param name="assetPaths">The paths to the assets that should be reserialized. If omitted, will reserialize all assets in the project.</param>
+      <param name="options">Specify whether you want to reserialize the assets themselves, their .meta files, or both. If omitted, defaults to both.</param>
+    </member>
+    <member name="M:UnityEditor.AssetDatabase.ForceReserializeAssets">
+      <summary>
+        <para>Forcibly load and re-serialize the given assets, flushing any outstanding data changes to disk.</para>
+      </summary>
+      <param name="assetPaths">The paths to the assets that should be reserialized. If omitted, will reserialize all assets in the project.</param>
+      <param name="options">Specify whether you want to reserialize the assets themselves, their .meta files, or both. If omitted, defaults to both.</param>
+    </member>
     <member name="M:UnityEditor.AssetDatabase.GenerateUniqueAssetPath(System.String)">
       <summary>
         <para>Creates a new unique path for an asset.</para>
@@ -2548,6 +2614,14 @@ Transitions with exit times greater than one will be evaluated only once, so the
       </summary>
       <param name="path"></param>
     </member>
+    <member name="M:UnityEditor.AssetDatabase.GetCurrentCacheServerIp">
+      <summary>
+        <para>Gets the IP address of the Cache Server currently in use by the Editor.</para>
+      </summary>
+      <returns>
+        <para>Returns a string representation of the current Cache Server IP address.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.AssetDatabase.GetDependencies(System.String)">
       <summary>
         <para>Given a pathName, returns the list of all assets that it depends on.</para>
@@ -2620,7 +2694,7 @@ Transitions with exit times greater than one will be evaluated only once, so the
     </member>
     <member name="M:UnityEditor.AssetDatabase.GetSubFolders(System.String)">
       <summary>
-        <para>Given an absolute path to a directory, this method will return an array of all it's subdirectories.</para>
+        <para>Given a path to a directory in the Assets folder, relative to the project folder, this method will return an array of all its subdirectories.</para>
       </summary>
       <param name="path"></param>
     </member>
@@ -2917,9 +2991,12 @@ Transitions with exit times greater than one will be evaluated only once, so the
     </member>
     <member name="M:UnityEditor.AssetDatabase.IsValidFolder(System.String)">
       <summary>
-        <para>Given an absolute path to a folder, returns true if it exists, false otherwise.</para>
+        <para>Given a path to a folder, returns true if it exists, false otherwise.</para>
       </summary>
-      <param name="path"></param>
+      <param name="path">The path to the folder.</param>
+      <returns>
+        <para>Returns true if the folder exists.</para>
+      </returns>
     </member>
     <member name="M:UnityEditor.AssetDatabase.LoadAllAssetRepresentationsAtPath(System.String)">
       <summary>
@@ -3710,7 +3787,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
     </member>
     <member name="F:UnityEditor.BuildOptions.BuildAdditionalStreamedScenes">
       <summary>
-        <para>Build a compressed asset bundle that contains streamed scenes loadable with the WWW class.</para>
+        <para>Build a compressed asset bundle that contains streamed scenes loadable with the UnityWebRequest class.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.BuildOptions.BuildScriptsOnly">
@@ -3807,7 +3884,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
       <param name="pathName">The filename where to write the compressed asset bundle.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform to build the bundle for.</param>
-      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.</param>
+      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle.</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundle">
       <summary>
@@ -3818,7 +3895,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
       <param name="pathName">The filename where to write the compressed asset bundle.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform to build the bundle for.</param>
-      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.</param>
+      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle.</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundle">
       <summary>
@@ -3829,7 +3906,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
       <param name="pathName">The filename where to write the compressed asset bundle.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform to build the bundle for.</param>
-      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.</param>
+      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle.</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundle">
       <summary>
@@ -3840,7 +3917,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
       <param name="pathName">The filename where to write the compressed asset bundle.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform to build the bundle for.</param>
-      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.</param>
+      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle.</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundle(UnityEngine.Object,UnityEngine.Object[],System.String,UnityEditor.BuildAssetBundleOptions,UnityEditor.BuildTarget)">
       <summary>
@@ -3851,7 +3928,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
       <param name="pathName">The filename where to write the compressed asset bundle.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform to build the bundle for.</param>
-      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.</param>
+      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle.</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundle(UnityEngine.Object,UnityEngine.Object[],System.String,System.UInt32&amp;,UnityEditor.BuildAssetBundleOptions,UnityEditor.BuildTarget)">
       <summary>
@@ -3862,7 +3939,7 @@ Amount of compression. The value roughly corresponds to the ratio between the re
       <param name="pathName">The filename where to write the compressed asset bundle.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform to build the bundle for.</param>
-      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.</param>
+      <param name="crc">The optional crc output parameter can be used to get a CRC checksum for the generated AssetBundle, which can be used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle.</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundleExplicitAssetNames">
       <summary>
@@ -3874,7 +3951,7 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="pathName">The location where the compressed asset bundle will be written to.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform where the asset bundle will be used.</param>
-      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.)</param>
+      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle().)</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundleExplicitAssetNames">
       <summary>
@@ -3886,7 +3963,7 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="pathName">The location where the compressed asset bundle will be written to.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform where the asset bundle will be used.</param>
-      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.)</param>
+      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle().)</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundleExplicitAssetNames">
       <summary>
@@ -3898,7 +3975,7 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="pathName">The location where the compressed asset bundle will be written to.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform where the asset bundle will be used.</param>
-      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.)</param>
+      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle().)</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundleExplicitAssetNames">
       <summary>
@@ -3910,7 +3987,7 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="pathName">The location where the compressed asset bundle will be written to.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform where the asset bundle will be used.</param>
-      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.)</param>
+      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle().)</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundleExplicitAssetNames(UnityEngine.Object[],System.String[],System.String,UnityEditor.BuildAssetBundleOptions,UnityEditor.BuildTarget)">
       <summary>
@@ -3922,7 +3999,7 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="pathName">The location where the compressed asset bundle will be written to.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform where the asset bundle will be used.</param>
-      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.)</param>
+      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle().)</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundleExplicitAssetNames(UnityEngine.Object[],System.String[],System.String,System.UInt32&amp;,UnityEditor.BuildAssetBundleOptions,UnityEditor.BuildTarget)">
       <summary>
@@ -3934,7 +4011,7 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="pathName">The location where the compressed asset bundle will be written to.</param>
       <param name="assetBundleOptions">Automatically include dependencies or always include complete assets instead of just the exact referenced objects.</param>
       <param name="targetPlatform">The platform where the asset bundle will be used.</param>
-      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using WWW.LoadFromCacheOrDownload.)</param>
+      <param name="crc">An optional output parameter used to get a CRC checksum for the generated AssetBundle. (Used to verify content when downloading AssetBundles using UnityWebRequest.GetAssetBundle().)</param>
     </member>
     <member name="M:UnityEditor.BuildPipeline.BuildAssetBundles(System.String,UnityEditor.BuildAssetBundleOptions,UnityEditor.BuildTarget)">
       <summary>
@@ -4202,11 +4279,6 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
         <para>Build a PS Vita Standalone.</para>
       </summary>
     </member>
-    <member name="F:UnityEditor.BuildTarget.SamsungTV">
-      <summary>
-        <para>Build to Samsung Smart TV platform.</para>
-      </summary>
-    </member>
     <member name="F:UnityEditor.BuildTarget.StandaloneLinux">
       <summary>
         <para>Build a Linux standalone.</para>
@@ -4222,19 +4294,19 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
         <para>Build a Linux universal standalone.</para>
       </summary>
     </member>
+    <member name="F:UnityEditor.BuildTarget.StandaloneOSX">
+      <summary>
+        <para>Build a macOS standalone (Intel 64-bit).</para>
+      </summary>
+    </member>
     <member name="F:UnityEditor.BuildTarget.StandaloneOSXIntel">
       <summary>
-        <para>Build a macOS standalone (Intel only).</para>
+        <para>Build a macOS Intel 32-bit standalone. (This build target is deprecated)</para>
       </summary>
     </member>
     <member name="F:UnityEditor.BuildTarget.StandaloneOSXIntel64">
       <summary>
-        <para>Build a macOS Intel 64-bit standalone.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.BuildTarget.StandaloneOSXUniversal">
-      <summary>
-        <para>Build a universal macOS standalone.</para>
+        <para>Build a macOS Intel 64-bit standalone. (This build target is deprecated)</para>
       </summary>
     </member>
     <member name="F:UnityEditor.BuildTarget.StandaloneWindows">
@@ -4330,11 +4402,6 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
     <member name="F:UnityEditor.BuildTargetGroup.PSP2">
       <summary>
         <para>Sony PS Vita target.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.BuildTargetGroup.SamsungTV">
-      <summary>
-        <para>Samsung Smart TV target.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.BuildTargetGroup.Standalone">
@@ -4493,6 +4560,73 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
       <param name="minExposureValue">Minimum exposure value used in the tonemapping section of the Color Picker.</param>
       <param name="maxExposureValue">Maximum exposure value used in the tonemapping section of the Color Picker.</param>
     </member>
+    <member name="T:UnityEditor.Compilation.Assembly">
+      <summary>
+        <para>Class that represents an assembly compiled by Unity.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.allReferences">
+      <summary>
+        <para>Returns Assembly.assemblyReferences and Assembly.compiledAssemblyReferences combined.
+
+This returns all assemblies that are passed to the compiler when building this assembly,.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.assemblyReferences">
+      <summary>
+        <para>Assembly references used to build this assembly.
+
+The references are also assemblies built as part of the Unity project.
+
+See Also: Assembly.compiledAssemblyReferences and Assembly.allReferences.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.compiledAssemblyReferences">
+      <summary>
+        <para>Assembly references to pre-compiled assemblies that used to build this assembly.
+
+See Also: Assembly.assemblyReferences and Assembly.allReferences.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.defines">
+      <summary>
+        <para>The defines used to compile this assembly.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.flags">
+      <summary>
+        <para>Flags for the assembly.
+
+See Also: AssemblyFlags.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.name">
+      <summary>
+        <para>The name of the assembly.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.outputPath">
+      <summary>
+        <para>The full output file path of this assembly.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.Assembly.sourceFiles">
+      <summary>
+        <para>All the souce files used to compile this assembly.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Compilation.Assembly.#ctor(System.String,System.String,System.String[],System.String[],UnityEditor.Compilation.Assembly[],System.String[],UnityEditor.Compilation.AssemblyFlags)">
+      <summary>
+        <para>Constructor.</para>
+      </summary>
+      <param name="name">Assembly name.</param>
+      <param name="outputPath">Assembly output.</param>
+      <param name="sourceFiles">Assembliy source files.</param>
+      <param name="defines">Assembly defines.</param>
+      <param name="assemblyReferences">Assembly references.</param>
+      <param name="compiledAssemblyReferences">Compiled assembly references.</param>
+      <param name="flags">Assembly flags.</param>
+    </member>
     <member name="T:UnityEditor.Compilation.AssemblyBuilder">
       <summary>
         <para>Compiles scripts outside the Assets folder into a managed assembly that can be used inside the Assets folder.</para>
@@ -4533,6 +4667,11 @@ These will be used as asset names, which you can then pass to AssetBundle.Load t
     <member name="P:UnityEditor.Compilation.AssemblyBuilder.buildTargetGroup">
       <summary>
         <para>BuildTargetGroup for the assembly build.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.AssemblyBuilder.excludeReferences">
+      <summary>
+        <para>References to exclude when compiling the assembly.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.Compilation.AssemblyBuilder.flags">
@@ -4606,6 +4745,120 @@ While building, the small progress icon in the lower right corner of Unity's mai
       <summary>
         <para>Indicates the AssemblyBuilder build has not been started.</para>
       </summary>
+    </member>
+    <member name="T:UnityEditor.Compilation.AssemblyDefinitionException">
+      <summary>
+        <para>An exception throw for Assembly Definition Files errors.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.AssemblyDefinitionException.filePaths">
+      <summary>
+        <para>File paths of the assembly definition files that caused the exception.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Compilation.AssemblyDefinitionException.#ctor(System.String,System.String[])">
+      <summary>
+        <para>Constructor.</para>
+      </summary>
+      <param name="message">Exception message.</param>
+      <param name="filePaths">File paths for assembly definition files.</param>
+    </member>
+    <member name="T:UnityEditor.Compilation.AssemblyDefinitionPlatform">
+      <summary>
+        <para>Contains information about a platform supported by the assembly definition files.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.AssemblyDefinitionPlatform.BuildTarget">
+      <summary>
+        <para>BuildTarget for the AssemblyDefinitionPlatform.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.AssemblyDefinitionPlatform.DisplayName">
+      <summary>
+        <para>Display name for the platform.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Compilation.AssemblyDefinitionPlatform.Name">
+      <summary>
+        <para>Name used in assembly definition files.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.Compilation.AssemblyFlags">
+      <summary>
+        <para>Flags for Assembly.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Compilation.AssemblyFlags.EditorAssembly">
+      <summary>
+        <para>Indicates whether this assembly is an editor only assembly.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Compilation.AssemblyFlags.None">
+      <summary>
+        <para>None value. Default.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.Compilation.CompilationPipeline">
+      <summary>
+        <para>Methods and properties for script compilation pipeline.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEditor.Compilation.CompilationPipeline.assemblyCompilationFinished(System.Action`2&lt;System.String,UnityEditor.Compilation.CompilerMessage[]&gt;)">
+      <summary>
+        <para>An event that is invoked on the main thread when compilation of an assembly finishes.</para>
+      </summary>
+      <param name="value">First parameter is the output assembly path. Second parameter are the compiler messages.</param>
+    </member>
+    <member name="?:UnityEditor.Compilation.CompilationPipeline.assemblyCompilationStarted(System.Action`1&lt;System.String&gt;)">
+      <summary>
+        <para>Event that is invoked on the main thread when the assembly build starts.</para>
+      </summary>
+      <param name="value">Parameter is the output assembly path.</param>
+    </member>
+    <member name="M:UnityEditor.Compilation.CompilationPipeline.GetAssemblies">
+      <summary>
+        <para>Get all script assemblies compiled by Unity.</para>
+      </summary>
+      <returns>
+        <para>Array of script assemblies compoiled by Unity.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Compilation.CompilationPipeline.GetAssemblyDefinitionFilePathFromAssemblyName(System.String)">
+      <summary>
+        <para>Returns the assembly definition file path from an assembly name. Returns null if there is no assembly definition file for the given assembly name.</para>
+      </summary>
+      <param name="assemblyName">Assembly name.</param>
+      <returns>
+        <para>File path of assembly definition file.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Compilation.CompilationPipeline.GetAssemblyDefinitionFilePathFromScriptPath(System.String)">
+      <summary>
+        <para>Returns the assembly definition file path for a source (script) path. Returns null if there is no assembly definition file for the given script path.</para>
+      </summary>
+      <param name="sourceFilePath">Source (script) file path.</param>
+      <returns>
+        <para>File path of assembly definition file.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Compilation.CompilationPipeline.GetAssemblyDefinitionPlatforms">
+      <summary>
+        <para>Returns all the platforms supported by assembly definition files.
+
+See Also: AssemblyDefinitionPlatform.</para>
+      </summary>
+      <returns>
+        <para>Platforms supported by assembly definition files.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Compilation.CompilationPipeline.GetAssemblyNameFromScriptPath(System.String)">
+      <summary>
+        <para>Returns the assembly name for a source (script) path. Returns null if there is no assembly name for the given script path.</para>
+      </summary>
+      <param name="sourceFilePath">Source (script) path.</param>
+      <returns>
+        <para>Assembly name.</para>
+      </returns>
     </member>
     <member name="T:UnityEditor.Compilation.CompilerMessage">
       <summary>
@@ -4691,6 +4944,27 @@ While building, the small progress icon in the lower right corner of Unity's mai
       <param name="inspectedType">Type that this editor can edit.</param>
       <param name="editorForChildClasses">If true, child classes of inspectedType will also show this editor. Defaults to false.</param>
     </member>
+    <member name="T:UnityEditor.CustomEditorForRenderPipelineAttribute">
+      <summary>
+        <para>Tells an Editor class which run-time type it's an editor for when the given RenderPipeline is activated.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.CustomEditorForRenderPipelineAttribute.#ctor(System.Type,System.Type)">
+      <summary>
+        <para>Defines which object type the custom editor class can edit.</para>
+      </summary>
+      <param name="inspectedType">Type that this editor can edit.</param>
+      <param name="renderPipeline">Type of RenderPipelineAsset that that should be active for this inspector to be used.</param>
+      <param name="editorForChildClasses">If true, child classes of inspectedType will also show this editor. Defaults to false.</param>
+    </member>
+    <member name="M:UnityEditor.CustomEditorForRenderPipelineAttribute.#ctor(System.Type,System.Type,System.Boolean)">
+      <summary>
+        <para>Defines which object type the custom editor class can edit.</para>
+      </summary>
+      <param name="inspectedType">Type that this editor can edit.</param>
+      <param name="renderPipeline">Type of RenderPipelineAsset that that should be active for this inspector to be used.</param>
+      <param name="editorForChildClasses">If true, child classes of inspectedType will also show this editor. Defaults to false.</param>
+    </member>
     <member name="T:UnityEditor.CustomPreviewAttribute">
       <summary>
         <para>Adds an extra preview in the Inspector for the specified type.</para>
@@ -4770,6 +5044,14 @@ While building, the small progress icon in the lower right corner of Unity's mai
       <summary>
         <para>The PropertyAttribute for the decorator. (Read Only)</para>
       </summary>
+    </member>
+    <member name="M:UnityEditor.DecoratorDrawer.CanCacheInspectorGUI">
+      <summary>
+        <para>Override this method to determine whether the inspector GUI for your decorator can be cached.</para>
+      </summary>
+      <returns>
+        <para>Whether the inspector GUI for your decorator can be cached.</para>
+      </returns>
     </member>
     <member name="M:UnityEditor.DecoratorDrawer.GetHeight">
       <summary>
@@ -5284,9 +5566,62 @@ See DecoratorDrawer for an example of how to use this.</para>
         <para>Does this edit require to be repainted constantly in its current state?</para>
       </summary>
     </member>
+    <member name="M:UnityEditor.Editor.ShouldHideOpenButton">
+      <summary>
+        <para>Returns the visibility setting of the "open" button in the Inspector.</para>
+      </summary>
+      <returns>
+        <para>Return true if the button should be hidden.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.Editor.UseDefaultMargins">
       <summary>
         <para>Override this method in subclasses to return false if you don't want default margins.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.EditorAnalytics">
+      <summary>
+        <para>Editor API for the EditorAnalytics feature.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalytics.enabled">
+      <summary>
+        <para>Returns true when EditorAnalytics is enabled.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.EditorAnalyticsSessionInfo">
+      <summary>
+        <para>Accesses for EditorAnalytics session information.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalyticsSessionInfo.activeElapsedTime">
+      <summary>
+        <para>Returns total time there was user iteraction in the Editor since the beginning of a session.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalyticsSessionInfo.elapsedTime">
+      <summary>
+        <para>Returns session time since startup of the Editor.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalyticsSessionInfo.focusedElapsedTime">
+      <summary>
+        <para>Returns total time the Editor was in focus since the beginning of a session.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalyticsSessionInfo.id">
+      <summary>
+        <para>Returns session id used for tracking the Editor session.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalyticsSessionInfo.playbackElapsedTime">
+      <summary>
+        <para>Returns total time the Editor was in playmode since the beginning of a session.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorAnalyticsSessionInfo.userId">
+      <summary>
+        <para>The userId is random GUID and is persisted across Editor session.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.EditorApplication">
@@ -5608,6 +5943,12 @@ Each time an object is (or a group of objects are) created, renamed, parented, u
 See Also: EditorBuildSettingsScene, EditorBuildSettings.scenes.</para>
       </summary>
     </member>
+    <member name="?:UnityEditor.EditorBuildSettings.sceneListChanged(System.Action)">
+      <summary>
+        <para>A delegate called whenever EditorBuildSettings.scenes is set.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
     <member name="P:UnityEditor.EditorBuildSettings.scenes">
       <summary>
         <para>The list of Scenes that should be included in the build.
@@ -5747,6 +6088,15 @@ See Also: EditorBuildSettingsScene, EditorBuildSettings.scenes.</para>
       <param name="value">The value to edit.</param>
       <returns>
         <para>The value entered by the user.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.CanCacheInspectorGUI(UnityEditor.SerializedProperty)">
+      <summary>
+        <para>Get whether a SerializedProperty's inspector GUI can be cached.</para>
+      </summary>
+      <param name="property">The SerializedProperty in question.</param>
+      <returns>
+        <para>Whether the property's inspector GUI can be cached.</para>
       </returns>
     </member>
     <member name="T:UnityEditor.EditorGUI.ChangeCheckScope">
@@ -6312,86 +6662,195 @@ See Also: EditorBuildSettingsScene, EditorBuildSettings.scenes.</para>
         <para>Ends a Property wrapper started with BeginProperty.</para>
       </summary>
     </member>
+    <member name="M:UnityEditor.EditorGUI.EnumFlagsField(UnityEngine.Rect,System.Enum)">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the enum flags field.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value (Only supports enum values for enum types with int as the underlying type).</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.EnumFlagsField(UnityEngine.Rect,System.Enum,UnityEngine.GUIStyle)">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the enum flags field.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value (Only supports enum values for enum types with int as the underlying type).</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.EnumFlagsField(UnityEngine.Rect,System.String,System.Enum)">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the enum flags field.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value (Only supports enum values for enum types with int as the underlying type).</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.EnumFlagsField(UnityEngine.Rect,System.String,System.Enum,UnityEngine.GUIStyle)">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the enum flags field.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value (Only supports enum values for enum types with int as the underlying type).</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.EnumFlagsField(UnityEngine.Rect,UnityEngine.GUIContent,System.Enum)">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the enum flags field.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value (Only supports enum values for enum types with int as the underlying type).</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.EnumFlagsField(UnityEngine.Rect,UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle)">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the enum flags field.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value (Only supports enum values for enum types with int as the underlying type).</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskField(UnityEngine.Rect,System.Enum)">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for this control.</param>
+      <param name="label">Caption/label for the control.</param>
       <param name="enumValue">Enum to use for the flags.</param>
       <param name="style">Optional GUIStyle.</param>
-      <param name="label">Caption/label for the control.</param>
       <returns>
-        <para>The value modified by the user.</para>
+        <para>A selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskField(UnityEngine.Rect,System.String,System.Enum)">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for this control.</param>
+      <param name="label">Caption/label for the control.</param>
       <param name="enumValue">Enum to use for the flags.</param>
       <param name="style">Optional GUIStyle.</param>
-      <param name="label">Caption/label for the control.</param>
       <returns>
-        <para>The value modified by the user.</para>
+        <para>A selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskField(UnityEngine.Rect,UnityEngine.GUIContent,System.Enum)">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for this control.</param>
+      <param name="label">Caption/label for the control.</param>
       <param name="enumValue">Enum to use for the flags.</param>
       <param name="style">Optional GUIStyle.</param>
-      <param name="label">Caption/label for the control.</param>
       <returns>
-        <para>The value modified by the user.</para>
+        <para>A selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskField(UnityEngine.Rect,System.Enum,UnityEngine.GUIStyle)">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for this control.</param>
+      <param name="label">Caption/label for the control.</param>
       <param name="enumValue">Enum to use for the flags.</param>
       <param name="style">Optional GUIStyle.</param>
-      <param name="label">Caption/label for the control.</param>
       <returns>
-        <para>The value modified by the user.</para>
+        <para>A selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskField(UnityEngine.Rect,System.String,System.Enum,UnityEngine.GUIStyle)">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for this control.</param>
+      <param name="label">Caption/label for the control.</param>
       <param name="enumValue">Enum to use for the flags.</param>
       <param name="style">Optional GUIStyle.</param>
-      <param name="label">Caption/label for the control.</param>
       <returns>
-        <para>The value modified by the user.</para>
+        <para>A selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskField(UnityEngine.Rect,UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle)">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for this control.</param>
+      <param name="label">Caption/label for the control.</param>
       <param name="enumValue">Enum to use for the flags.</param>
       <param name="style">Optional GUIStyle.</param>
-      <param name="label">Caption/label for the control.</param>
       <returns>
-        <para>The value modified by the user.</para>
+        <para>A selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
       </returns>
     </member>
-    <member name="M:UnityEditor.EditorGUI.EnumMaskField">
+    <member name="M:UnityEditor.EditorGUI.EnumMaskPopup(UnityEngine.Rect,System.String,System.Enum)">
       <summary>
-        <para>Internal version that also gives you back which flags were changed and what they were changed to.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
+      <param name="position">Rectangle on the screen to use for the field.</param>
+      <param name="label">Optional label in front of the field.</param>
+      <param name="selected">The enum options the field shows.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum options that has been selected by the user.</para>
+      </returns>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskPopup(UnityEngine.Rect,System.String,System.Enum,UnityEngine.GUIStyle)">
       <summary>
-        <para>Make an enum popup selection field for a bitmask.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
+      </summary>
+      <param name="position">Rectangle on the screen to use for the field.</param>
+      <param name="label">Optional label in front of the field.</param>
+      <param name="selected">The enum options the field shows.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <returns>
+        <para>The enum options that has been selected by the user.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUI.EnumMaskPopup(UnityEngine.Rect,UnityEngine.GUIContent,System.Enum)">
+      <summary>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for the field.</param>
       <param name="label">Optional label in front of the field.</param>
@@ -6403,7 +6862,9 @@ See Also: EditorBuildSettingsScene, EditorBuildSettings.scenes.</para>
     </member>
     <member name="M:UnityEditor.EditorGUI.EnumMaskPopup(UnityEngine.Rect,UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle)">
       <summary>
-        <para>Make an enum popup selection field for a bitmask.</para>
+        <para>This method is obsolete. Use EditorGUI.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
       <param name="position">Rectangle on the screen to use for the field.</param>
       <param name="label">Optional label in front of the field.</param>
@@ -9360,134 +9821,238 @@ GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
         <para>Close a group started with BeginVertical.</para>
       </summary>
     </member>
-    <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
+    <member name="M:UnityEditor.EditorGUILayout.EnumFlagsField(System.Enum,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
       </summary>
-      <param name="label">Prefix label for this field.</param>
-      <param name="enumValue">Enum to use for the flags.</param>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value.</param>
+      <param name="style">Optional GUIStyle.</param>
       <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
 See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
 GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
-      <param name="style"></param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUILayout.EnumFlagsField(System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
+See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
+GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUILayout.EnumFlagsField(System.String,System.Enum,UnityEngine.GUILayoutOption[])">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
+See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
+GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUILayout.EnumFlagsField(System.String,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
+See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
+GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUILayout.EnumFlagsField(UnityEngine.GUIContent,System.Enum,UnityEngine.GUILayoutOption[])">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
+See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
+GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUILayout.EnumFlagsField(UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
+      <summary>
+        <para>Displays a menu with an option for every value of the enum type when clicked. An option for the value 0 with name "Nothing" and an option for the value ~0 (that is, all bits set) with the name "Everything" are always displayed at the top of the menu. The names for the values 0 and ~0 can be overriden by defining these values in the enum type.</para>
+      </summary>
+      <param name="label">Optional label to display in front of the enum flags field.</param>
+      <param name="enumValue">Enum flags value.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
+See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
+GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
+      <returns>
+        <para>The enum flags value modified by the user. This is a selection BitMask where each bit represents an Enum value index. (Note this returned value is not itself an Enum).</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
+      <summary>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
+      </summary>
+      <param name="label">Prefix label for this field.</param>
+      <param name="enumValue">Enum to use for the flags.</param>
+      <param name="style">Optional GUIStyle.</param>
+      <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
+See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
+GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
       <returns>
         <para>The value modified by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(System.String,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="label">Prefix label for this field.</param>
       <param name="enumValue">Enum to use for the flags.</param>
+      <param name="style">Optional GUIStyle.</param>
       <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
 See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
 GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
-      <param name="style"></param>
       <returns>
         <para>The value modified by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(UnityEngine.GUIContent,System.Enum,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="label">Prefix label for this field.</param>
       <param name="enumValue">Enum to use for the flags.</param>
+      <param name="style">Optional GUIStyle.</param>
       <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
 See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
 GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
-      <param name="style"></param>
       <returns>
         <para>The value modified by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(System.String,System.Enum,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="label">Prefix label for this field.</param>
       <param name="enumValue">Enum to use for the flags.</param>
+      <param name="style">Optional GUIStyle.</param>
       <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
 See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
 GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
-      <param name="style"></param>
       <returns>
         <para>The value modified by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="label">Prefix label for this field.</param>
       <param name="enumValue">Enum to use for the flags.</param>
+      <param name="style">Optional GUIStyle.</param>
       <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
 See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
 GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
-      <param name="style"></param>
       <returns>
         <para>The value modified by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskField(System.Enum,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make a field for enum based masks.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make a field for enum based masks.</para>
       </summary>
       <param name="label">Prefix label for this field.</param>
       <param name="enumValue">Enum to use for the flags.</param>
+      <param name="style">Optional GUIStyle.</param>
       <param name="options">An optional list of layout options that specify extra layout properties. Any values passed in here will override settings defined by the style.&lt;br&gt;
 See Also: GUILayout.Width, GUILayout.Height, GUILayout.MinWidth, GUILayout.MaxWidth, GUILayout.MinHeight,
 GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
-      <param name="style"></param>
       <returns>
         <para>The value modified by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskPopup(System.String,System.Enum,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make an enum popup selection field for a bitmask.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
       <param name="label">Optional label in front of the field.</param>
       <param name="selected">The enum options the field shows.</param>
-      <param name="options">Optional layout options.</param>
       <param name="style">Optional GUIStyle.</param>
+      <param name="options">Optional layout options.</param>
       <returns>
         <para>The enum options that has been selected by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskPopup(System.String,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make an enum popup selection field for a bitmask.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
       <param name="label">Optional label in front of the field.</param>
       <param name="selected">The enum options the field shows.</param>
-      <param name="options">Optional layout options.</param>
       <param name="style">Optional GUIStyle.</param>
+      <param name="options">Optional layout options.</param>
       <returns>
         <para>The enum options that has been selected by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskPopup(UnityEngine.GUIContent,System.Enum,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make an enum popup selection field for a bitmask.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
       <param name="label">Optional label in front of the field.</param>
       <param name="selected">The enum options the field shows.</param>
-      <param name="options">Optional layout options.</param>
       <param name="style">Optional GUIStyle.</param>
+      <param name="options">Optional layout options.</param>
       <returns>
         <para>The enum options that has been selected by the user.</para>
       </returns>
     </member>
     <member name="M:UnityEditor.EditorGUILayout.EnumMaskPopup(UnityEngine.GUIContent,System.Enum,UnityEngine.GUIStyle,UnityEngine.GUILayoutOption[])">
       <summary>
-        <para>Make an enum popup selection field for a bitmask.</para>
+        <para>This method is obsolete. Use EditorGUILayout.EnumFlagsField instead.
+
+Make an enum popup selection field for a bitmask.</para>
       </summary>
       <param name="label">Optional label in front of the field.</param>
       <param name="selected">The enum options the field shows.</param>
-      <param name="options">Optional layout options.</param>
       <param name="style">Optional GUIStyle.</param>
+      <param name="options">Optional layout options.</param>
       <returns>
         <para>The enum options that has been selected by the user.</para>
       </returns>
@@ -12549,6 +13114,11 @@ This value is the number of screen pixels per point of interface space. For inst
         <para>Set which build system to use for building the Android package.</para>
       </summary>
     </member>
+    <member name="P:UnityEditor.EditorUserBuildSettings.androidETC2Fallback">
+      <summary>
+        <para>ETC2 texture decompression fallback on Android devices that don't support ETC2.</para>
+      </summary>
+    </member>
     <member name="P:UnityEditor.EditorUserBuildSettings.buildScriptsOnly">
       <summary>
         <para>Is build script only enabled.</para>
@@ -12591,7 +13161,7 @@ This value is the number of screen pixels per point of interface space. For inst
     </member>
     <member name="P:UnityEditor.EditorUserBuildSettings.exportAsGoogleAndroidProject">
       <summary>
-        <para>Export Android Project for use with Android StudioGradle or EclipseADT.</para>
+        <para>Export Android Project for use with Android Studio/Gradle.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.EditorUserBuildSettings.forceInstallation">
@@ -12717,6 +13287,11 @@ This value is the number of screen pixels per point of interface space. For inst
     <member name="P:UnityEditor.EditorUserBuildSettings.wsaUWPSDK">
       <summary>
         <para>Sets and gets target UWP SDK to build Windows Store application against.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.EditorUserBuildSettings.wsaUWPVisualStudioVersion">
+      <summary>
+        <para>Sets and gets Visual Studio version to build Windows Store application with.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.EditorUserBuildSettings.xboxBuildSubtarget">
@@ -13109,7 +13684,7 @@ More information - https:msdn.microsoft.comen-uslibrary/dn584397(v=vs.110).aspx.
     </member>
     <member name="P:UnityEditor.EditorWindow.maximized">
       <summary>
-        <para>Is this window maximized.</para>
+        <para>Is this window maximized?</para>
       </summary>
     </member>
     <member name="P:UnityEditor.EditorWindow.maxSize">
@@ -13129,7 +13704,7 @@ More information - https:msdn.microsoft.comen-uslibrary/dn584397(v=vs.110).aspx.
     </member>
     <member name="P:UnityEditor.EditorWindow.position">
       <summary>
-        <para>The position of the window in screen space.</para>
+        <para>The desired position of the window in screen space.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.EditorWindow.title">
@@ -13169,7 +13744,7 @@ More information - https:msdn.microsoft.comen-uslibrary/dn584397(v=vs.110).aspx.
     </member>
     <member name="M:UnityEditor.EditorWindow.Focus">
       <summary>
-        <para>Moves keyboard focus to this EditorWindow.</para>
+        <para>Moves keyboard focus to another EditorWindow.</para>
       </summary>
     </member>
     <member name="M:UnityEditor.EditorWindow.FocusWindowIfItsOpen(System.Type)">
@@ -13747,50 +14322,40 @@ More information - https:msdn.microsoft.comen-uslibrary/dn584397(v=vs.110).aspx.
     </member>
     <member name="T:UnityEditor.Experimental.AssetImporters.AssetImportContext">
       <summary>
-        <para>Used by ScriptableImporter child classes and defines the argument passed to OnImportAsset().</para>
+        <para>Defines the import context for scripted importers during an import event.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.Experimental.AssetImporters.AssetImportContext.assetPath">
       <summary>
-        <para>The path of the Asset file to be imported.</para>
+        <para>The path of the source asset file to be imported.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.Experimental.AssetImporters.AssetImportContext.selectedBuildTarget">
       <summary>
-        <para>This indicates what platform the Asset import event is targetting.</para>
+        <para>This indicates what platform the import event is targetting.</para>
       </summary>
     </member>
-    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.AddSubAsset(System.String,UnityEngine.Object)">
+    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.AddObjectToAsset(System.String,UnityEngine.Object)">
       <summary>
-        <para>Adds a sub-Asset to the result of the import operation.</para>
+        <para>Adds an object to the result of the import operation.</para>
       </summary>
-      <param name="identifier">A unique identifier associated to this sub-Asset.</param>
-      <param name="asset">The Unity Object that is the sub-Asset.</param>
-      <param name="thumbnail">An optional 2D texture to use as the tumbnail for this sub-Asset.</param>
+      <param name="identifier">A unique identifier associated to this object.</param>
+      <param name="obj">The Unity Object to add to the asset.</param>
+      <param name="thumbnail">An optional 2D texture to use as the tumbnail for this object.</param>
     </member>
-    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.AddSubAsset(System.String,UnityEngine.Object,UnityEngine.Texture2D)">
+    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.AddObjectToAsset(System.String,UnityEngine.Object,UnityEngine.Texture2D)">
       <summary>
-        <para>Adds a sub-Asset to the result of the import operation.</para>
+        <para>Adds an object to the result of the import operation.</para>
       </summary>
-      <param name="identifier">A unique identifier associated to this sub-Asset.</param>
-      <param name="asset">The Unity Object that is the sub-Asset.</param>
-      <param name="thumbnail">An optional 2D texture to use as the tumbnail for this sub-Asset.</param>
+      <param name="identifier">A unique identifier associated to this object.</param>
+      <param name="obj">The Unity Object to add to the asset.</param>
+      <param name="thumbnail">An optional 2D texture to use as the tumbnail for this object.</param>
     </member>
-    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.SetMainAsset(System.String,UnityEngine.Object)">
+    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.SetMainObject(UnityEngine.Object)">
       <summary>
-        <para>Set's the main Asset to the result of the import operation.</para>
+        <para>Specifies which object in the asset file should become the main object of the import opperation.</para>
       </summary>
-      <param name="identifier">A Unique identifier associated to this Asset.</param>
-      <param name="asset">The Unity Object that is the sub-Asset.</param>
-      <param name="thumbnail">An optional 2D texture to use as the thumbnail for the Asset.</param>
-    </member>
-    <member name="M:UnityEditor.Experimental.AssetImporters.AssetImportContext.SetMainAsset(System.String,UnityEngine.Object,UnityEngine.Texture2D)">
-      <summary>
-        <para>Set's the main Asset to the result of the import operation.</para>
-      </summary>
-      <param name="identifier">A Unique identifier associated to this Asset.</param>
-      <param name="asset">The Unity Object that is the sub-Asset.</param>
-      <param name="thumbnail">An optional 2D texture to use as the thumbnail for the Asset.</param>
+      <param name="obj">The Unity Object that is to be marked as the main object.</param>
     </member>
     <member name="T:UnityEditor.Experimental.AssetImporters.AssetImporterEditor">
       <summary>
@@ -13832,7 +14397,7 @@ More information - https:msdn.microsoft.comen-uslibrary/dn584397(v=vs.110).aspx.
     </member>
     <member name="M:UnityEditor.Experimental.AssetImporters.AssetImporterEditor.ApplyRevertGUI">
       <summary>
-        <para>Add's the 'Apply' and 'Revert' buttons to the editor</para>
+        <para>Add's the 'Apply' and 'Revert' buttons to the editor.</para>
       </summary>
     </member>
     <member name="M:UnityEditor.Experimental.AssetImporters.AssetImporterEditor.Awake">
@@ -13973,26 +14538,15 @@ If the Unity Editor setting "Auto-Update" is set to enabled, editing a script ou
         <para>Implement this method to customize how Unity's Asset inspector is drawn for an Asset managed by a ScriptedImporter.</para>
       </summary>
     </member>
-    <member name="T:UnityEditor.Experimental.CustomLightEditorAttribute">
+    <member name="T:UnityEditor.Experimental.Lightmapping">
       <summary>
-        <para>Tells a Light Editor class which RenderPipelineAsset it is an editor for.</para>
+        <para>Experimental lightmapping features.</para>
       </summary>
     </member>
-    <member name="P:UnityEditor.Experimental.CustomLightEditorAttribute.renderPipelineType">
+    <member name="P:UnityEditor.Experimental.Lightmapping.probesIgnoreDirectEnvironment">
       <summary>
-        <para>The RenderPipelineAsset type this light editor is for.</para>
+        <para>If enabled ignores the direct contribution from the environment lighting in baked probes.</para>
       </summary>
-    </member>
-    <member name="?:UnityEditor.Experimental.ICustomLightEditor">
-      <summary>
-        <para>Custom light inspector class for a RenderPipelineAsset.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEditor.Experimental.ICustomLightEditor.OnInspectorGUI(UnityEditor.LightEditor)">
-      <summary>
-        <para>Implement this function to make a custom light inspector.</para>
-      </summary>
-      <param name="lightEditor">Default light editor.</param>
     </member>
     <member name="T:UnityEditor.ExportPackageOptions">
       <summary>
@@ -14147,6 +14701,26 @@ If the Unity Editor setting "Auto-Update" is set to enabled, editing a script ou
     <member name="F:UnityEditor.FontTextureCase.Unicode">
       <summary>
         <para>Import a set of Unicode characters common for latin scripts.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.ForceReserializeAssetsOptions">
+      <summary>
+        <para>Options for AssetDatabase.ForceReserializeAssets.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ForceReserializeAssetsOptions.ReserializeAssets">
+      <summary>
+        <para>Specifies that AssetDatabase.ForceReserializeAssets should load, upgrade, and save the assets at the paths passed to the function, but not their accompanying .meta files.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ForceReserializeAssetsOptions.ReserializeAssetsAndMetadata">
+      <summary>
+        <para>Specifies that AssetDatabase.ForceReserializeAssets should load, upgrade, and save both the assets at the paths passed to the function, and also their accompanying .meta files.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ForceReserializeAssetsOptions.ReserializeMetadata">
+      <summary>
+        <para>Specifies that AssetDatabase.ForceReserializeAssets should load, upgrade, and save the .meta files for the assets at the paths passed to the function, but not the assets themselves.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.GameObjectUtility">
@@ -14457,7 +15031,7 @@ If the Unity Editor setting "Auto-Update" is set to enabled, editing a script ou
       <summary>
         <para>Flood fills tiles and GameObjects starting from a given position within the selected layers.</para>
       </summary>
-      <param name="gridLayout"> used for layout.</param>
+      <param name="gridLayout">GridLayout used for layout.</param>
       <param name="brushTarget">Target of the flood fill operation. By default the currently selected GameObject.</param>
       <param name="position">Starting position of the flood fill.</param>
     </member>
@@ -14957,11 +15531,28 @@ If the Unity Editor setting "Auto-Update" is set to enabled, editing a script ou
       <param name="size">The size of the handle in the space of Handles.matrix. Use HandleUtility.GetHandleSize if you want a constant screen-space size.</param>
       <param name="eventType">Event type for the handle to act upon. By design it handles EventType.Layout and EventType.Repaint events.</param>
     </member>
+    <member name="M:UnityEditor.Handles.Disc(System.Int32,UnityEngine.Quaternion,UnityEngine.Vector3,UnityEngine.Vector3,System.Single,System.Boolean,System.Single)">
+      <summary>
+        <para>Make a 3D disc that can be dragged with the mouse.
+Note: Use HandleUtility.GetHandleSize where you might want to have constant screen-sized handles.</para>
+      </summary>
+      <param name="id">Control id of the handle.</param>
+      <param name="rotation">The rotation of the disc.</param>
+      <param name="position">The center of the disc.</param>
+      <param name="axis">The axis to rotate around.</param>
+      <param name="size">The size of the disc in world space See Also:HandleUtility.GetHandleSize.</param>
+      <param name="cutoffPlane">If true, only the front-facing half of the circle is draw / draggable. This is useful when you have many overlapping rotation axes (like in the default rotate tool) to avoid clutter.</param>
+      <param name="snap">The grid size to snap to.</param>
+      <returns>
+        <para>The new rotation value modified by the user's interaction with the handle. If the user has not moved the handle, it will return the same value as you passed into the function.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.Handles.Disc(UnityEngine.Quaternion,UnityEngine.Vector3,UnityEngine.Vector3,System.Single,System.Boolean,System.Single)">
       <summary>
         <para>Make a 3D disc that can be dragged with the mouse.
 Note: Use HandleUtility.GetHandleSize where you might want to have constant screen-sized handles.</para>
       </summary>
+      <param name="id">Control id of the handle.</param>
       <param name="rotation">The rotation of the disc.</param>
       <param name="position">The center of the disc.</param>
       <param name="axis">The axis to rotate around.</param>
@@ -15247,10 +15838,25 @@ Note: Use HandleUtility.GetHandleSize where you might want to have constant scre
         <para>The new value modified by the user's interaction with the handle. If the user has not moved the handle, it will return the same value as you passed into the function.</para>
       </returns>
     </member>
+    <member name="M:UnityEditor.Handles.FreeRotateHandle(System.Int32,UnityEngine.Quaternion,UnityEngine.Vector3,System.Single)">
+      <summary>
+        <para>Make an unconstrained rotation handle.</para>
+      </summary>
+      <param name="id">Control id of the handle.</param>
+      <param name="rotation">Orientation of the handle.</param>
+      <param name="position">Center of the handle in 3D space.</param>
+      <param name="size">The size of the handle.
+
+Note: Use HandleUtility.GetHandleSize where you might want to have constant screen-sized handles.</param>
+      <returns>
+        <para>The new rotation value modified by the user's interaction with the handle. If the user has not moved the handle, it will return the same value as you passed into the function.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.Handles.FreeRotateHandle(UnityEngine.Quaternion,UnityEngine.Vector3,System.Single)">
       <summary>
         <para>Make an unconstrained rotation handle.</para>
       </summary>
+      <param name="id">Control id of the handle.</param>
       <param name="rotation">Orientation of the handle.</param>
       <param name="position">Center of the handle in 3D space.</param>
       <param name="size">The size of the handle.
@@ -18154,6 +18760,41 @@ GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
         <para>A light status bar, intended for use on dark backgrounds.</para>
       </summary>
     </member>
+    <member name="T:UnityEditor.iOSSystemGestureDeferMode">
+      <summary>
+        <para>Bit-mask used to control the deferring of system gestures on iOS.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.iOSSystemGestureDeferMode.All">
+      <summary>
+        <para>Identifies all screen edges.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.iOSSystemGestureDeferMode.BottomEdge">
+      <summary>
+        <para>Identifies bottom screen edge.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.iOSSystemGestureDeferMode.LeftEdge">
+      <summary>
+        <para>Identifies left screen edge.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.iOSSystemGestureDeferMode.None">
+      <summary>
+        <para>Disables gesture deferring on all edges.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.iOSSystemGestureDeferMode.RightEdge">
+      <summary>
+        <para>Identifies right screen edge.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.iOSSystemGestureDeferMode.TopEdge">
+      <summary>
+        <para>Identifies top screen edge.</para>
+      </summary>
+    </member>
     <member name="T:UnityEditor.iOSTargetDevice">
       <summary>
         <para>Target iOS device.</para>
@@ -18242,11 +18883,6 @@ GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
     <member name="T:UnityEditor.LightEditor">
       <summary>
         <para>The class used to render the Light Editor when a Light is selected in the Unity Editor.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEditor.LightEditor.DefaultOnInspectorGUI">
-      <summary>
-        <para>Perform the rendering of the light Inspector.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.LightingDataAsset">
@@ -18399,14 +19035,14 @@ GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
         <para>Backends available for baking lightmaps.</para>
       </summary>
     </member>
-    <member name="F:UnityEditor.LightmapEditorSettings.Lightmapper.PathTracer">
-      <summary>
-        <para>Backend for baking lightmaps with path tracing.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.LightmapEditorSettings.Lightmapper.Radiosity">
+    <member name="F:UnityEditor.LightmapEditorSettings.Lightmapper.Enlighten">
       <summary>
         <para>Backend for baking lightmaps with the Enlighten radiosity middleware.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.LightmapEditorSettings.Lightmapper.ProgressiveCPU">
+      <summary>
+        <para>Backend for baking lightmaps using progressive path tracing.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.LightmapEditorSettings.Sampling">
@@ -18728,14 +19364,14 @@ GUILayout.MaxHeight, GUILayout.ExpandWidth, GUILayout.ExpandHeight.</param>
     </member>
     <member name="M:UnityEditor.MaterialEditor.BeginAnimatedCheck(UnityEngine.Rect,UnityEditor.MaterialProperty)">
       <summary>
-        <para>Create a Property wrapper, useful for making regular GUI controls work with MaterialProperty.</para>
+        <para>Creates a Property wrapper, useful for making regular GUI controls work with MaterialProperty.</para>
       </summary>
       <param name="totalPosition">Rectangle on the screen to use for the control, including label if applicable.</param>
       <param name="prop">The MaterialProperty to use for the control.</param>
     </member>
     <member name="M:UnityEditor.MaterialEditor.BeginAnimatedCheck(UnityEditor.MaterialProperty)">
       <summary>
-        <para>Create a Property wrapper, useful for making regular GUI controls work with MaterialProperty.</para>
+        <para>Creates a Property wrapper, useful for making regular GUI controls work with MaterialProperty.</para>
       </summary>
       <param name="totalPosition">Rectangle on the screen to use for the control, including label if applicable.</param>
       <param name="prop">The MaterialProperty to use for the control.</param>
@@ -19479,6 +20115,151 @@ See Also: MaterialLightmapFlags.</para>
       <param name="label">The label of this property.</param>
       <param name="editor">Current material editor.</param>
     </member>
+    <member name="T:UnityEditor.Media.AudioTrackAttributes">
+      <summary>
+        <para>Descriptor for audio track format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.AudioTrackAttributes.channelCount">
+      <summary>
+        <para>Number of channels.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.AudioTrackAttributes.language">
+      <summary>
+        <para>Dialogue language, if applicable.  Can be empty.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.AudioTrackAttributes.sampleRate">
+      <summary>
+        <para>Audio sampling rate.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.Media.MediaEncoder">
+      <summary>
+        <para>Encodes images and audio samples into an audio or movie file.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.AddFrame(UnityEngine.Texture2D)">
+      <summary>
+        <para>Appends a frame to the file's video track.</para>
+      </summary>
+      <param name="texture">Texture containing the pixels to be written into the track for the current frame.</param>
+      <returns>
+        <para>True if the operation succeeded. False otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.AddSamples(System.UInt16,UnityEngine.Collections.NativeArray`1&lt;System.Single&gt;)">
+      <summary>
+        <para>Appends sample frames to the specified audio track.</para>
+      </summary>
+      <param name="trackIndex">Index of the track to which sample frames will be added.</param>
+      <param name="interleavedSamples">Sample frames to add.  Samples are expected to be interleaved.</param>
+      <returns>
+        <para>True if the operation succeeded. False otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.AddSamples(UnityEngine.Collections.NativeArray`1&lt;System.Single&gt;)">
+      <summary>
+        <para>Appends sample frames to the specified audio track.</para>
+      </summary>
+      <param name="trackIndex">Index of the track to which sample frames will be added.</param>
+      <param name="interleavedSamples">Sample frames to add.  Samples are expected to be interleaved.</param>
+      <returns>
+        <para>True if the operation succeeded. False otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.#ctor(System.String,UnityEditor.Media.VideoTrackAttributes,UnityEditor.Media.AudioTrackAttributes[])">
+      <summary>
+        <para>Create a new encoder with various track arrangements.</para>
+      </summary>
+      <param name="filePath">Path fo the media file to be written.</param>
+      <param name="videoAttrs">Attributes for the file's video track, if any.</param>
+      <param name="audioAttrs">Attributes for the file's audio tracks, if any.</param>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.#ctor(System.String,UnityEditor.Media.VideoTrackAttributes,UnityEditor.Media.AudioTrackAttributes)">
+      <summary>
+        <para>Create a new encoder with various track arrangements.</para>
+      </summary>
+      <param name="filePath">Path fo the media file to be written.</param>
+      <param name="videoAttrs">Attributes for the file's video track, if any.</param>
+      <param name="audioAttrs">Attributes for the file's audio tracks, if any.</param>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.#ctor(System.String,UnityEditor.Media.VideoTrackAttributes)">
+      <summary>
+        <para>Create a new encoder with various track arrangements.</para>
+      </summary>
+      <param name="filePath">Path fo the media file to be written.</param>
+      <param name="videoAttrs">Attributes for the file's video track, if any.</param>
+      <param name="audioAttrs">Attributes for the file's audio tracks, if any.</param>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.#ctor(System.String,UnityEditor.Media.AudioTrackAttributes[])">
+      <summary>
+        <para>Create a new encoder with various track arrangements.</para>
+      </summary>
+      <param name="filePath">Path fo the media file to be written.</param>
+      <param name="videoAttrs">Attributes for the file's video track, if any.</param>
+      <param name="audioAttrs">Attributes for the file's audio tracks, if any.</param>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.#ctor(System.String,UnityEditor.Media.AudioTrackAttributes)">
+      <summary>
+        <para>Create a new encoder with various track arrangements.</para>
+      </summary>
+      <param name="filePath">Path fo the media file to be written.</param>
+      <param name="videoAttrs">Attributes for the file's video track, if any.</param>
+      <param name="audioAttrs">Attributes for the file's audio tracks, if any.</param>
+    </member>
+    <member name="M:UnityEditor.Media.MediaEncoder.Dispose">
+      <summary>
+        <para>Finishes writing all tracks and closes the file being written.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.Media.MediaRational">
+      <summary>
+        <para>Rational number useful for expressing fractions precisely.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.MediaRational.denominator">
+      <summary>
+        <para>Fraction denominator.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.MediaRational.numerator">
+      <summary>
+        <para>Fraction numerator.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Media.MediaRational.#ctor(System.Int32)">
+      <summary>
+        <para>Constructs a rational number whose denominator is 1.</para>
+      </summary>
+      <param name="num">Numerator. Will also become the rational value as the denominator is set to 1.</param>
+    </member>
+    <member name="T:UnityEditor.Media.VideoTrackAttributes">
+      <summary>
+        <para>Descriptor for audio track format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.VideoTrackAttributes.frameRate">
+      <summary>
+        <para>Frames per second.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.VideoTrackAttributes.height">
+      <summary>
+        <para>Image height in pixels.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.VideoTrackAttributes.includeAlpha">
+      <summary>
+        <para>True if the track is to include the alpha channel found in the texture passed to AddFrame. False otherwise.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.Media.VideoTrackAttributes.width">
+      <summary>
+        <para>Image width in pixels.</para>
+      </summary>
+    </member>
     <member name="T:UnityEditor.MemoryProfiler.Connection">
       <summary>
         <para>A pair of from and to indices describing what thing keeps what other thing alive.</para>
@@ -20092,6 +20873,11 @@ See Also: MaterialLightmapFlags.</para>
         <para>Use visibility properties to enable or disable MeshRenderer components.</para>
       </summary>
     </member>
+    <member name="P:UnityEditor.ModelImporter.indexFormat">
+      <summary>
+        <para>Format of the imported mesh index buffer data.</para>
+      </summary>
+    </member>
     <member name="P:UnityEditor.ModelImporter.isBakeIKSupported">
       <summary>
         <para>Is Bake Inverse Kinematics (IK) supported by this importer.</para>
@@ -20120,6 +20906,11 @@ See Also: MaterialLightmapFlags.</para>
     <member name="P:UnityEditor.ModelImporter.keepQuads">
       <summary>
         <para>If this is true, any quad faces that exist in the mesh data before it is imported are kept as quads instead of being split into two triangles, for the purposes of tessellation. Set this to false to disable this behavior.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.ModelImporter.materialLocation">
+      <summary>
+        <para>Material import location options.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.ModelImporter.materialName">
@@ -20165,6 +20956,11 @@ See Also: MaterialLightmapFlags.</para>
     <member name="P:UnityEditor.ModelImporter.optimizeMesh">
       <summary>
         <para>Vertex optimization setting.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.ModelImporter.preserveHierarchy">
+      <summary>
+        <para>If true, always create an explicit prefab root. Otherwise, if the model has a single root, it is reused as the prefab root.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.ModelImporter.referencedClips">
@@ -20258,6 +21054,16 @@ Notes:
       <param name="folderPath">The directory where the textures will be extracted.</param>
       <returns>
         <para>Returns true if the textures are extracted successfully, otherwise false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.ModelImporter.SearchAndRemapMaterials(UnityEditor.ModelImporterMaterialName,UnityEditor.ModelImporterMaterialSearch)">
+      <summary>
+        <para>Search the project for matching materials and use them instead of the internal materials.</para>
+      </summary>
+      <param name="nameOption">The name matching option.</param>
+      <param name="searchOption">The search type option.</param>
+      <returns>
+        <para>Returns true if the materials have been successfly remapped, otherwise false.</para>
       </returns>
     </member>
     <member name="T:UnityEditor.ModelImporterAnimationCompression">
@@ -20531,6 +21337,41 @@ To force a reload of the mask, simply set  ModelImporterClipAnimation.maskSource
     <member name="F:UnityEditor.ModelImporterHumanoidOversampling.X8">
       <summary>
         <para>Humanoid Oversampling samples at 8 times the sampling rate found in the imported file.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.ModelImporterIndexFormat">
+      <summary>
+        <para>Format of the imported mesh index buffer data.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ModelImporterIndexFormat.Auto">
+      <summary>
+        <para>Use 16 or 32 bit index buffer depending on mesh size.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ModelImporterIndexFormat.UInt16">
+      <summary>
+        <para>Use 16 bit index buffer.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ModelImporterIndexFormat.UInt32">
+      <summary>
+        <para>Use 32 bit index buffer.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.ModelImporterMaterialLocation">
+      <summary>
+        <para>Material import options for ModelImporter.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ModelImporterMaterialLocation.External">
+      <summary>
+        <para>Extract the materials and textures from the model.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.ModelImporterMaterialLocation.InPrefab">
+      <summary>
+        <para>Unity imports materials as sub-assets.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.ModelImporterMaterialName">
@@ -20855,7 +21696,12 @@ To force a reload of the mask, simply set  ModelImporterClipAnimation.maskSource
         <para>Information of the connected player.</para>
       </summary>
     </member>
-    <member name="P:UnityEditor.Networking.PlayerConnection.ConnectedPlayer.PlayerId">
+    <member name="P:UnityEditor.Networking.PlayerConnection.ConnectedPlayer.name">
+      <summary>
+        <para>The name of the connected player.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.Networking.PlayerConnection.ConnectedPlayer.playerId">
       <summary>
         <para>The Id of the player connected.</para>
       </summary>
@@ -21042,6 +21888,229 @@ If the target name is in the provided list of existing names, a unique name is g
     <member name="M:UnityEditor.ObjectPreview.ResetTarget">
       <summary>
         <para>Called to Reset the target before iterating through them.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Client">
+      <summary>
+        <para>Unity Package Manager client class.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.PackageManager.Client.Add(System.String)">
+      <summary>
+        <para>Adds a package dependency to the project.</para>
+      </summary>
+      <param name="packageIdOrName">The name or ID of the package to add.  If only the name is specified, the latest version of the package is installed.</param>
+      <returns>
+        <para>An AddRequest instance, which you can use to monitor the asynchronous operation, and when complete, get the result.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.PackageManager.Client.List">
+      <summary>
+        <para>Lists the packages the project depends on.</para>
+      </summary>
+      <returns>
+        <para>A ListRequest instance, which you can use to monitor the asynchronous operation, and when complete, get the result.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.PackageManager.Client.Remove(System.String)">
+      <summary>
+        <para>Removes a previously added package from the project.</para>
+      </summary>
+      <param name="packageIdOrName">The name or the ID of the package to remove from the project.  If only the name is specified, the package is removed regardless of the installed version.</param>
+      <returns>
+        <para>A RemoveRequest instance, which you can use to monitor the status of the asynchronous operation.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.PackageManager.Client.ResetToEditorDefaults">
+      <summary>
+        <para>Resets the list of packages installed for this project to the editor's default configuration. This operation will clear all packages added to the project and keep only the packages set for the current editor default configuration.</para>
+      </summary>
+      <returns>
+        <para>A ResetToEditorDefaultsRequest instance, which you can use to monitor the status of the asynchronous operation.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.PackageManager.Client.Search(System.String)">
+      <summary>
+        <para>Searches the Unity package registry for the given package.</para>
+      </summary>
+      <param name="packageIdOrName">The name or ID of the package.</param>
+      <returns>
+        <para>A SearchRequest instance, which you can use to monitor the asynchronous operation, and when complete, get the result.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Error">
+      <summary>
+        <para>Structure describing the error of a package operation.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Error.errorCode">
+      <summary>
+        <para>Numerical error code.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Error.message">
+      <summary>
+        <para>Error message or description.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.ErrorCode">
+      <summary>
+        <para>Package operation Error.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.ErrorCode.Conflict">
+      <summary>
+        <para>Conflicting package versions were found.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.ErrorCode.Forbidden">
+      <summary>
+        <para>Operation was not allowed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.ErrorCode.InvalidParameter">
+      <summary>
+        <para>Operation had invalid parameters.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.ErrorCode.NotFound">
+      <summary>
+        <para>A package required to fulfill the operation was not found.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.ErrorCode.Unknown">
+      <summary>
+        <para>Operation resulted in an unknown error.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.PackageCollection">
+      <summary>
+        <para>A collection of PackageInfo objects.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.PackageInfo">
+      <summary>
+        <para>Structure describing a Unity Package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.category">
+      <summary>
+        <para>Category of the package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.description">
+      <summary>
+        <para>Detailed description of the package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.displayName">
+      <summary>
+        <para>Friendly display name of the package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.name">
+      <summary>
+        <para>Unique name of the package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.packageId">
+      <summary>
+        <para>Identifier of the package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.resolvedPath">
+      <summary>
+        <para>The local path of the project on disk.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.PackageInfo.version">
+      <summary>
+        <para>Version of the package.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.AddRequest">
+      <summary>
+        <para>Represents an asynchronous request to add a package to the project.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.ListRequest">
+      <summary>
+        <para>Represents an asynchronous request to list the packages in the project.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.RemoveRequest">
+      <summary>
+        <para>Represents an asynchronous request to remove a package from the project.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Requests.RemoveRequest.PackageIdOrName">
+      <summary>
+        <para>The package being removed by this request.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.Request">
+      <summary>
+        <para>Tracks the state of an asynchronous Unity Package Manager (Upm) server operation.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Requests.Request.Error">
+      <summary>
+        <para>The error returned by the request, if any.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Requests.Request.IsCompleted">
+      <summary>
+        <para>Whether the request is complete.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Requests.Request.Status">
+      <summary>
+        <para>The request status.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.Request`1">
+      <summary>
+        <para>Tracks the state of an asynchronous Unity Package Manager (Upm) server operation that returns a non-empty response.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Requests.Request_1.Result">
+      <summary>
+        <para>The response to the request.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.ResetToEditorDefaultsRequest">
+      <summary>
+        <para>Represents an asynchronous request to reset the project packages to the current Editor default configuration.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.Requests.SearchRequest">
+      <summary>
+        <para>Represents an asynchronous request to find a package.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PackageManager.Requests.SearchRequest.PackageIdOrName">
+      <summary>
+        <para>The package id or name used in this search operation.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PackageManager.StatusCode">
+      <summary>
+        <para>Unity Package Manager operation status.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.StatusCode.Failure">
+      <summary>
+        <para>Package manager operation failed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.StatusCode.InProgress">
+      <summary>
+        <para>Package manager operation is in progress.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.PackageManager.StatusCode.Success">
+      <summary>
+        <para>Package manager operation completed successfully.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.PauseState">
@@ -21634,6 +22703,11 @@ See Also: PhysicsVisualizationSettings.</para>
         <para>Stops or allows audio from other applications to play in the background while your Unity application is running.</para>
       </summary>
     </member>
+    <member name="P:UnityEditor.PlayerSettings.preserveFramebufferAlpha">
+      <summary>
+        <para>When enabled, preserves the alpha value in the framebuffer to support rendering over native UI on Android.</para>
+      </summary>
+    </member>
     <member name="P:UnityEditor.PlayerSettings.productName">
       <summary>
         <para>The name of your product.</para>
@@ -21686,7 +22760,7 @@ See Also: PhysicsVisualizationSettings.</para>
     </member>
     <member name="P:UnityEditor.PlayerSettings.statusBarHidden">
       <summary>
-        <para>Should status bar be hidden. Shared between iOS &amp; Android platforms.</para>
+        <para>Returns if status bar should be hidden. Supported on iOS only; on Android, the status bar is always hidden.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.PlayerSettings.stereoRenderingPath">
@@ -21751,7 +22825,7 @@ See Also: PhysicsVisualizationSettings.</para>
     </member>
     <member name="P:UnityEditor.PlayerSettings.virtualRealitySupported">
       <summary>
-        <para>Enable virtual reality support.</para>
+        <para>Enable Virtual Reality support on the current build target.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.PlayerSettings.visibleInBackground">
@@ -21907,6 +22981,15 @@ See Also: PhysicsVisualizationSettings.</para>
       </summary>
       <param name="targetGroup"></param>
     </member>
+    <member name="M:UnityEditor.PlayerSettings.GetAvailableVirtualRealitySDKs(UnityEditor.BuildTargetGroup)">
+      <summary>
+        <para>Returns a list of the available Virtual Reality SDKs that are supported on a given BuildTargetGroup.</para>
+      </summary>
+      <param name="targetGroup">The BuildTargetGroup to return the list for.</param>
+      <returns>
+        <para>List of available Virtual Reality SDKs.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.PlayerSettings.GetGraphicsAPIs(UnityEditor.BuildTarget)">
       <summary>
         <para>Get graphics APIs to be used on a build platform.</para>
@@ -21954,7 +23037,7 @@ See Also: PhysicsVisualizationSettings.</para>
       <summary>
         <para>Check if multithreaded rendering option for mobile platform is enabled.</para>
       </summary>
-      <param name="targetGroup">Mobile platform (Only iOS, tvOS, Android and Samsung TV).</param>
+      <param name="targetGroup">Mobile platform (Only iOS, tvOS and Android).</param>
       <returns>
         <para>Return true if multithreaded rendering option for targetGroup platform is enabled.</para>
       </returns>
@@ -22058,6 +23141,24 @@ See Also: PhysicsVisualizationSettings.</para>
         <para>Should best available graphics API be used.</para>
       </returns>
     </member>
+    <member name="M:UnityEditor.PlayerSettings.GetVirtualRealitySDKs(UnityEditor.BuildTargetGroup)">
+      <summary>
+        <para>Get the List of Virtual Reality SDKs for a given BuildTargetGroup.</para>
+      </summary>
+      <param name="targetGroup">The BuildTargetGroup to return the SDK list for.</param>
+      <returns>
+        <para>Ordered list of Virtual Reality SDKs.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.PlayerSettings.GetVirtualRealitySupported(UnityEditor.BuildTargetGroup)">
+      <summary>
+        <para>Returns whether or not Virtual Reality Support is enabled for a given BuildTargetGroup.</para>
+      </summary>
+      <param name="targetGroup">The BuildTargetGroup to return the value for.</param>
+      <returns>
+        <para>True if Virtual Reality Support is enabled.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.PlayerSettings.HasAspectRatio(UnityEditor.AspectRatio)">
       <summary>
         <para>Returns whether or not the specified aspect ratio is enabled.</para>
@@ -22109,6 +23210,16 @@ See Also: PhysicsVisualizationSettings.</para>
         <para>Describes the reason for access to the user's camera.</para>
       </summary>
     </member>
+    <member name="P:UnityEditor.PlayerSettings.iOS.deferSystemGesturesMode">
+      <summary>
+        <para>Defer system gestures until the second swipe on specific edges.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PlayerSettings.iOS.disableDepthAndStencilBuffers">
+      <summary>
+        <para>Disable Depth and Stencil Buffers.</para>
+      </summary>
+    </member>
     <member name="P:UnityEditor.PlayerSettings.iOS.exitOnSuspend">
       <summary>
         <para>Application should exit when suspended to background.</para>
@@ -22117,6 +23228,11 @@ See Also: PhysicsVisualizationSettings.</para>
     <member name="P:UnityEditor.PlayerSettings.iOS.forceHardShadowsOnMetal">
       <summary>
         <para>Should hard shadows be enforced when running on (mobile) Metal.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PlayerSettings.iOS.hideHomeButton">
+      <summary>
+        <para>Specifies whether the home button should be hidden in the iOS build of this application.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.PlayerSettings.iOS.iOSManualProvisioningProfileID">
@@ -22808,81 +23924,6 @@ See Also: PhysicsVisualizationSettings.</para>
         <para>PS Vita Bootable, PS Vita TV Not Bootable (SCEJ or SCE Asia).</para>
       </summary>
     </member>
-    <member name="T:UnityEditor.PlayerSettings.SamsungTV">
-      <summary>
-        <para>Samsung Smart TV specific Player Settings.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.PlayerSettings.SamsungTV.deviceAddress">
-      <summary>
-        <para>The address used when accessing the device.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.PlayerSettings.SamsungTV.productAuthor">
-      <summary>
-        <para>Author of the created product.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.PlayerSettings.SamsungTV.productAuthorEmail">
-      <summary>
-        <para>Product author's e-mail.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.PlayerSettings.SamsungTV.productCategory">
-      <summary>
-        <para>The category of the created product.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.PlayerSettings.SamsungTV.productDescription">
-      <summary>
-        <para>The description of the created product.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.PlayerSettings.SamsungTV.productLink">
-      <summary>
-        <para>The author's website link.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories">
-      <summary>
-        <para>Types of available product categories.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Education">
-      <summary>
-        <para>The education category.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Games">
-      <summary>
-        <para>The games category (default).</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Information">
-      <summary>
-        <para>The information category.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Kids">
-      <summary>
-        <para>The kids category.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Lifestyle">
-      <summary>
-        <para>The lifestyle category.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Sports">
-      <summary>
-        <para>The sports category.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.PlayerSettings.SamsungTV.SamsungTVProductCategories.Videos">
-      <summary>
-        <para>The videos category.</para>
-      </summary>
-    </member>
     <member name="M:UnityEditor.PlayerSettings.SetAdditionalIl2CppArgs(System.String)">
       <summary>
         <para>IL2CPP build arguments.</para>
@@ -22951,7 +23992,7 @@ See Also: PhysicsVisualizationSettings.</para>
       <summary>
         <para>Enable or disable multithreaded rendering option for mobile platform.</para>
       </summary>
-      <param name="targetGroup">Mobile platform (Only iOS, tvOS, Android and Samsung TV).</param>
+      <param name="targetGroup">Mobile platform (Only iOS, tvOS and Android).</param>
       <param name="enable"></param>
     </member>
     <member name="M:UnityEditor.PlayerSettings.SetPlatformVuforiaEnabled(UnityEditor.BuildTargetGroup,System.Boolean)">
@@ -23013,6 +24054,20 @@ Note: calling this function will implicitly call Application.SetStackTraceLogTyp
       </summary>
       <param name="platform">Platform to set the flag for.</param>
       <param name="automatic">Should best available graphics API be used?</param>
+    </member>
+    <member name="M:UnityEditor.PlayerSettings.SetVirtualRealitySDKs(UnityEditor.BuildTargetGroup,System.String[])">
+      <summary>
+        <para>Set the List of Virtual Reality SDKs for a given BuildTargetGroup.</para>
+      </summary>
+      <param name="targetGroup">The BuildTargetGroup to set the SDK list for.</param>
+      <param name="sdks">List of Virtual Reality SDKs.</param>
+    </member>
+    <member name="M:UnityEditor.PlayerSettings.SetVirtualRealitySupported(UnityEditor.BuildTargetGroup,System.Boolean)">
+      <summary>
+        <para>Sets whether or not Virtual Reality Support is enabled for a given BuildTargetGroup.</para>
+      </summary>
+      <param name="targetGroup">The BuildTargetGroup to set the value for.</param>
+      <param name="value">The value to set, true to enable, false to disable.</param>
     </member>
     <member name="T:UnityEditor.PlayerSettings.SplashScreen">
       <summary>
@@ -23515,6 +24570,35 @@ Protected memory support is currently an all or nothing feature. When enabled on
 NOTE: Only takes effect if set before initializing VR.</para>
       </summary>
     </member>
+    <member name="P:UnityEditor.PlayerSettings.VRDaydream.maximumSupportedHeadTracking">
+      <summary>
+        <para>Set the highest level of head tracking required to run your application.
+
+Set this property to limit your application to only run on devices that support this maximum level of head tracking. On devices that support higher levels of head tracking, your application is limited to using the maximum level.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PlayerSettings.VRDaydream.minimumSupportedHeadTracking">
+      <summary>
+        <para>Set the lowest level of head tracking required to run your application.
+
+Set this property to limit your application to only run on devices that support this minimum level of head tracking.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.PlayerSettings.VROculus">
+      <summary>
+        <para>Class used to access properties of the Oculus VR device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PlayerSettings.VROculus.dashSupport">
+      <summary>
+        <para>Enable Oculus Dash support for the application.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PlayerSettings.VROculus.sharedDepthBuffer">
+      <summary>
+        <para>Enable Shared Depth Buffer support with Oculus.</para>
+      </summary>
+    </member>
     <member name="T:UnityEditor.PlayerSettings.WebGL">
       <summary>
         <para>WebGL specific player settings.</para>
@@ -23578,6 +24662,11 @@ NOTE: Only takes effect if set before initializing VR.</para>
     <member name="P:UnityEditor.PlayerSettings.WSA.inputSource">
       <summary>
         <para>Where Unity gets input from.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.PlayerSettings.WSA.transparentSwapchain">
+      <summary>
+        <para>Sets AlphaMode on the swap chain to DXGI_ALPHA_MODE_PREMULTIPLIED.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.PlayerSettings.WSA.Declarations">
@@ -24227,6 +25316,15 @@ See Also: PauseState, EditorApplication.playModeStateChanged, EditorApplication.
         <para>The reflection FieldInfo for the member this property represents. (Read Only)</para>
       </summary>
     </member>
+    <member name="M:UnityEditor.PropertyDrawer.CanCacheInspectorGUI(UnityEditor.SerializedProperty)">
+      <summary>
+        <para>Override this method to determine whether the inspector GUI for your property can be cached.</para>
+      </summary>
+      <param name="property">The SerializedProperty to make the custom GUI for.</param>
+      <returns>
+        <para>Whether the drawer's UI can be cached.</para>
+      </returns>
+    </member>
     <member name="M:UnityEditor.PropertyDrawer.GetPropertyHeight(UnityEditor.SerializedProperty,UnityEngine.GUIContent)">
       <summary>
         <para>Override this method to specify how tall the GUI for this field is in pixels.</para>
@@ -24357,7 +25455,7 @@ See Also: PauseState, EditorApplication.playModeStateChanged, EditorApplication.
     </member>
     <member name="P:UnityEditor.Rendering.EditorGraphicsSettings.albedoSwatches">
       <summary>
-        <para>Will return an array of Rendering.AlbedoSwatchInfo.</para>
+        <para>Returns an array of Rendering.AlbedoSwatchInfo.</para>
       </summary>
     </member>
     <member name="M:UnityEditor.Rendering.EditorGraphicsSettings.GetShaderSettingsForPlatform(UnityEditor.BuildTargetGroup,UnityEngine.Rendering.ShaderHardwareTier)">
@@ -24369,7 +25467,7 @@ See Also: PauseState, EditorApplication.playModeStateChanged, EditorApplication.
     </member>
     <member name="M:UnityEditor.Rendering.EditorGraphicsSettings.GetTierSettings(UnityEditor.BuildTargetGroup,UnityEngine.Rendering.GraphicsTier)">
       <summary>
-        <para>Will return TierSettings for given platform and shader hardware tier.</para>
+        <para>Returns TierSettings for the target build platform and shader hardware tier.</para>
       </summary>
       <param name="target"></param>
       <param name="tier"></param>
@@ -26017,97 +27115,6 @@ See Also:</para>
         <para>Vector Property.</para>
       </summary>
     </member>
-    <member name="T:UnityEditor.SketchUpImportCamera">
-      <summary>
-        <para>Structure to hold camera data extracted from a SketchUp file.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.aspectRatio">
-      <summary>
-        <para>Aspect ratio of the camera.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.fieldOfView">
-      <summary>
-        <para>Field of view of the camera.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.isPerspective">
-      <summary>
-        <para>Indicate if the camera is using a perspective or orthogonal projection.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.lookAt">
-      <summary>
-        <para>The position the camera is looking at.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.orthoSize">
-      <summary>
-        <para>The orthogonal projection size of the camera. This value only make sense if SketchUpImportCamera.isPerspective is false.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.position">
-      <summary>
-        <para>The position of the camera.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportCamera.up">
-      <summary>
-        <para>Up vector of the camera.</para>
-      </summary>
-    </member>
-    <member name="T:UnityEditor.SketchUpImporter">
-      <summary>
-        <para>Derives from AssetImporter to handle importing of SketchUp files.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.SketchUpImporter.latitude">
-      <summary>
-        <para>Retrieves the latitude Geo Coordinate imported from the SketchUp file.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.SketchUpImporter.longitude">
-      <summary>
-        <para>Retrieves the longitude Geo Coordinate imported from the SketchUp file.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEditor.SketchUpImporter.northCorrection">
-      <summary>
-        <para>Retrieves the north correction value imported from the SketchUp file.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEditor.SketchUpImporter.GetDefaultCamera">
-      <summary>
-        <para>The default camera or the camera of the active scene which the SketchUp file was saved with.</para>
-      </summary>
-      <returns>
-        <para>The default camera.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEditor.SketchUpImporter.GetScenes">
-      <summary>
-        <para>The method returns an array of SketchUpImportScene which represents SketchUp scenes.</para>
-      </summary>
-      <returns>
-        <para>Array of scenes extracted from a SketchUp file.</para>
-      </returns>
-    </member>
-    <member name="T:UnityEditor.SketchUpImportScene">
-      <summary>
-        <para>Structure to hold scene data extracted from a SketchUp file.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportScene.camera">
-      <summary>
-        <para>The camera data of the SketchUp scene.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEditor.SketchUpImportScene.name">
-      <summary>
-        <para>The name of the SketchUp scene.</para>
-      </summary>
-    </member>
     <member name="T:UnityEditor.SpeedTreeImporter">
       <summary>
         <para>AssetImportor for importing SpeedTree model assets.</para>
@@ -26623,11 +27630,6 @@ See Also:</para>
         <para>Used to compute static occlusion culling data asynchronously.</para>
       </summary>
     </member>
-    <member name="M:UnityEditor.StaticOcclusionCulling.GenerateInBackground">
-      <summary>
-        <para>Used to compute static occlusion culling data asynchronously.</para>
-      </summary>
-    </member>
     <member name="T:UnityEditor.StaticOcclusionCullingVisualization">
       <summary>
         <para>Used to visualize static occlusion culling at development time in scene view.</para>
@@ -26675,11 +27677,14 @@ See Also:</para>
 See Also: AssetDatabase.IsOpenForEdit, AssetDatabase.IsMetaFileOpenForEdit.</para>
       </summary>
     </member>
+    <member name="F:UnityEditor.StatusQueryOptions.UseCachedAsync">
+      <summary>
+        <para>This option sets the status query to first use the latest valid version control system status of the file and query for a valid status asynchronously if otherwise.</para>
+      </summary>
+    </member>
     <member name="F:UnityEditor.StatusQueryOptions.UseCachedIfPossible">
       <summary>
-        <para>Use the last known version control system status of the file. This is faster on average but less accurate than forcing an update, as it will cache the status of the file for a period of time.
-
-See Also: AssetDatabase.IsOpenForEdit, AssetDatabase.IsMetaFileOpenForEdit.</para>
+        <para>This option sets the status query to first use the latest valid version control system status of the file and query for a valid status synchronously if otherwise.</para>
       </summary>
     </member>
     <member name="T:UnityEditor.StereoRenderingPath">
@@ -27006,6 +28011,11 @@ Values match the ProceduralMaterial::ProceduralLoadingBehavior enum.</param>
     <member name="P:UnityEditor.TextureImporter.alphaTestReferenceValue">
       <summary>
         <para>Returns or assigns the alpha test reference value.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.TextureImporter.androidETC2FallbackOverride">
+      <summary>
+        <para>ETC2 texture decompression fallback override on Android devices that don't support ETC2.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.TextureImporter.anisoLevel">
@@ -27565,7 +28575,7 @@ Values match the ProceduralMaterial::ProceduralLoadingBehavior enum.</param>
     </member>
     <member name="F:UnityEditor.TextureImporterFormat.DXT1Crunched">
       <summary>
-        <para>DXT1 compressed texture format with Crunch compression for small storage sizes.</para>
+        <para>DXT1 compressed texture format with Crunch compression for smaller storage sizes.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.TextureImporterFormat.DXT5">
@@ -27575,7 +28585,7 @@ Values match the ProceduralMaterial::ProceduralLoadingBehavior enum.</param>
     </member>
     <member name="F:UnityEditor.TextureImporterFormat.DXT5Crunched">
       <summary>
-        <para>DXT5 compressed texture format with Crunch compression for small storage sizes.</para>
+        <para>DXT5 compressed texture format with Crunch compression for smaller storage sizes.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.TextureImporterFormat.EAC_R">
@@ -27603,6 +28613,11 @@ Values match the ProceduralMaterial::ProceduralLoadingBehavior enum.</param>
         <para>ETC (GLES2.0) 4 bits/pixel compressed RGB texture format.</para>
       </summary>
     </member>
+    <member name="F:UnityEditor.TextureImporterFormat.ETC_RGB4Crunched">
+      <summary>
+        <para>ETC_RGB4 compressed texture format with Crunch compression for smaller storage sizes.</para>
+      </summary>
+    </member>
     <member name="F:UnityEditor.TextureImporterFormat.ETC2_RGB4">
       <summary>
         <para>ETC2 compressed 4 bits / pixel RGB texture format.</para>
@@ -27616,6 +28631,11 @@ Values match the ProceduralMaterial::ProceduralLoadingBehavior enum.</param>
     <member name="F:UnityEditor.TextureImporterFormat.ETC2_RGBA8">
       <summary>
         <para>ETC2 compressed 8 bits / pixel RGBA texture format.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.TextureImporterFormat.ETC2_RGBA8Crunched">
+      <summary>
+        <para>ETC2_RGBA8 compressed texture format with Crunch compression for smaller storage sizes.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.TextureImporterFormat.PVRTC_RGB2">
@@ -27756,6 +28776,11 @@ Values match the ProceduralMaterial::ProceduralLoadingBehavior enum.</param>
     <member name="P:UnityEditor.TextureImporterPlatformSettings.allowsAlphaSplitting">
       <summary>
         <para>Allows Alpha splitting on the imported texture when needed (for example ETC1 compression for textures with transparency).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.TextureImporterPlatformSettings.androidETC2FallbackOverride">
+      <summary>
+        <para>Override for ETC2 decompression fallback on Android devices that don't support ETC2.</para>
       </summary>
     </member>
     <member name="P:UnityEditor.TextureImporterPlatformSettings.compressionQuality">
@@ -28200,6 +29225,11 @@ Valid values are in the range [0-1], with higher values generating a tighter mes
         <para>The scale tool is active.</para>
       </summary>
     </member>
+    <member name="F:UnityEditor.Tool.Transform">
+      <summary>
+        <para>The transform tool is active.</para>
+      </summary>
+    </member>
     <member name="F:UnityEditor.Tool.View">
       <summary>
         <para>The view tool is active - Use Tools.viewTool to find out which view tool we're talking about.</para>
@@ -28595,9 +29625,9 @@ It is required that the GameObject is at the root of its current scene.</para>
       <summary>
         <para>Sets the parent of transform to the new parent and records an undo operation.</para>
       </summary>
-      <param name="transform"></param>
-      <param name="newParent"></param>
-      <param name="name"></param>
+      <param name="transform">The Transform component whose parent is to be changed.</param>
+      <param name="newParent">The parent Transform to be assigned.</param>
+      <param name="name">The name of this action, to be stored in the Undo history buffer.</param>
     </member>
     <member name="T:UnityEditor.Undo.UndoRedoCallback">
       <summary>
@@ -29891,6 +30921,15 @@ It is required that the GameObject is at the root of its current scene.</para>
         <para>True if the source file has a channel for per-pixel transparency.</para>
       </summary>
     </member>
+    <member name="P:UnityEditor.VideoClipImporter.transcodeSkipped">
+      <summary>
+        <para>Returns true if transcoding was skipped during import, false otherwise. (Read Only)
+
+When VideoImporterTargetSettings.enableTranscoding is set to true, the resulting transcoding operation done at import time may be quite long, up to many hours depending on source resolution and content duration. An option to skip this process is offered in the asset import progress bar. When skipped, the transcoding instead provides a non-transcoded verision of the asset. However, the importer settings stay intact so this property can be inspected to detect the incoherence with the generated artifact.
+
+Re-importing without stopping the transcode process, or with transcode turned off, causes this property to become false.</para>
+      </summary>
+    </member>
     <member name="P:UnityEditor.VideoClipImporter.useLegacyImporter">
       <summary>
         <para>True to import a MovieTexture (deprecated), false for a VideoClip (preferred).</para>
@@ -30212,9 +31251,14 @@ Returns frame 0 when not playing, and frame at current time when playing.</para>
         <para>Enable throw support.</para>
       </summary>
     </member>
-    <member name="F:UnityEditor.WebGLExceptionSupport.Full">
+    <member name="F:UnityEditor.WebGLExceptionSupport.FullWithoutStacktrace">
       <summary>
-        <para>Enable exception support for all exceptions.</para>
+        <para>Enable exception support for all exceptions, without stack trace information.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.WebGLExceptionSupport.FullWithStacktrace">
+      <summary>
+        <para>Enable exception support for all exceptions, including stack trace information.</para>
       </summary>
     </member>
     <member name="F:UnityEditor.WebGLExceptionSupport.None">
@@ -30348,6 +31392,21 @@ Optimization enabled, profiler code enabled.</para>
     <member name="F:UnityEditor.XboxBuildSubtarget.Master">
       <summary>
         <para>Master player (submission-proof).</para>
+      </summary>
+    </member>
+    <member name="T:UnityEditor.XR.Daydream.SupportedHeadTracking">
+      <summary>
+        <para>Resolution dialog setting.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.XR.Daydream.SupportedHeadTracking.SixDoF">
+      <summary>
+        <para>Devices that support 6 Degrees of Freedom head tracking.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEditor.XR.Daydream.SupportedHeadTracking.ThreeDoF">
+      <summary>
+        <para>Devices that support 3 Degrees of Freedom head tracking.</para>
       </summary>
     </member>
   </members>
