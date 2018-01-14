@@ -54,6 +54,11 @@
         <para>The PlayableGraph created by the PlayableDirector.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Playables.PlayableDirector.playOnAwake">
+      <summary>
+        <para>Whether the playable asset will start playing back as soon as the component awakes.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Playables.PlayableDirector.state">
       <summary>
         <para>The current playing state of the component. (Read Only)</para>
@@ -103,14 +108,18 @@
         <para>Pauses playback of the currently running playable.</para>
       </summary>
     </member>
+    <member name="M:UnityEngine.Playables.PlayableDirector.Play(UnityEngine.Playables.PlayableAsset,UnityEngine.Playables.DirectorWrapMode)">
+      <summary>
+        <para>Instatiates a Playable using the provided PlayableAsset and starts playback.</para>
+      </summary>
+      <param name="asset">An asset to instantiate a playable from.</param>
+      <param name="mode">What to do when the time passes the duration of the playable.</param>
+    </member>
     <member name="M:UnityEngine.Playables.PlayableDirector.Play(UnityEngine.Playables.PlayableAsset)">
       <summary>
         <para>Instatiates a Playable using the provided PlayableAsset and starts playback.</para>
       </summary>
       <param name="asset">An asset to instantiate a playable from.</param>
-      <param name="addMissingComponents">Should required components be added to targetGameObjects if they are missing.</param>
-      <param name="playerArray">An array of PlayableDirector player components whose types match the outputs of the playable.</param>
-      <param name="targetGameObjects">An array of game objects to extract the PlayableDirector player components from for each playable output.</param>
       <param name="mode">What to do when the time passes the duration of the playable.</param>
     </member>
     <member name="M:UnityEngine.Playables.PlayableDirector.Play">
@@ -118,40 +127,12 @@
         <para>Instatiates a Playable using the provided PlayableAsset and starts playback.</para>
       </summary>
       <param name="asset">An asset to instantiate a playable from.</param>
-      <param name="addMissingComponents">Should required components be added to targetGameObjects if they are missing.</param>
-      <param name="playerArray">An array of PlayableDirector player components whose types match the outputs of the playable.</param>
-      <param name="targetGameObjects">An array of game objects to extract the PlayableDirector player components from for each playable output.</param>
       <param name="mode">What to do when the time passes the duration of the playable.</param>
     </member>
-    <member name="M:UnityEngine.Playables.PlayableDirector.Play">
+    <member name="M:UnityEngine.Playables.PlayableDirector.RebuildGraph">
       <summary>
-        <para>Instatiates a Playable using the provided PlayableAsset and starts playback.</para>
+        <para>Discards the existing PlayableGraph and creates a new instance.</para>
       </summary>
-      <param name="asset">An asset to instantiate a playable from.</param>
-      <param name="addMissingComponents">Should required components be added to targetGameObjects if they are missing.</param>
-      <param name="playerArray">An array of PlayableDirector player components whose types match the outputs of the playable.</param>
-      <param name="targetGameObjects">An array of game objects to extract the PlayableDirector player components from for each playable output.</param>
-      <param name="mode">What to do when the time passes the duration of the playable.</param>
-    </member>
-    <member name="M:UnityEngine.Playables.PlayableDirector.Play">
-      <summary>
-        <para>Instatiates a Playable using the provided PlayableAsset and starts playback.</para>
-      </summary>
-      <param name="asset">An asset to instantiate a playable from.</param>
-      <param name="addMissingComponents">Should required components be added to targetGameObjects if they are missing.</param>
-      <param name="playerArray">An array of PlayableDirector player components whose types match the outputs of the playable.</param>
-      <param name="targetGameObjects">An array of game objects to extract the PlayableDirector player components from for each playable output.</param>
-      <param name="mode">What to do when the time passes the duration of the playable.</param>
-    </member>
-    <member name="M:UnityEngine.Playables.PlayableDirector.Play">
-      <summary>
-        <para>Instatiates a Playable using the provided PlayableAsset and starts playback.</para>
-      </summary>
-      <param name="asset">An asset to instantiate a playable from.</param>
-      <param name="addMissingComponents">Should required components be added to targetGameObjects if they are missing.</param>
-      <param name="playerArray">An array of PlayableDirector player components whose types match the outputs of the playable.</param>
-      <param name="targetGameObjects">An array of game objects to extract the PlayableDirector player components from for each playable output.</param>
-      <param name="mode">What to do when the time passes the duration of the playable.</param>
     </member>
     <member name="M:UnityEngine.Playables.PlayableDirector.Resume">
       <summary>

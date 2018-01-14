@@ -1110,7 +1110,7 @@
     </member>
     <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.selectPressed">
       <summary>
-        <para>Depending on the InteractionSourceType of the interaction source, this returning true could represent a number of equivalent things: main button on a blicker, air-tap on a hand, and the trigger on a motion controller.</para>
+        <para>Depending on the InteractionSourceType of the interaction source, this returning true could represent a number of equivalent things: main button on a clicker, air-tap on a hand, and the trigger on a motion controller. For hands, a select-press represents the user's index finger in the down position. For motion controllers, a select-press represents the controller's index-finger trigger (or primary face button, if no trigger) being fully pressed. Note that a voice command of "Select" causes an instant press and release, so you cannot poll for a voice press using this property - instead, you must use GestureRecognizer and subscribe to the Tapped event, or subscribe to the InteractionSourcePressed event from InteractionManager.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.XR.WSA.Input.InteractionSourceState.selectPressedAmount">
@@ -2599,6 +2599,11 @@ and false if the node is not presently being tracked by the underlying XR system
     <member name="P:UnityEngine.XR.XRSettings.supportedDevices">
       <summary>
         <para>Returns a list of supported XR devices that were included at build time.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRSettings.useOcclusionMesh">
+      <summary>
+        <para>Specifies whether or not the occlusion mesh should be used when rendering. Enabled by default.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.XR.XRSettings.LoadDeviceByName(System.String)">

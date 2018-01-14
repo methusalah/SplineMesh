@@ -430,14 +430,6 @@
         <para>A PlayableTrack is a track whose clips are custom playables.</para>
       </summary>
     </member>
-    <member name="M:UnityEngine.Timeline.PlayableTrack.CreateClip">
-      <summary>
-        <para>Creates a clip on the track with a custom playable asset attached, whose type is specified by T.</para>
-      </summary>
-      <returns>
-        <para>A TimelineClip whose asset is of type T.</para>
-      </returns>
-    </member>
     <member name="T:UnityEngine.Timeline.PrefabControlPlayable">
       <summary>
         <para>Playable that controls and instantiates a Prefab.</para>
@@ -715,6 +707,14 @@
       <summary>
         <para>The TimelineAsset this track belongs to.</para>
       </summary>
+    </member>
+    <member name="M:UnityEngine.Timeline.TrackAsset.CreateClip">
+      <summary>
+        <para>Creates a clip on the track with a custom playable asset attached, whose type is specified by T. Throws an InvalidOperationException if the specified type is not supported by the track.</para>
+      </summary>
+      <returns>
+        <para>A TimelineClip whose asset is of type T.</para>
+      </returns>
     </member>
     <member name="M:UnityEngine.Timeline.TrackAsset.CreateDefaultClip">
       <summary>

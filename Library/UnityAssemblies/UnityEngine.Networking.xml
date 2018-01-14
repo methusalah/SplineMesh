@@ -1778,7 +1778,7 @@
       <summary>
         <para>This is called on the client when the client is finished loading a new networked scene.</para>
       </summary>
-      <param name="conn"></param>
+      <param name="conn">The connection that finished loading a new networked scene.</param>
     </member>
     <member name="M:UnityEngine.Networking.NetworkLobbyManager.OnLobbyServerConnect(UnityEngine.Networking.NetworkConnection)">
       <summary>
@@ -1816,8 +1816,8 @@
       <summary>
         <para>This is called on the server when a player is removed.</para>
       </summary>
-      <param name="conn"></param>
-      <param name="playerControllerId"></param>
+      <param name="conn">The connection the player object is for.</param>
+      <param name="playerControllerId">The controllerId of the player that was removed.</param>
     </member>
     <member name="M:UnityEngine.Networking.NetworkLobbyManager.OnLobbyServerPlayersReady">
       <summary>
@@ -1844,7 +1844,7 @@
       <summary>
         <para>This is called on the client when a client is started.</para>
       </summary>
-      <param name="lobbyClient"></param>
+      <param name="lobbyClient">The connection for the lobby.</param>
     </member>
     <member name="M:UnityEngine.Networking.NetworkLobbyManager.OnLobbyStartHost">
       <summary>

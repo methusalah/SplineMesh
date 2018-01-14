@@ -858,7 +858,7 @@
     </member>
     <member name="M:UnityEngine.EventSystems.IPointerClickHandler.OnPointerClick(UnityEngine.EventSystems.PointerEventData)">
       <summary>
-        <para></para>
+        <para>Use this callback to detect clicks.</para>
       </summary>
       <param name="eventData">Current event data.</param>
     </member>
@@ -952,32 +952,32 @@
     </member>
     <member name="T:UnityEngine.EventSystems.MoveDirection">
       <summary>
-        <para>8 direction movement enum.</para>
+        <para>This is an 8 direction movement enum.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.EventSystems.MoveDirection.Down">
       <summary>
-        <para>Down.</para>
+        <para>The Down State of MoveDirection. Assign functionality for moving in a downward direction.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.EventSystems.MoveDirection.Left">
       <summary>
-        <para>Left.</para>
+        <para>This is the Left state of MoveDirection.  Assign functionality for moving to the left.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.EventSystems.MoveDirection.None">
       <summary>
-        <para>None.</para>
+        <para>This is the None state. Assign functionality that stops movement.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.EventSystems.MoveDirection.Right">
       <summary>
-        <para>Right.</para>
+        <para>This is the Right state of MoveDirection. Assign functionality for moving to the right.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.EventSystems.MoveDirection.Up">
       <summary>
-        <para>Up.</para>
+        <para>This is the Up state of MoveDirection.  Assign functionality for moving in an upward direction.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.EventSystems.Physics2DRaycaster">
@@ -1736,10 +1736,11 @@
         <para>See MonoBehaviour.OnDisable.</para>
       </summary>
     </member>
-    <member name="M:UnityEngine.UI.AspectRatioFitter.SetDirty">
+    <member name="M:UnityEngine.UI.AspectRatioFitter.SetDirty()">
       <summary>
         <para>Mark the AspectRatioFitter as dirty.</para>
       </summary>
+      <param name="delayUpdate"></param>
     </member>
     <member name="M:UnityEngine.UI.AspectRatioFitter.SetLayoutHorizontal">
       <summary>
@@ -5831,7 +5832,7 @@ Characters 0-9, . (dot), and - (dash / minus sign) are allowed. The dash is only
     </member>
     <member name="P:UnityEngine.UI.Text.text">
       <summary>
-        <para>The string value this text will display.</para>
+        <para>The string value this Text displays.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.UI.Text.verticalOverflow">
@@ -5891,7 +5892,7 @@ Characters 0-9, . (dot), and - (dash / minus sign) are allowed. The dash is only
     </member>
     <member name="P:UnityEngine.UI.Toggle.isOn">
       <summary>
-        <para>Is the toggle on.</para>
+        <para>Return or set whether the Toggle is on or not.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.UI.Toggle.onValueChanged">

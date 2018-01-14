@@ -23,14 +23,14 @@ public class SplineExtrusionEditor : Editor
     void OnSceneGUI()
     {
         Event e = Event.current;
-        if (e.type == EventType.mouseDown) {
+        if (e.type == EventType.MouseDown) {
             Undo.RegisterCompleteObjectUndo(se, "change extruded shape");
             // if control key pressed, we will have to create a new vertex if position is changed
             if (e.alt) {
                 mustCreateNewNode = true;
             }
         }
-        if (e.type == EventType.mouseUp) {
+        if (e.type == EventType.MouseUp) {
             mustCreateNewNode = false;
         }
 

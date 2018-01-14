@@ -4,5 +4,21 @@
     <assembly>
       <name>UnityEditor.TestRunner</name>
     </assembly>
+    <member name="T:UnityEditor.TestTools.RequirePlatformSupportAttribute">
+      <summary>
+        <para>Mark a test or test fixture as requiring that particular platform support has been installed into Unity.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEditor.TestTools.RequirePlatformSupportAttribute.platforms">
+      <summary>
+        <para>The list of platforms required by the test or test fixture marked with this attribute.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.TestTools.RequirePlatformSupportAttribute.#ctor(UnityEditor.BuildTarget[])">
+      <summary>
+        <para>Specifies that the test or test fixture requires particular platform support to be installed. See RequirePlatformSupportAttribute.</para>
+      </summary>
+      <param name="platforms">The list of platforms required by this test or test fixture.</param>
+    </member>
   </members>
 </doc>

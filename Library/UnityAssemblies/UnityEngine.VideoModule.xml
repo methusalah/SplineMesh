@@ -4,6 +4,42 @@
     <assembly>
       <name>UnityEngine.VideoModule</name>
     </assembly>
+    <member name="T:UnityEngine.Experimental.Video.VideoClipPlayable">
+      <summary>
+        <para>An implementation of IPlayable that controls playback of a VideoClip.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.Video.VideoClipPlayable.Create(UnityEngine.Playables.PlayableGraph,UnityEngine.Video.VideoClip,System.Boolean)">
+      <summary>
+        <para>Creates a VideoClipPlayable in the PlayableGraph.</para>
+      </summary>
+      <param name="graph">The PlayableGraph object that will own the VideoClipPlayable.</param>
+      <param name="looping">Indicates if VideoClip loops when it reaches the end.</param>
+      <param name="clip">VideoClip used to produce textures in the PlayableGraph.</param>
+      <returns>
+        <para>A VideoClipPlayable linked to the PlayableGraph.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Video.Video3DLayout">
+      <summary>
+        <para>Types of 3D content layout within a video.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Video.Video3DLayout.No3D">
+      <summary>
+        <para>Video does not have any 3D content.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Video.Video3DLayout.OverUnder3D">
+      <summary>
+        <para>Video contains 3D content where the left eye occupies the upper half and right eye occupies the lower half of video frames.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Video.Video3DLayout.SideBySide3D">
+      <summary>
+        <para>Video contains 3D content where the left eye occupies the left half and right eye occupies the right half of video frames.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.Video.VideoAspectRatio">
       <summary>
         <para>Methods used to fit a video in the target area.</para>
@@ -320,6 +356,11 @@ The actual number of audio tracks cannot be known in advance when playing URLs, 
         <para>Camera component to draw to when Video.VideoPlayer.renderMode is set to either Video.VideoTarget.CameraFarPlane or Video.VideoTarget.CameraNearPlane.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Video.VideoPlayer.targetCamera3DLayout">
+      <summary>
+        <para>Type of 3D content contained in the source video media.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Video.VideoPlayer.targetCameraAlpha">
       <summary>
         <para>Overall transparency level of the target camera plane video.</para>
@@ -337,7 +378,7 @@ The actual number of audio tracks cannot be known in advance when playing URLs, 
     </member>
     <member name="P:UnityEngine.Video.VideoPlayer.targetTexture">
       <summary>
-        <para>RenderTexture to draw to when Video.VideoPlayer.renderMode is set to Video.VideoTarget.RenderTexture. For optimal performance, the dimensions of the RenderTexture should match those of the video media exactly.</para>
+        <para>RenderTexture to draw to when Video.VideoPlayer.renderMode is set to Video.VideoTarget.RenderTexture.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Video.VideoPlayer.texture">

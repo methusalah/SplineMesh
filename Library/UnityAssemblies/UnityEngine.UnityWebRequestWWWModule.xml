@@ -76,7 +76,7 @@
     </member>
     <member name="P:UnityEngine.WWW.threadPriority">
       <summary>
-        <para>Priority of AssetBundle decompression thread.</para>
+        <para>Obsolete, has no effect.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.WWW.uploadProgress">
@@ -159,6 +159,80 @@
       <param name="s">A string with characters to be escaped.</param>
       <param name="e">The text encoding to use.</param>
     </member>
+    <member name="M:UnityEngine.WWW.GetAudioClip(System.Boolean)">
+      <summary>
+        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
+      </summary>
+      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip
+the .audioClip property defaults to 3D.</param>
+      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false) or the stream can be played even if only part of the clip is downloaded (true).
+The latter will disable seeking on the clip (with .time and/or .timeSamples).</param>
+      <param name="audioType">The AudioType of the content your downloading. If this is not set Unity will try to determine the type from URL.</param>
+      <returns>
+        <para>The returned AudioClip.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.WWW.GetAudioClip(System.Boolean,System.Boolean)">
+      <summary>
+        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
+      </summary>
+      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip
+the .audioClip property defaults to 3D.</param>
+      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false) or the stream can be played even if only part of the clip is downloaded (true).
+The latter will disable seeking on the clip (with .time and/or .timeSamples).</param>
+      <param name="audioType">The AudioType of the content your downloading. If this is not set Unity will try to determine the type from URL.</param>
+      <returns>
+        <para>The returned AudioClip.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.WWW.GetAudioClip(System.Boolean,System.Boolean,UnityEngine.AudioType)">
+      <summary>
+        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
+      </summary>
+      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip
+the .audioClip property defaults to 3D.</param>
+      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false) or the stream can be played even if only part of the clip is downloaded (true).
+The latter will disable seeking on the clip (with .time and/or .timeSamples).</param>
+      <param name="audioType">The AudioType of the content your downloading. If this is not set Unity will try to determine the type from URL.</param>
+      <returns>
+        <para>The returned AudioClip.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.WWW.GetAudioClipCompressed">
+      <summary>
+        <para>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</para>
+      </summary>
+      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.</param>
+      <param name="audioType">The AudioType of the content your downloading. If this is not set Unity will try to determine the type from URL.</param>
+      <returns>
+        <para>The returned AudioClip.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.WWW.GetAudioClipCompressed(System.Boolean)">
+      <summary>
+        <para>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</para>
+      </summary>
+      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.</param>
+      <param name="audioType">The AudioType of the content your downloading. If this is not set Unity will try to determine the type from URL.</param>
+      <returns>
+        <para>The returned AudioClip.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.WWW.GetAudioClipCompressed(System.Boolean,UnityEngine.AudioType)">
+      <summary>
+        <para>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</para>
+      </summary>
+      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.</param>
+      <param name="audioType">The AudioType of the content your downloading. If this is not set Unity will try to determine the type from URL.</param>
+      <returns>
+        <para>The returned AudioClip.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.WWW.GetMovieTexture">
+      <summary>
+        <para>Returns a MovieTexture generated from the downloaded data (Read Only).</para>
+      </summary>
+    </member>
     <member name="M:UnityEngine.WWW.LoadFromCacheOrDownload(System.String,System.Int32)">
       <summary>
         <para>Loads an AssetBundle with the specified version number from the cache. If the AssetBundle is not currently cached, it will automatically be downloaded and stored in the cache for future retrieval from local storage.</para>
@@ -239,106 +313,6 @@ Analogous to the cachedAssetBundle parameter for UnityWebRequest.GetAssetBundle.
       </summary>
       <param name="s">A string containing escaped characters.</param>
       <param name="e">The text encoding to use.</param>
-    </member>
-    <member name="T:UnityEngine.WWWAudioExtensions">
-      <summary>
-        <para>Provides methods to access AudioClip or MovieTexture objects from WWW streams.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.
-The threeD parameter defaults to true.</param>
-      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false), or whether the stream can be played even if only part of the clip is downloaded (true).
-Setting this to true will disable seeking (with .time and/or .timeSamples) on the clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.
-The threeD parameter defaults to true.</param>
-      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false), or whether the stream can be played even if only part of the clip is downloaded (true).
-Setting this to true will disable seeking (with .time and/or .timeSamples) on the clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.
-The threeD parameter defaults to true.</param>
-      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false), or whether the stream can be played even if only part of the clip is downloaded (true).
-Setting this to true will disable seeking (with .time and/or .timeSamples) on the clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean,UnityEngine.AudioType)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.
-The threeD parameter defaults to true.</param>
-      <param name="stream">Sets whether the clip should be completely downloaded before it's ready to play (false), or whether the stream can be played even if only part of the clip is downloaded (true).
-Setting this to true will disable seeking (with .time and/or .timeSamples) on the clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW,System.Boolean)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW,System.Boolean,UnityEngine.AudioType)">
-      <summary>
-        <para>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</para>
-      </summary>
-      <param name="threeD">Use this to specify whether the clip should be a 2D or 3D clip.</param>
-      <param name="audioType">The AudioType of the content you are downloading. If this is not set Unity will try to determine the type from URL.</param>
-      <param name="www"></param>
-      <returns>
-        <para>The returned AudioClip.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.WWWAudioExtensions.GetMovieTexture(UnityEngine.WWW)">
-      <summary>
-        <para>Returns a MovieTexture generated from the downloaded data (Read Only).</para>
-      </summary>
-      <param name="www"></param>
     </member>
   </members>
 </doc>

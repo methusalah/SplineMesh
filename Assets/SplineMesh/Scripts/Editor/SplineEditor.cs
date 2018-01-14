@@ -63,7 +63,7 @@ public class SplineEditor : Editor {
     void OnSceneGUI()
     {
         Event e = Event.current;
-        if (e.type == EventType.mouseDown)
+        if (e.type == EventType.MouseDown)
         {
             Undo.RegisterCompleteObjectUndo(spline, "change spline topography");
             // if alt key pressed, we will have to create a new node if node position is changed
@@ -71,7 +71,7 @@ public class SplineEditor : Editor {
                 mustCreateNewNode = true;
             }
         }
-        if (e.type == EventType.mouseUp)
+        if (e.type == EventType.MouseUp)
         {
             mustCreateNewNode = false;
         }
