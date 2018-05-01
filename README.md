@@ -2,6 +2,8 @@
 
 **<a href="https://twitter.com/dumas181" target="_blank">Follow me on twitter !</a>**
 
+**<a href="https://www.youtube.com/watch?v=-iQj0lYbqLE">Watch SplineMesh in action</a>**
+
 # What is SplineMesh?
 
 Inspired by Unreal Engine 4 spline component, SplineMesh is a Unity 3D plugin that allow you to create curved content:
