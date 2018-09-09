@@ -183,18 +183,32 @@ public class SplineEditor : Editor {
         GUI.enabled = true;
 
         // nodes
-        // This special editor prevent the user to modify the list because nodes are listened.
-        // But I can't understand why these guys are not editable in the inspector...
         EditorGUILayout.PropertyField(nodes);
-        EditorGUI.indentLevel += 1;
+        EditorGUI.indentLevel++;
         if (nodes.isExpanded) {
             for (int i = 0; i < nodes.arraySize; i++) {
-                EditorGUILayout.PropertyField(nodes.GetArrayElementAtIndex(i), new GUIContent("Node " + i), true);
+                SerializedProperty node = nodes.GetArrayElementAtIndex(i);
+                EditorGUILayout.PropertyField(node);
+                EditorGUI.indentLevel++;
+                if (node.isExpanded) {
+                    using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
+                        EditorGUILayout.PropertyField(node.FindPropertyRelative("position"), new GUIContent("Position"));
+                        if (check.changed) {
+                            ((Spline)target).nodes[i].SetPosition(node.FindPropertyRelative("position").vector3Value);
+                        }
+                    }
+
+                    using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
+                        EditorGUILayout.PropertyField(node.FindPropertyRelative("direction"), new GUIContent("Direction"));
+                        if (check.changed) {
+                            ((Spline)target).nodes[i].SetDirection(node.FindPropertyRelative("direction").vector3Value);
+                        }
+                    }
+                }
+                EditorGUI.indentLevel--;
             }
         }
-        EditorGUI.indentLevel -= 1;
-
-        serializedObject.ApplyModifiedProperties();
+        EditorGUI.indentLevel--;
     }
 
     [MenuItem("GameObject/3D Object/Spline")]
