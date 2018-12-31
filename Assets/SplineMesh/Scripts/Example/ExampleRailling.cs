@@ -4,23 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Exemple of component to bend a mesh along a spline. This component can be used as-is but will most likely be a base for your own component.
+/// Example of component to bend a mesh along a spline with an offset.
 /// 
-/// In this basic exemple, you only specify rotation and scale to adapt to the provided mesh.
-/// Scale is useful because most of the time, the modeling tools don't use the scaling you want.
-/// Rotation is often mandatory because MeshBender will always bend along the X axis and your mesh may be oriented differently.
+/// This component can be used as-is but will most likely be a base for your own component. For explanations of the base component, <see cref="ExamplePipe"/>
 /// 
-/// One children GameObject is created for each spline curve here, with a MeshBender and a MeshFilter on each. The list of GameObject is stored for later cleanup.
-/// Each time the spline nodes are changed (a node is added or removed), the stored object are cleaned and the entire process is redone.
+/// In this component, we use the MeshBender translation parameter.
+/// It allows you move the source mesh on the Y and Z axis, considering that X axis as spline tangent.
 /// 
-/// The MeshBender listen the curve to detect itself if the nodes it is connected to are moved or rotated. You don't have to manage that yourself here.
+/// This is usefull to align a mesh that is not centered without reworking it in a modeling tool.
+/// It is also useful to offset the mesh from the spline, like in the case of raillings on road sides.
 /// </summary>
 [ExecuteInEditMode]
 [SelectionBase]
-public class ExemplePipe : MonoBehaviour {
+public class ExampleRailling : MonoBehaviour {
+
     public Mesh mesh;
     public Material material;
     public Vector3 rotation;
+    public float YOffset;
+    public float ZOffset;
     public float scale = 1;
 
     private Spline spline = null;
@@ -44,8 +46,8 @@ public class ExemplePipe : MonoBehaviour {
     }
 
     public void CreateMeshes() {
-        foreach(GameObject go in meshes) {
-            if(gameObject != null) {
+        foreach (GameObject go in meshes) {
+            if (gameObject != null) {
                 if (Application.isPlaying) {
                     Destroy(go);
                 } else {
@@ -68,6 +70,7 @@ public class ExemplePipe : MonoBehaviour {
             MeshBender mb = go.GetComponent<MeshBender>();
             mb.SetSourceMesh(mesh, false);
             mb.SetRotation(Quaternion.Euler(rotation), false);
+            mb.SetTranslation(new Vector3(0, YOffset, ZOffset), false);
             mb.SetCurve(curve, false);
             mb.SetStartScale(scale, false);
             mb.SetEndScale(scale);

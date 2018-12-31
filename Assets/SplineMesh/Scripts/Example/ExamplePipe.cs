@@ -1,53 +1,54 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// Exemple of component to bend a mesh along a spline with some interpolation of scales and rolls. This component can be used as-is but will most likely be a base for your own component.
+/// Example of component to bend a mesh along a spline. This component can be used as-is but will most likely be a base for your own component.
 /// 
-/// For explanations of the base component, <see cref="ExemplePipe"/>
+/// In this basic exemple, you only specify rotation and scale to adapt to the provided mesh.
+/// Scale is useful because most of the time, the modeling tools don't use the scaling you want.
+/// Rotation is often mandatory because MeshBender will always bend along the X axis and your mesh may be oriented differently.
 /// 
-/// In this component, we have added properties to make scale and roll vary between spline start and end.
-/// Intermediate scale and roll values are calculated at each spline node accordingly to the distance, then given to the MeshBenders component.
-/// MeshBender applies scales and rolls values by interpollation if they differ from strat to end of the curve.
+/// One children GameObject is created for each spline curve here, with a MeshBender and a MeshFilter on each. The list of GameObject is stored for later cleanup.
+/// Each time the spline nodes are changed (a node is added or removed), the stored object are cleaned and the entire process is redone.
 /// 
-/// You can easily imagine a list of scales to apply to each node independantly to create your own variation.
+/// The MeshBender listen the curve to detect itself if the nodes it is connected to are moved or rotated. You don't have to manage that yourself here.
 /// </summary>
 [ExecuteInEditMode]
 [SelectionBase]
-public class ExempleTentacle : MonoBehaviour {
+public class ExamplePipe : MonoBehaviour {
     public Mesh mesh;
     public Material material;
     public Vector3 rotation;
-    public float startScale = 1, endScale = 1;
-    public float startRoll = 0, endRoll = 0;
+    public float scale = 1;
 
     private Spline spline = null;
     public List<GameObject> meshes = new List<GameObject>();
-    private bool toUpdate = false;
+    private bool toUpdate = true;
 
     private void OnEnable() {
         spline = GetComponent<Spline>();
-        spline.NodeCountChanged.AddListener(() => { toUpdate = true; });
+        spline.NodeCountChanged.AddListener(() => toUpdate = true);
     }
 
     private void OnValidate() {
-        if(spline == null)
-            return;
         toUpdate = true;
     }
 
     private void Update() {
         if (toUpdate) {
-            toUpdate = false;
             CreateMeshes();
+            toUpdate = false;
         }
+
     }
 
     public void CreateMeshes() {
-        foreach (GameObject go in meshes) {
-            if (gameObject != null) {
+        foreach(GameObject go in meshes) {
+            if(gameObject != null) {
                 if (Application.isPlaying) {
                     Destroy(go);
                 } else {
@@ -57,7 +58,6 @@ public class ExempleTentacle : MonoBehaviour {
         }
         meshes.Clear();
 
-        float currentLength = 0;
         int i = 0;
         foreach (CubicBezierCurve curve in spline.GetCurves()) {
             GameObject go = new GameObject("SplineMesh" + i++, typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshBender), typeof(MeshCollider));
@@ -72,16 +72,8 @@ public class ExempleTentacle : MonoBehaviour {
             mb.SetSourceMesh(mesh, false);
             mb.SetRotation(Quaternion.Euler(rotation), false);
             mb.SetCurve(curve, false);
-
-            float startRate = currentLength / spline.Length;
-            currentLength += mb.curve.Length;
-            float endRate = currentLength / spline.Length;
-
-            mb.SetStartScale(startScale + (endScale - startScale) * startRate, false);
-            mb.SetEndScale(startScale + (endScale - startScale) * endRate, false);
-
-            mb.SetStartRoll(startRoll, false);
-            mb.SetEndRoll(endRoll);
+            mb.SetStartScale(scale, false);
+            mb.SetEndScale(scale);
             meshes.Add(go);
         }
     }

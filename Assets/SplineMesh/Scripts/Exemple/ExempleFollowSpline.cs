@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// Exemple of component to show that the spline is an independant mathematical component and can be used for other purposes than mesh deformation.
+/// Example of component to show that the spline is an independant mathematical component and can be used for other purposes than mesh deformation.
 /// 
 /// This component is only for demo purpose and is not intended to be used as-is.
 /// 
@@ -12,7 +12,7 @@ using UnityEngine;
 /// </summary>
 [ExecuteInEditMode]
 [RequireComponent(typeof(Spline))]
-public class ExempleFollowSpline : MonoBehaviour {
+public class ExampleFollowSpline : MonoBehaviour {
 
     public GameObject Follower;
     public float DurationInSecond;

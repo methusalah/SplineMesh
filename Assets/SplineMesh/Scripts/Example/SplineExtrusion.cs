@@ -8,7 +8,7 @@ using UnityEngine;
 /// 
 /// Note : This component is not lightweight and should be used as-is mostly for prototyping. It allows to quickly create meshes by
 /// drawing only the 2D shape to extrude along the spline. The result is not intended to be used in a production context and you will most likely
-/// create eventuelly the mesh you need in a modeling tool to save performances and have better control.
+/// create eventualy the mesh you need in a modeling tool to save performances and have better control.
 /// 
 /// The special editor of this component allow you to draw a 2D shape with vertices, normals and U texture coordinate. The V coordinate is set
 /// for the whole spline, by setting the number of times the texture must be repeated.
@@ -18,7 +18,7 @@ using UnityEngine;
 /// You can expand the vertices list in the inspector to access data and enter precise values.
 /// 
 /// This component doesn't offer much control as Unity is not a modeling tool. That said, you should be able to create your own version easily.
-/// /// </summary>
+/// </summary>
 [ExecuteInEditMode]
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]

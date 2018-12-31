@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Exemple of component to places assets along a spline. This component can be used as-is but will most likely be a base for your own component.
+/// Example of component to places assets along a spline. This component can be used as-is but will most likely be a base for your own component.
 /// 
-/// In this exemple, the user gives the prefab to place, a spacing value between two placements, the prefab scale and an horizontal offset to the spline.
+/// In this example, the user gives the prefab to place, a spacing value between two placements, the prefab scale and an horizontal offset to the spline.
 /// These three last values have an additional range, allowing to add some randomness. for each placement, the computed value will be between value and value+range.
 /// 
 /// Prefabs are placed from the start of the spline at computed spacing, unitl there is no lentgh remaining. Prefabs are stored, destroyed
@@ -24,7 +24,7 @@ using UnityEngine;
 /// </summary>
 [ExecuteInEditMode]
 [SelectionBase]
-public class ExempleSower : MonoBehaviour {
+public class ExampleSower : MonoBehaviour {
 
     public GameObject prefab = null;
     public float scale = 1, scaleRange = 0;
