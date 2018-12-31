@@ -15,45 +15,45 @@ public class SplineNode {
     /// Node position
     /// Note : you shouldn't modify position and direction manualy but use dedicated methods instead, to insure event raising.
     /// </summary>
-    public Vector3 position;
+    [SerializeField]
+    private Vector3 position;
+
+    public Vector3 Position {
+        get { return position; }
+        set {
+            if (position.Equals(value)) return;
+            position.x = value.x;
+            position.y = value.y;
+            position.z = value.z;
+            if (Changed != null)
+                Changed.Invoke();
+        }
+    }
+
 
     /// <summary>
     /// Node direction
     /// Note : you shouldn't modify position and direction manualy but use dedicated methods instead, to insure event raising.
     /// </summary>
-    public Vector3 direction;
+    [SerializeField]
+    private Vector3 direction;
+
+    public Vector3 Direction {
+        get { return direction; }
+        set {
+            if (direction.Equals(value)) return;
+            direction.x = value.x;
+            direction.y = value.y;
+            direction.z = value.z;
+            if (Changed != null)
+                Changed.Invoke();
+        }
+    }
+
 
     public SplineNode(Vector3 position, Vector3 direction) {
-        SetPosition(position);
-        SetDirection(direction);
-    }
-
-    /// <summary>
-    /// Sets the new position and raises an event.
-    /// </summary>
-    /// <param name="p"></param>
-    public void SetPosition(Vector3 p) {
-        if (!position.Equals(p)) {
-            position.x = p.x;
-            position.y = p.y;
-            position.z = p.z;
-            if (Changed != null)
-                Changed.Invoke();
-        }
-    }
-
-    /// <summary>
-    /// Sets the new direction and raises an event.
-    /// </summary>
-    /// <param name="d"></param>
-    public void SetDirection(Vector3 d) {
-        if (!direction.Equals(d)) {
-            direction.x = d.x;
-            direction.y = d.y;
-            direction.z = d.z;
-            if (Changed != null)
-                Changed.Invoke();
-        }
+        Position = position;
+        Direction = direction;
     }
 
     /// <summary>

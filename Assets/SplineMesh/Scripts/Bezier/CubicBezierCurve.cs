@@ -71,7 +71,7 @@ public class CubicBezierCurve {
     /// </summary>
     /// <returns></returns>
     public Vector3 GetInverseDirection() {
-        return (2 * n2.position) - n2.direction;
+        return (2 * n2.Position) - n2.Direction;
     }
 
     /// <summary>
@@ -87,10 +87,10 @@ public class CubicBezierCurve {
         float omt2 = omt * omt;
         float t2 = t * t;
         return
-            n1.position * (omt2 * omt) +
-            n1.direction * (3f * omt2 * t) +
+            n1.Position * (omt2 * omt) +
+            n1.Direction * (3f * omt2 * t) +
             GetInverseDirection() * (3f * omt * t2) +
-            n2.position * (t2 * t);
+            n2.Position * (t2 * t);
     }
 
     /// <summary>
@@ -106,10 +106,10 @@ public class CubicBezierCurve {
         float omt2 = omt * omt;
         float t2 = t * t;
         Vector3 tangent =
-            n1.position * (-omt2) +
-            n1.direction * (3 * omt2 - 2 * omt) +
+            n1.Position * (-omt2) +
+            n1.Direction * (3 * omt2 - 2 * omt) +
             GetInverseDirection() * (-3 * t2 + 2 * t) +
-            n2.position * (t2);
+            n2.Position * (t2);
         return tangent.normalized;
     }
 

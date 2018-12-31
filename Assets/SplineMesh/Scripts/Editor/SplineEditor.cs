@@ -45,7 +45,7 @@ public class SplineEditor : Editor {
 
     SplineNode AddClonedNode(SplineNode node) {
         int index = spline.nodes.IndexOf(node);
-        SplineNode res = new SplineNode(node.position, node.direction);
+        SplineNode res = new SplineNode(node.Position, node.Direction);
         if (index == spline.nodes.Count - 1) {
             spline.AddNode(res);
         } else {
@@ -85,9 +85,9 @@ public class SplineEditor : Editor {
 
         // draw a bezier curve for each curve in the spline
         foreach (CubicBezierCurve curve in spline.GetCurves()) {
-            Handles.DrawBezier(spline.transform.TransformPoint(curve.n1.position),
-                spline.transform.TransformPoint(curve.n2.position),
-                spline.transform.TransformPoint(curve.n1.direction),
+            Handles.DrawBezier(spline.transform.TransformPoint(curve.n1.Position),
+                spline.transform.TransformPoint(curve.n2.Position),
+                spline.transform.TransformPoint(curve.n1.Direction),
                 spline.transform.TransformPoint(curve.GetInverseDirection()),
                 CURVE_COLOR,
                 null,
@@ -98,25 +98,25 @@ public class SplineEditor : Editor {
         switch (selectionType) {
             case SelectionType.Node:
                 // place a handle on the node and manage position change
-                Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.position), Quaternion.identity));
-                if (newPosition != selection.position) {
+                Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Position), Quaternion.identity));
+                if (newPosition != selection.Position) {
                     // position handle has been moved
                     if (mustCreateNewNode) {
                         mustCreateNewNode = false;
                         selection = AddClonedNode(selection);
-                        selection.SetDirection(selection.direction + newPosition - selection.position);
-                        selection.SetPosition(newPosition);
+                        selection.Direction += newPosition - selection.Position;
+                        selection.Position = newPosition;
                     } else {
-                        selection.SetDirection(selection.direction + newPosition - selection.position);
-                        selection.SetPosition(newPosition);
+                        selection.Direction += newPosition - selection.Position;
+                        selection.Position = newPosition;
                     }
                 }
                 break;
             case SelectionType.Direction:
-                selection.SetDirection(spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.direction), Quaternion.identity)));
+                selection.Direction = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction), Quaternion.identity));
                 break;
             case SelectionType.InverseDirection:
-                selection.SetDirection(2 * selection.position - spline.transform.InverseTransformPoint(Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.position) - spline.transform.TransformPoint(selection.direction), Quaternion.identity)));
+                selection.Direction = 2 * selection.Position - spline.transform.InverseTransformPoint(Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity));
                 break;
         }
 
@@ -124,10 +124,10 @@ public class SplineEditor : Editor {
         Handles.BeginGUI();
         foreach (SplineNode n in spline.nodes)
         {
-            Vector3 guiPos = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.position));
+            Vector3 guiPos = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Position));
             if (n == selection) {
-                Vector3 guiDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.direction));
-                Vector3 guiInvDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(2 * n.position - n.direction));
+                Vector3 guiDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Direction));
+                Vector3 guiInvDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(2 * n.Position - n.Direction));
 
                 // for the selected node, we also draw a line and place two buttons for directions
                 Handles.color = Color.red;
@@ -194,14 +194,14 @@ public class SplineEditor : Editor {
                     using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
                         EditorGUILayout.PropertyField(node.FindPropertyRelative("position"), new GUIContent("Position"));
                         if (check.changed) {
-                            ((Spline)target).nodes[i].SetPosition(node.FindPropertyRelative("position").vector3Value);
+                            ((Spline)target).nodes[i].Position = node.FindPropertyRelative("position").vector3Value;
                         }
                     }
 
                     using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
                         EditorGUILayout.PropertyField(node.FindPropertyRelative("direction"), new GUIContent("Direction"));
                         if (check.changed) {
-                            ((Spline)target).nodes[i].SetDirection(node.FindPropertyRelative("direction").vector3Value);
+                            ((Spline)target).nodes[i].Direction = node.FindPropertyRelative("direction").vector3Value;
                         }
                     }
                 }
