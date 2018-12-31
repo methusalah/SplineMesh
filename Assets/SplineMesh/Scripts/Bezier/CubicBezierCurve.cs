@@ -39,8 +39,8 @@ public class CubicBezierCurve {
     {
         this.n1 = n1;
         this.n2 = n2;
-        n1.Changed.AddListener(() => ComputePoints());
-        n2.Changed.AddListener(() => ComputePoints());
+        n1.Changed.AddListener(ComputePoints);
+        n2.Changed.AddListener(ComputePoints);
         ComputePoints();
     }
 
@@ -49,9 +49,9 @@ public class CubicBezierCurve {
     /// </summary>
     /// <param name="n1"></param>
     public void ConnectStart(SplineNode n1) {
-        this.n1.Changed.RemoveListener(() => ComputePoints());
+        this.n1.Changed.RemoveListener(ComputePoints);
         this.n1 = n1;
-        n1.Changed.AddListener(() => ComputePoints());
+        n1.Changed.AddListener(ComputePoints);
         ComputePoints();
     }
 
@@ -60,9 +60,9 @@ public class CubicBezierCurve {
     /// </summary>
     /// <param name="n2"></param>
     public void ConnectEnd(SplineNode n2) {
-        this.n2.Changed.RemoveListener(() => ComputePoints());
+        this.n2.Changed.RemoveListener(ComputePoints);
         this.n2 = n2;
-        n2.Changed.AddListener(() => ComputePoints());
+        n2.Changed.AddListener(ComputePoints);
         ComputePoints();
     }
 
