@@ -35,12 +35,15 @@ public class ExampleFollowSpline : MonoBehaviour {
 
         spline = GetComponent<Spline>();
         PlaceFollower();
-
+#if UNITY_EDITOR
         EditorApplication.update += EditorUpdate;
+#endif
     }
 
     void OnDisable() {
+#if UNITY_EDITOR
         EditorApplication.update -= EditorUpdate;
+#endif
     }
 
     void EditorUpdate() {
