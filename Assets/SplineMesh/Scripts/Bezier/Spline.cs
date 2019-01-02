@@ -110,6 +110,16 @@ namespace SplineMesh {
             return curves[index].GetTangent(t - index);
         }
 
+        public Vector2 GetScaleAlongSpline(float t) {
+            int index = GetNodeIndexForTime(t);
+            return curves[index].GetScale(t - index);
+        }
+
+        public float GetRollAlongSpline(float t) {
+            int index = GetNodeIndexForTime(t);
+            return curves[index].GetRoll(t - index);
+        }
+
         private int GetNodeIndexForTime(float t) {
             if (t < 0 || t > nodes.Count - 1) {
                 throw new ArgumentException(string.Format("Time must be between 0 and last node index ({0}). Given time was {1}.", nodes.Count - 1, t));

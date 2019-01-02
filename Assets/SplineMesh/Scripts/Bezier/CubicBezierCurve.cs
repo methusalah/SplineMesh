@@ -111,6 +111,14 @@ namespace SplineMesh {
             return tangent.normalized;
         }
 
+        public Vector2 GetScale(float t) {
+            return n1.Scale + (n2.Scale - n1.Scale) * t;
+        }
+
+        public float GetRoll(float t) {
+            return n1.Roll + (n2.Roll - n1.Roll) * t;
+        }
+
         private void ComputePoints() {
             samples.Clear();
             Length = 0;

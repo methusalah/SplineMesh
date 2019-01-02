@@ -14,11 +14,7 @@ namespace SplineMesh {
 
         /// <summary>
         /// Node position
-        /// Note : you shouldn't modify position and direction manualy but use dedicated methods instead, to insure event raising.
         /// </summary>
-        [SerializeField]
-        private Vector3 position;
-
         public Vector3 Position {
             get { return position; }
             set {
@@ -30,15 +26,12 @@ namespace SplineMesh {
                     Changed.Invoke();
             }
         }
-
+        [SerializeField]
+        private Vector3 position;
 
         /// <summary>
         /// Node direction
-        /// Note : you shouldn't modify position and direction manualy but use dedicated methods instead, to insure event raising.
         /// </summary>
-        [SerializeField]
-        private Vector3 direction;
-
         public Vector3 Direction {
             get { return direction; }
             set {
@@ -50,7 +43,41 @@ namespace SplineMesh {
                     Changed.Invoke();
             }
         }
+        [SerializeField]
+        private Vector3 direction;
 
+        /// <summary>
+        /// Scale to apply at this node. This value is not used on the spline itself but
+        /// is commonly used on bended content.
+        /// </summary>
+        public Vector2 Scale {
+            get { return scale; }
+            set {
+                if (scale.Equals(value)) return;
+                scale.x = value.x;
+                scale.y = value.y;
+                if (Changed != null)
+                    Changed.Invoke();
+            }
+        }
+        [SerializeField]
+        private Vector2 scale = Vector2.one;
+
+        /// <summary>
+        /// Roll to apply at this node. This value is not used on the spline itself but
+        /// is commonly used on bended content.
+        /// </summary>
+        public float Roll {
+            get { return roll; }
+            set {
+                if (roll == value) return;
+                roll = value;
+                if (Changed != null)
+                    Changed.Invoke();
+            }
+        }
+        [SerializeField]
+        private float roll;
 
         public SplineNode(Vector3 position, Vector3 direction) {
             Position = position;
@@ -58,7 +85,7 @@ namespace SplineMesh {
         }
 
         /// <summary>
-        /// Event raised when position or direct changes.
+        /// Event raised when position, direction, scale or roll changes.
         /// </summary>
         [HideInInspector]
         public UnityEvent Changed = new UnityEvent();
