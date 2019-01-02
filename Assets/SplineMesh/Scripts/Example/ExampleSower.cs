@@ -105,7 +105,10 @@ namespace SplineMesh {
                 // move orthogonaly to the spline, according to offset + random
                 Vector3 binormal = spline.GetTangentAlongSplineAtDistance(distance);
                 binormal = Quaternion.LookRotation(Vector3.right, Vector3.up) * binormal;
-                binormal *= offset + UnityEngine.Random.Range(0, offsetRange * Math.Sign(offset));
+                var localOffset = offset + UnityEngine.Random.Range(0, offsetRange * Math.Sign(offset));
+                localOffset *=  spline.GetScaleAlongSpline((distance/spline.Length)*(spline.nodes.Count-1)).x;
+                Debug.Log(distance / spline.Length);
+                binormal *= localOffset;
                 go.transform.position += binormal;
 
                 prefabs.Add(go);
