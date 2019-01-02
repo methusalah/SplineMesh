@@ -200,6 +200,20 @@ namespace SplineMesh {
                                 ((Spline)target).nodes[i].Direction = node.FindPropertyRelative("direction").vector3Value;
                             }
                         }
+
+                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
+                            EditorGUILayout.PropertyField(node.FindPropertyRelative("scale"), new GUIContent("Scale"));
+                            if (check.changed) {
+                                ((Spline)target).nodes[i].Scale = node.FindPropertyRelative("scale").vector2Value;
+                            }
+                        }
+
+                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
+                            EditorGUILayout.PropertyField(node.FindPropertyRelative("roll"), new GUIContent("Roll"));
+                            if (check.changed) {
+                                ((Spline)target).nodes[i].Roll = node.FindPropertyRelative("roll").floatValue;
+                            }
+                        }
                     }
                     EditorGUI.indentLevel--;
                 }
