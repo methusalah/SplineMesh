@@ -20,8 +20,6 @@ namespace SplineMesh {
         private Vector3 sourceTranslation;
 
         public CubicBezierCurve curve;
-        private float startScale = 1, endScale = 1;
-        private float startRoll, endRoll;
 
         private void OnEnable() {
             result = new Mesh();
@@ -39,46 +37,6 @@ namespace SplineMesh {
             }
             this.curve = curve;
             curve.Changed.AddListener(() => Compute());
-            if (update) Compute();
-        }
-
-        /// <summary>
-        /// Set the scale of the mesh at curve start.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetStartScale(float scale, bool update = true) {
-            this.startScale = scale;
-            if (update) Compute();
-        }
-
-        /// <summary>
-        /// Set the scale of the mesh at curve end. If scale is different between start and end, the value will be interpolated along the curve.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetEndScale(float scale, bool update = true) {
-            this.endScale = scale;
-            if (update) Compute();
-        }
-
-        /// <summary>
-        /// Set the roll of the mesh (rotation around X) at curve start.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetStartRoll(float roll, bool update = true) {
-            this.startRoll = roll;
-            if (update) Compute();
-        }
-
-        /// <summary>
-        /// Set the roll of the mesh (rotation around X) at curve end. If roll is different between start and end, the value will be interpolated along the curve.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetEndRoll(float roll, bool update = true) {
-            this.endRoll = roll;
             if (update) Compute();
         }
 
@@ -163,12 +121,12 @@ namespace SplineMesh {
                 Vector3 curveTangent = curve.GetTangentAtDistance(curve.Length * distanceRate);
                 Quaternion q = CubicBezierCurve.GetRotationFromTangent(curveTangent) * Quaternion.Euler(0, -90, 0);
 
-                // application of scale
-                float scaleAtDistance = startScale + (endScale - startScale) * distanceRate;
-                p *= scaleAtDistance;
+                // application of scale (todo : we need the interpolation based on the distance, not time)
+                var scale = curve.GetScale(distanceRate);
+                p = Vector3.Scale(p, new Vector3(0, scale.y, scale.x));
 
-                // application of roll
-                float rollAtDistance = startRoll + (endRoll - startRoll) * distanceRate;
+                // application of roll (todo : we need the interpolation based on the distance, not time)
+                float rollAtDistance = curve.GetRoll(distanceRate);
                 p = Quaternion.AngleAxis(rollAtDistance, Vector3.right) * p;
                 n = Quaternion.AngleAxis(rollAtDistance, Vector3.right) * n;
 

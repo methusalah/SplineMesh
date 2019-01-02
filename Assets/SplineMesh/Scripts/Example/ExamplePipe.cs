@@ -24,7 +24,6 @@ namespace SplineMesh {
         public Mesh mesh;
         public Material material;
         public Vector3 rotation;
-        public float scale = 1;
 
         private Spline spline = null;
         public List<GameObject> meshes = new List<GameObject>();
@@ -72,9 +71,7 @@ namespace SplineMesh {
                 MeshBender mb = go.GetComponent<MeshBender>();
                 mb.SetSourceMesh(mesh, false);
                 mb.SetRotation(Quaternion.Euler(rotation), false);
-                mb.SetCurve(curve, false);
-                mb.SetStartScale(scale, false);
-                mb.SetEndScale(scale);
+                mb.SetCurve(curve, true);
                 meshes.Add(go);
             }
         }

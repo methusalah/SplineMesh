@@ -36,6 +36,20 @@ namespace SplineMesh {
         private void OnValidate() {
             if (spline == null)
                 return;
+
+            // apply scale and roll at each node
+            float currentLength = 0;
+            foreach (CubicBezierCurve curve in spline.GetCurves()) {
+                float startRate = currentLength / spline.Length;
+                currentLength += curve.Length;
+                float endRate = currentLength / spline.Length;
+
+                curve.n1.Scale = Vector2.one * (startScale + (endScale - startScale) * startRate);
+                curve.n2.Scale = Vector2.one * (startScale + (endScale - startScale) * endRate);
+
+                curve.n1.Roll = startRoll + (endRoll - startRoll) * startRate;
+                curve.n2.Roll = startRoll + (endRoll - startRoll) * endRate;
+            }
             toUpdate = true;
         }
 
@@ -58,7 +72,6 @@ namespace SplineMesh {
             }
             meshes.Clear();
 
-            float currentLength = 0;
             int i = 0;
             foreach (CubicBezierCurve curve in spline.GetCurves()) {
                 GameObject go = new GameObject("SplineMesh" + i++, typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshBender), typeof(MeshCollider));
@@ -72,17 +85,8 @@ namespace SplineMesh {
                 MeshBender mb = go.GetComponent<MeshBender>();
                 mb.SetSourceMesh(mesh, false);
                 mb.SetRotation(Quaternion.Euler(rotation), false);
-                mb.SetCurve(curve, false);
+                mb.SetCurve(curve, true);
 
-                float startRate = currentLength / spline.Length;
-                currentLength += mb.curve.Length;
-                float endRate = currentLength / spline.Length;
-
-                mb.SetStartScale(startScale + (endScale - startScale) * startRate, false);
-                mb.SetEndScale(startScale + (endScale - startScale) * endRate, false);
-
-                mb.SetStartRoll(startRoll, false);
-                mb.SetEndRoll(endRoll);
                 meshes.Add(go);
             }
         }
