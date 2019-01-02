@@ -70,9 +70,12 @@ namespace SplineMesh {
         private List<OrientedPoint> GetPath() {
             var path = new List<OrientedPoint>();
             for (float t = 0; t < spline.nodes.Count - 1; t += 1 / 10.0f) {
-                var point = spline.GetLocationAlongSpline(t);
-                var rotation = CubicBezierCurve.GetRotationFromTangent(spline.GetTangentAlongSpline(t));
-                path.Add(new OrientedPoint(point, rotation));
+                path.Add(new OrientedPoint() {
+                    position = spline.GetLocationAlongSpline(t),
+                    rotation = CubicBezierCurve.GetRotationFromTangent(spline.GetTangentAlongSpline(t)),
+                    scale = spline.GetScaleAlongSpline(t),
+                    roll = spline.GetRollAlongSpline(t)
+            });
             }
             return path;
         }
@@ -93,7 +96,14 @@ namespace SplineMesh {
             int index = 0;
             foreach (OrientedPoint op in path) {
                 foreach (Vertex v in ShapeVertices) {
-                    vertices[index] = op.LocalToWorld(v.point);
+                    var position = v.point;
+                    // apply scale
+                    position = Vector3.Scale(position, new Vector3(op.scale.x, op.scale.y, 0));
+
+                    // apply roll
+                    position = Quaternion.AngleAxis(op.roll, Vector3.forward) * position;
+
+                    vertices[index] = op.LocalToWorld(position);
                     normals[index] = op.LocalToWorldDirection(v.normal);
                     uvs[index] = new Vector2(v.uCoord, path.IndexOf(op) / ((float)edgeLoops) * TextureScale);
                     index++;
@@ -140,11 +150,8 @@ namespace SplineMesh {
         public struct OrientedPoint {
             public Vector3 position;
             public Quaternion rotation;
-
-            public OrientedPoint(Vector3 position, Quaternion rotation) {
-                this.position = position;
-                this.rotation = rotation;
-            }
+            public Vector2 scale;
+            public float roll;
 
             public Vector3 LocalToWorld(Vector3 point) {
                 return position + rotation * point;
