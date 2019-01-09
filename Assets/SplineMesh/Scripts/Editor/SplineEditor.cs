@@ -110,10 +110,13 @@ namespace SplineMesh {
                     }
                     break;
                 case SelectionType.Direction:
-                    selection.Direction = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction), Quaternion.identity));
+                    var result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
+                    selection.Direction = spline.transform.InverseTransformPoint(result);
                     break;
                 case SelectionType.InverseDirection:
-                    selection.Direction = 2 * selection.Position - spline.transform.InverseTransformPoint(Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity));
+                    result = Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
+                    selection.Direction = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
+                    break;
                     break;
             }
 
