@@ -112,11 +112,11 @@ namespace SplineMesh {
         }
 
         public Vector2 GetScale(float t) {
-            return n1.Scale + (n2.Scale - n1.Scale) * t;
+            return Vector2.Lerp(n1.Scale, n2.Scale, t);
         }
 
         public float GetRoll(float t) {
-            return n1.Roll + (n2.Roll - n1.Roll) * t;
+            return Mathf.Lerp(n1.Roll, n2.Roll, t);
         }
 
         private void ComputePoints() {
