@@ -19,7 +19,7 @@ namespace SplineMesh {
         private Quaternion sourceRotation;
         private Vector3 sourceTranslation;
 
-        public CubicBezierCurve curve;
+        private CubicBezierCurve curve;
 
         private void OnEnable() {
             result = new Mesh();
@@ -119,16 +119,17 @@ namespace SplineMesh {
 
                 Vector3 curvePoint = curve.GetLocationAtDistance(curve.Length * distanceRate);
                 Vector3 curveTangent = curve.GetTangentAtDistance(curve.Length * distanceRate);
-                Quaternion q = CubicBezierCurve.GetRotationFromTangent(curveTangent) * Quaternion.Euler(0, -90, 0);
+                float roll = curve.GetRoll(distanceRate);
+                var scale = curve.GetScale(distanceRate);
+
+                Quaternion q = curve.GetRotationAtDistance(curve.Length * distanceRate) * Quaternion.Euler(0, -90, 0);
 
                 // application of scale (todo : we need the interpolation based on the distance, not time)
-                var scale = curve.GetScale(distanceRate);
                 p = Vector3.Scale(p, new Vector3(0, scale.y, scale.x));
 
                 // application of roll (todo : we need the interpolation based on the distance, not time)
-                float rollAtDistance = curve.GetRoll(distanceRate);
-                p = Quaternion.AngleAxis(rollAtDistance, Vector3.right) * p;
-                n = Quaternion.AngleAxis(rollAtDistance, Vector3.right) * n;
+                p = Quaternion.AngleAxis(roll, Vector3.right) * p;
+                n = Quaternion.AngleAxis(roll, Vector3.right) * n;
 
                 // reset X value of p
                 p = new Vector3(0, p.y, p.z);

@@ -110,6 +110,11 @@ namespace SplineMesh {
             return curves[index].GetTangent(t - index);
         }
 
+        public Quaternion GetRotationAlongSpline(float t) {
+            int index = GetNodeIndexForTime(t);
+            return curves[index].GetRotation(t - index);
+        }
+
         public Vector2 GetScaleAlongSpline(float t) {
             int index = GetNodeIndexForTime(t);
             return curves[index].GetScale(t - index);
@@ -118,6 +123,10 @@ namespace SplineMesh {
         public float GetRollAlongSpline(float t) {
             int index = GetNodeIndexForTime(t);
             return curves[index].GetRoll(t - index);
+        }
+
+        public CubicBezierCurve GetCurve(float t) {
+            return curves[GetNodeIndexForTime(t)];
         }
 
         private int GetNodeIndexForTime(float t) {
@@ -161,6 +170,19 @@ namespace SplineMesh {
                     d -= curve.Length;
                 } else {
                     return curve.GetTangentAtDistance(d);
+                }
+            }
+            throw new Exception("Something went wrong with GetTangentAlongSplineAtDistance");
+        }
+
+        public Quaternion GetRotationAlongSplineAtDistance(float d) {
+            if (d < 0 || d > Length)
+                throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));
+            foreach (CubicBezierCurve curve in curves) {
+                if (d > curve.Length) {
+                    d -= curve.Length;
+                } else {
+                    return curve.GetRotationAtDistance(d);
                 }
             }
             throw new Exception("Something went wrong with GetTangentAlongSplineAtDistance");

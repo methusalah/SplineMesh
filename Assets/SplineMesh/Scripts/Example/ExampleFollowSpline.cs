@@ -58,7 +58,7 @@ namespace SplineMesh {
         private void PlaceFollower() {
             if (go != null) {
                 go.transform.localPosition = spline.GetLocationAlongSpline(rate);
-                go.transform.localRotation = CubicBezierCurve.GetRotationFromTangent(spline.GetTangentAlongSpline(rate));
+                go.transform.localRotation = spline.GetRotationAlongSpline(rate);
             }
         }
     }

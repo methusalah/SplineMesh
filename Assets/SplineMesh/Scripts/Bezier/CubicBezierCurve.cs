@@ -123,6 +123,7 @@ namespace SplineMesh {
             return Mathf.Lerp(n1.Roll, n2.Roll, t);
         }
 
+
         private void ComputePoints() {
             samples.Clear();
             Length = 0;
@@ -131,6 +132,11 @@ namespace SplineMesh {
                 CurveSample sample = new CurveSample();
                 sample.location = GetLocation(t);
                 sample.tangent = GetTangent(t);
+                sample.up = GetUp(t);
+                sample.roll = GetRoll(t);
+
+                //Vector3.Cross(sample.tangent, Vector3.Cross(Quaternion.AngleAxis(GetRoll(t), Vector3.forward) * previousUp, sample.tangent).normalized);
+                //sample.up = Quaternion.AngleAxis(GetRoll(t), Vector3.forward) * previousUp;
                 Length += Vector3.Distance(previousPosition, sample.location);
                 sample.distance = Length;
 
@@ -140,6 +146,10 @@ namespace SplineMesh {
             CurveSample lastSample = new CurveSample();
             lastSample.location = GetLocation(1);
             lastSample.tangent = GetTangent(1);
+            lastSample.up = GetUp(1);
+            lastSample.roll = GetRoll(1);
+
+            //lastSample.upPitch = Vector3.Cross(lastSample.tangent, Vector3.Cross(Quaternion.AngleAxis(GetRoll(1), Vector3.forward) * previousUp, lastSample.tangent).normalized);
             Length += Vector3.Distance(previousPosition, lastSample.location);
             lastSample.distance = Length;
             samples.Add(lastSample);
@@ -170,6 +180,8 @@ namespace SplineMesh {
             res.distance = d;
             res.location = Vector3.Lerp(previous.location, next.location, t);
             res.tangent = Vector3.Lerp(previous.tangent, next.tangent, t).normalized;
+            res.up = Vector3.Lerp(previous.up, next.up, t);
+            res.roll = Mathf.Lerp(previous.roll, next.roll, t);
             return res;
         }
 
@@ -191,9 +203,15 @@ namespace SplineMesh {
             return getCurvePointAtDistance(d).tangent;
         }
 
+        public Vector3 GetUpAtDistance(float d) {
+            return getCurvePointAtDistance(d).up;
+        }
+
         private class CurveSample {
             public Vector3 location;
             public Vector3 tangent;
+            public Vector3 up;
+            public float roll;
             public float distance;
         }
 
@@ -202,10 +220,28 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="Tangent"></param>
         /// <returns></returns>
-        public static Quaternion GetRotationFromTangent(Vector3 Tangent) {
+        public static Quaternion GetRotationFromTangent(Vector3 Tangent, float roll = 0) {
             if (Tangent == Vector3.zero)
                 return Quaternion.identity;
-            return Quaternion.LookRotation(Tangent, Vector3.Cross(Tangent, Vector3.Cross(Vector3.up, Tangent).normalized));
+            return Quaternion.LookRotation(Tangent, Vector3.Cross(Tangent, Vector3.Cross(Quaternion.AngleAxis(roll, Vector3.forward)* Vector3.up, Tangent).normalized));
+        }
+
+        public Quaternion GetRotation(float t) {
+            var sample = new CurveSample();
+            sample.location = GetLocation(t);
+            sample.tangent = GetTangent(t);
+            sample.up = GetUp(t);
+            sample.roll = GetRoll(t);
+            return GetRotation(sample);
+        }
+
+        public Quaternion GetRotationAtDistance(float d) {
+            return GetRotation(getCurvePointAtDistance(d));
+        }
+
+        private Quaternion GetRotation(CurveSample sample) {
+            var upVector = Vector3.Cross(sample.tangent, Vector3.Cross(Quaternion.AngleAxis(sample.roll, Vector3.forward) * sample.up, sample.tangent).normalized);
+            return Quaternion.LookRotation(sample.tangent, upVector);
         }
     }
 }
