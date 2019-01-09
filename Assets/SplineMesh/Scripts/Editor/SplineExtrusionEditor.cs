@@ -9,15 +9,17 @@ namespace SplineMesh {
         private Color CURVE_COLOR = new Color(0.8f, 0.8f, 0.8f);
         private bool mustCreateNewNode = false;
         private SerializedProperty textureScale;
+        private SerializedProperty material;
         private SerializedProperty vertices;
 
         private SplineExtrusion se;
-        private SplineExtrusion.Vertex selection = null;
+        private ExtrusionSegment.Vertex selection = null;
 
         private void OnEnable() {
             se = (SplineExtrusion)target;
-            textureScale = serializedObject.FindProperty("TextureScale");
-            vertices = serializedObject.FindProperty("ShapeVertices");
+            textureScale = serializedObject.FindProperty("textureScale");
+            material = serializedObject.FindProperty("material");
+            vertices = serializedObject.FindProperty("shapeVertices");
         }
 
         void OnSceneGUI() {
@@ -33,11 +35,13 @@ namespace SplineMesh {
                 mustCreateNewNode = false;
             }
 
-            Vector3 splineStartTangent = se.spline.GetTangentAlongSpline(0);
-            Vector3 splineStart = se.spline.GetLocationAlongSpline(0);
-            Quaternion q = CubicBezierCurve.GetRotationFromTangent(splineStartTangent);
+            var spline = se.GetComponent<Spline>();
+            Vector3 splineStartTangent = spline.GetTangentAlongSpline(0);
+            Vector3 splineStart = spline.GetLocationAlongSpline(0);
+            float splineStartRoll = spline.GetRollAlongSpline(0);
+            Quaternion q = CubicBezierCurve.GetRotationFromTangent(splineStartTangent, splineStartRoll);
 
-            foreach (SplineExtrusion.Vertex v in se.ShapeVertices) {
+            foreach (ExtrusionSegment.Vertex v in se.shapeVertices) {
                 // we create point and normal relative to the spline start where the shape is drawn
                 Vector3 point = se.transform.TransformPoint(q * v.point + splineStart);
                 Vector3 normal = se.transform.TransformPoint(q * (v.point + v.normal) + splineStart);
@@ -55,12 +59,12 @@ namespace SplineMesh {
                         if (mustCreateNewNode) {
                             // We must create a new node
                             mustCreateNewNode = false;
-                            SplineExtrusion.Vertex newVertex = new SplineExtrusion.Vertex(newVertexPoint, v.normal, v.uCoord);
-                            int i = se.ShapeVertices.IndexOf(v);
-                            if (i == se.ShapeVertices.Count - 1) {
-                                se.ShapeVertices.Add(newVertex);
+                            ExtrusionSegment.Vertex newVertex = new ExtrusionSegment.Vertex(newVertexPoint, v.normal, v.uCoord);
+                            int i = se.shapeVertices.IndexOf(v);
+                            if (i == se.shapeVertices.Count - 1) {
+                                se.shapeVertices.Add(newVertex);
                             } else {
-                                se.ShapeVertices.Insert(i + 1, newVertex);
+                                se.shapeVertices.Insert(i + 1, newVertex);
                             }
                             selection = newVertex;
                         } else {
@@ -68,7 +72,7 @@ namespace SplineMesh {
                             // normal must be updated if point has been moved
                             normal = se.transform.TransformPoint(q * (v.point + v.normal) + splineStart);
                         }
-                        se.GenerateMesh();
+                        se.SetToUpdate();
                     } else {
                         // vertex position handle hasn't been moved
                         // create a handle for normal
@@ -76,7 +80,7 @@ namespace SplineMesh {
                         if (movedNormal != normal) {
                             // normal has been moved
                             v.normal = (Vector2)(Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedNormal) - splineStart)) - v.point;
-                            se.GenerateMesh();
+                            se.SetToUpdate();
                         }
                     }
 
@@ -99,9 +103,9 @@ namespace SplineMesh {
                 Handles.DrawLine(point, normal);
 
                 // draw a line between that vertex and the next one
-                int index = se.ShapeVertices.IndexOf(v);
-                int nextIndex = index == se.ShapeVertices.Count - 1 ? 0 : index + 1;
-                SplineExtrusion.Vertex next = se.ShapeVertices[nextIndex];
+                int index = se.shapeVertices.IndexOf(v);
+                int nextIndex = index == se.shapeVertices.Count - 1 ? 0 : index + 1;
+                ExtrusionSegment.Vertex next = se.shapeVertices[nextIndex];
                 Handles.color = CURVE_COLOR;
                 Vector3 vAtSplineEnd = se.transform.TransformPoint(q * next.point + splineStart);
                 Handles.DrawLine(point, vAtSplineEnd);
@@ -126,19 +130,20 @@ namespace SplineMesh {
             EditorGUILayout.HelpBox("Hold Alt and drag a vertex to create a new one.", MessageType.Info);
 
             // Delete vertex button
-            if (selection == null || se.ShapeVertices.Count <= 3) {
+            if (selection == null || se.shapeVertices.Count <= 3) {
                 GUI.enabled = false;
             }
             if (GUILayout.Button("Delete selected vertex")) {
                 Undo.RegisterCompleteObjectUndo(se, "delete vertex");
-                se.ShapeVertices.Remove(selection);
+                se.shapeVertices.Remove(selection);
                 selection = null;
-                se.GenerateMesh();
+                se.SetToUpdate();
             }
             GUI.enabled = true;
 
             // Properties
             EditorGUILayout.PropertyField(textureScale, true);
+            EditorGUILayout.PropertyField(material, true);
 
             EditorGUILayout.PropertyField(vertices);
             EditorGUI.indentLevel += 1;
