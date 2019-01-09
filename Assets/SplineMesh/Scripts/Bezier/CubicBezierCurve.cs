@@ -111,6 +111,10 @@ namespace SplineMesh {
             return tangent.normalized;
         }
 
+        public Vector3 GetUp(float t) {
+            return Vector3.Lerp(n1.Up, n2.Up, t);
+        }
+
         public Vector2 GetScale(float t) {
             return Vector2.Lerp(n1.Scale, n2.Scale, t);
         }

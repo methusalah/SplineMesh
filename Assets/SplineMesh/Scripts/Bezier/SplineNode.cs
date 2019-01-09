@@ -46,6 +46,20 @@ namespace SplineMesh {
         [SerializeField]
         private Vector3 direction;
 
+        public Vector3 Up {
+            get { return up; }
+            set {
+                if (up.Equals(value)) return;
+                up.x = value.x;
+                up.y = value.y;
+                up.z = value.z;
+                if (Changed != null)
+                    Changed.Invoke();
+            }
+        }
+        [SerializeField]
+        private Vector3 up = Vector3.up;
+
         /// <summary>
         /// Scale to apply at this node. This value is not used on the spline itself but
         /// is commonly used on bended content.
