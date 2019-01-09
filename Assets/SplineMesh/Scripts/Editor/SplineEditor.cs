@@ -12,11 +12,15 @@ namespace SplineMesh {
         private Color CURVE_BUTTON_COLOR = new Color(0.8f, 0.8f, 0.8f);
         private Color DIRECTION_COLOR = Color.red;
         private Color DIRECTION_BUTTON_COLOR = Color.red;
+        private Color UP_BUTTON_COLOR = Color.green;
+
+        private static bool showUpVector = false;
 
         private enum SelectionType {
             Node,
             Direction,
-            InverseDirection
+            InverseDirection,
+            Up
         }
 
         private SplineNode selection;
@@ -25,7 +29,7 @@ namespace SplineMesh {
         private SerializedProperty nodes;
         private Spline spline;
 
-        private GUIStyle nodeButtonStyle, directionButtonStyle;
+        private GUIStyle nodeButtonStyle, directionButtonStyle, upButtonStyle;
 
         private void OnEnable() {
             spline = (Spline)target;
@@ -42,6 +46,12 @@ namespace SplineMesh {
             t.Apply();
             directionButtonStyle = new GUIStyle();
             directionButtonStyle.normal.background = t;
+
+            t = new Texture2D(1, 1);
+            t.SetPixel(0, 0, UP_BUTTON_COLOR);
+            t.Apply();
+            upButtonStyle = new GUIStyle();
+            upButtonStyle.normal.background = t;
         }
 
         SplineNode AddClonedNode(SplineNode node) {
@@ -117,6 +127,9 @@ namespace SplineMesh {
                     result = Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
                     selection.Direction = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
                     break;
+                case SelectionType.Up:
+                    result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Position) + selection.Up, Quaternion.LookRotation(selection.Direction - selection.Position));
+                    selection.Up = (spline.transform.InverseTransformPoint(result) - selection.Position).normalized;
                     break;
             }
 
@@ -127,6 +140,7 @@ namespace SplineMesh {
                 if (n == selection) {
                     Vector3 guiDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Direction));
                     Vector3 guiInvDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(2 * n.Position - n.Direction));
+                    Vector3 guiUp = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Position + n.Up));
 
                     // for the selected node, we also draw a line and place two buttons for directions
                     Handles.color = Color.red;
@@ -146,6 +160,15 @@ namespace SplineMesh {
                     if (selectionType != SelectionType.InverseDirection) {
                         if (Button(guiInvDir, directionButtonStyle)) {
                             selectionType = SelectionType.InverseDirection;
+                        }
+                    }
+                    if (showUpVector) {
+                        Handles.color = Color.green;
+                        Handles.DrawLine(guiPos, guiUp);
+                        if (selectionType != SelectionType.Up) {
+                            if (Button(guiUp, upButtonStyle)) {
+                                selectionType = SelectionType.Up;
+                            }
                         }
                     }
                 } else {
@@ -181,6 +204,8 @@ namespace SplineMesh {
             }
             GUI.enabled = true;
 
+            showUpVector = GUILayout.Toggle(showUpVector, "Show up vector");
+
             // nodes
             EditorGUILayout.PropertyField(nodes);
             EditorGUI.indentLevel++;
@@ -201,6 +226,13 @@ namespace SplineMesh {
                             EditorGUILayout.PropertyField(node.FindPropertyRelative("direction"), new GUIContent("Direction"));
                             if (check.changed) {
                                 ((Spline)target).nodes[i].Direction = node.FindPropertyRelative("direction").vector3Value;
+                            }
+                        }
+
+                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
+                            EditorGUILayout.PropertyField(node.FindPropertyRelative("up"), new GUIContent("Up"));
+                            if (check.changed) {
+                                ((Spline)target).nodes[i].Up = node.FindPropertyRelative("up").vector3Value;
                             }
                         }
 
