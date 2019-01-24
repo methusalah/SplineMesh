@@ -65,7 +65,7 @@ namespace SplineMesh {
             get { return curve; }
             set {
                 if (value == curve) return;
-                if(value == null) throw new ArgumentNullException(nameof(value));
+                if(value == null) throw new ArgumentNullException("Value");
                 isDirty = true;
                 if (curve != null) {
                     curve.Changed.RemoveListener(Compute);
