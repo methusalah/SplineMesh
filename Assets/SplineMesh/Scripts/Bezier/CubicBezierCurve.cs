@@ -39,9 +39,9 @@ namespace SplineMesh {
         public CubicBezierCurve(SplineNode n1, SplineNode n2) {
             this.n1 = n1;
             this.n2 = n2;
-            n1.Changed.AddListener(ComputePoints);
-            n2.Changed.AddListener(ComputePoints);
-            ComputePoints();
+            n1.Changed.AddListener(ComputeSamples);
+            n2.Changed.AddListener(ComputeSamples);
+            ComputeSamples();
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="n1"></param>
         public void ConnectStart(SplineNode n1) {
-            this.n1.Changed.RemoveListener(ComputePoints);
+            this.n1.Changed.RemoveListener(ComputeSamples);
             this.n1 = n1;
-            n1.Changed.AddListener(ComputePoints);
-            ComputePoints();
+            n1.Changed.AddListener(ComputeSamples);
+            ComputeSamples();
         }
 
         /// <summary>
@@ -60,10 +60,10 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="n2"></param>
         public void ConnectEnd(SplineNode n2) {
-            this.n2.Changed.RemoveListener(ComputePoints);
+            this.n2.Changed.RemoveListener(ComputeSamples);
             this.n2 = n2;
-            n2.Changed.AddListener(ComputePoints);
-            ComputePoints();
+            n2.Changed.AddListener(ComputeSamples);
+            ComputeSamples();
         }
 
         /// <summary>
@@ -123,8 +123,7 @@ namespace SplineMesh {
             return Mathf.Lerp(n1.Roll, n2.Roll, t);
         }
 
-
-        private void ComputePoints() {
+        private void ComputeSamples() {
             samples.Clear();
             Length = 0;
             Vector3 previousPosition = GetLocation(0);
