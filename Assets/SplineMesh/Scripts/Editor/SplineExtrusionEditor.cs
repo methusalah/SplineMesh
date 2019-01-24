@@ -34,17 +34,14 @@ namespace SplineMesh {
             if (e.type == EventType.MouseUp) {
                 mustCreateNewNode = false;
             }
-
             var spline = se.GetComponent<Spline>();
-            Vector3 splineStartTangent = spline.GetTangentAlongSpline(0);
-            Vector3 splineStart = spline.GetLocationAlongSpline(0);
-            float splineStartRoll = spline.GetRollAlongSpline(0);
-            Quaternion q = CubicBezierCurve.GetRotationFromTangent(splineStartTangent, splineStartRoll);
 
+            CurveSample startSample = spline.GetSample(0);
+            Quaternion q = CubicBezierCurve.GetRotationFromTangent(startSample.tangent, startSample.roll);
             foreach (ExtrusionSegment.Vertex v in se.shapeVertices) {
                 // we create point and normal relative to the spline start where the shape is drawn
-                Vector3 point = se.transform.TransformPoint(q * v.point + splineStart);
-                Vector3 normal = se.transform.TransformPoint(q * (v.point + v.normal) + splineStart);
+                Vector3 point = se.transform.TransformPoint(q * v.point + startSample.location);
+                Vector3 normal = se.transform.TransformPoint(q * (v.point + v.normal) + startSample.location);
 
                 if (v == selection) {
                     // draw the handles for selected vertex position and normal
@@ -52,10 +49,10 @@ namespace SplineMesh {
                     float snap = 0.1f;
 
                     // create a handle for the vertex position
-                    Vector3 movedPoint = Handles.Slider2D(0, point, splineStartTangent, Vector3.right, Vector3.up, size, Handles.CircleHandleCap, new Vector2(snap, snap));
+                    Vector3 movedPoint = Handles.Slider2D(0, point, startSample.tangent, Vector3.right, Vector3.up, size, Handles.CircleHandleCap, new Vector2(snap, snap));
                     if (movedPoint != point) {
                         // position has been moved
-                        Vector2 newVertexPoint = Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedPoint) - splineStart);
+                        Vector2 newVertexPoint = Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedPoint) - startSample.location);
                         if (mustCreateNewNode) {
                             // We must create a new node
                             mustCreateNewNode = false;
@@ -70,16 +67,16 @@ namespace SplineMesh {
                         } else {
                             v.point = newVertexPoint;
                             // normal must be updated if point has been moved
-                            normal = se.transform.TransformPoint(q * (v.point + v.normal) + splineStart);
+                            normal = se.transform.TransformPoint(q * (v.point + v.normal) + startSample.location);
                         }
                         se.SetToUpdate();
                     } else {
                         // vertex position handle hasn't been moved
                         // create a handle for normal
-                        Vector3 movedNormal = Handles.Slider2D(normal, splineStartTangent, Vector3.right, Vector3.up, size, Handles.CircleHandleCap, snap);
+                        Vector3 movedNormal = Handles.Slider2D(normal, startSample.tangent, Vector3.right, Vector3.up, size, Handles.CircleHandleCap, snap);
                         if (movedNormal != normal) {
                             // normal has been moved
-                            v.normal = (Vector2)(Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedNormal) - splineStart)) - v.point;
+                            v.normal = (Vector2)(Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedNormal) - startSample.location)) - v.point;
                             se.SetToUpdate();
                         }
                     }
@@ -107,7 +104,7 @@ namespace SplineMesh {
                 int nextIndex = index == se.shapeVertices.Count - 1 ? 0 : index + 1;
                 ExtrusionSegment.Vertex next = se.shapeVertices[nextIndex];
                 Handles.color = CURVE_COLOR;
-                Vector3 vAtSplineEnd = se.transform.TransformPoint(q * next.point + splineStart);
+                Vector3 vAtSplineEnd = se.transform.TransformPoint(q * next.point + startSample.location);
                 Handles.DrawLine(point, vAtSplineEnd);
             }
         }
