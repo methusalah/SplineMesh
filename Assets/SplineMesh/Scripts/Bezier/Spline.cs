@@ -90,39 +90,9 @@ namespace SplineMesh {
             }
         }
 
-        /// <summary>
-        /// Returns the point on spline at time. Time must be between 0 and the nodes count.
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public Vector3 GetLocationAlongSpline(float t) {
+        public CurveSample GetSample(float t) {
             int index = GetNodeIndexForTime(t);
-            return curves[index].GetLocation(t - index);
-        }
-
-        /// <summary>
-        /// Returns the tangent of spline at time. Time must be between 0 and the nodes count.
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public Vector3 GetTangentAlongSpline(float t) {
-            int index = GetNodeIndexForTime(t);
-            return curves[index].GetTangent(t - index);
-        }
-
-        public Quaternion GetRotationAlongSpline(float t) {
-            int index = GetNodeIndexForTime(t);
-            return curves[index].GetRotation(t - index);
-        }
-
-        public Vector2 GetScaleAlongSpline(float t) {
-            int index = GetNodeIndexForTime(t);
-            return curves[index].GetScale(t - index);
-        }
-
-        public float GetRollAlongSpline(float t) {
-            int index = GetNodeIndexForTime(t);
-            return curves[index].GetRoll(t - index);
+            return curves[index].GetSample(t - index);
         }
 
         public CubicBezierCurve GetCurve(float t) {
@@ -139,53 +109,17 @@ namespace SplineMesh {
             return res;
         }
 
-        /// <summary>
-        /// Returns the point on spline at distance. Distance must be between 0 and spline length.
-        /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public Vector3 GetLocationAlongSplineAtDistance(float d) {
+        public CurveSample GetSampleAtDistance(float d) {
             if (d < 0 || d > Length)
                 throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));
             foreach (CubicBezierCurve curve in curves) {
                 if (d > curve.Length) {
                     d -= curve.Length;
                 } else {
-                    return curve.GetLocationAtDistance(d);
+                    return curve.GetSampleAtDistance(d);
                 }
             }
-            throw new Exception("Something went wrong with GetLocationAlongSplineAtDistance");
-        }
-
-        /// <summary>
-        /// Returns the tangent of spline at distance. Distance must be between 0 and spline length.
-        /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public Vector3 GetTangentAlongSplineAtDistance(float d) {
-            if (d < 0 || d > Length)
-                throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));
-            foreach (CubicBezierCurve curve in curves) {
-                if (d > curve.Length) {
-                    d -= curve.Length;
-                } else {
-                    return curve.GetTangentAtDistance(d);
-                }
-            }
-            throw new Exception("Something went wrong with GetTangentAlongSplineAtDistance");
-        }
-
-        public Quaternion GetRotationAlongSplineAtDistance(float d) {
-            if (d < 0 || d > Length)
-                throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));
-            foreach (CubicBezierCurve curve in curves) {
-                if (d > curve.Length) {
-                    d -= curve.Length;
-                } else {
-                    return curve.GetRotationAtDistance(d);
-                }
-            }
-            throw new Exception("Something went wrong with GetTangentAlongSplineAtDistance");
+            throw new Exception("Something went wrong with GetSampleAtDistance");
         }
 
         /// <summary>
