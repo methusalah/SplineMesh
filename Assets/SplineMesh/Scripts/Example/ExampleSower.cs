@@ -85,12 +85,13 @@ namespace SplineMesh {
             float distance = 0;
             while (distance <= spline.Length) {
                 GameObject go = Instantiate(prefab, transform);
+                CurveSample sample = spline.GetSampleAtDistance(distance);
                 go.transform.localRotation = Quaternion.identity;
                 go.transform.localPosition = Vector3.zero;
                 go.transform.localScale = Vector3.one;
 
                 // move along spline, according to spacing + random
-                go.transform.localPosition = spline.GetLocationAlongSplineAtDistance(distance);
+                go.transform.localPosition = sample.location;
                 // apply scale + random
                 float rangedScale = scale + UnityEngine.Random.Range(0, scaleRange);
                 go.transform.localScale = new Vector3(rangedScale, rangedScale, rangedScale);
@@ -98,15 +99,15 @@ namespace SplineMesh {
                 if (isRandomYaw) {
                     go.transform.Rotate(0, 0, UnityEngine.Random.Range(-180, 180));
                 } else {
-                    Vector3 horTangent = spline.GetTangentAlongSplineAtDistance(distance);
+                    Vector3 horTangent = sample.tangent;
                     horTangent.y = 0;
-                    go.transform.rotation = Quaternion.LookRotation(horTangent) * Quaternion.LookRotation(Vector3.left, Vector3.up);
+                    go.transform.rotation = sample.Rotation;
                 }
                 // move orthogonaly to the spline, according to offset + random
-                Vector3 binormal = spline.GetTangentAlongSplineAtDistance(distance);
+                Vector3 binormal = sample.tangent;
                 binormal = Quaternion.LookRotation(Vector3.right, Vector3.up) * binormal;
                 var localOffset = offset + UnityEngine.Random.Range(0, offsetRange * Math.Sign(offset));
-                localOffset *=  spline.GetScaleAlongSpline((distance/spline.Length)*(spline.nodes.Count-1)).x;
+                localOffset *=  sample.scale.x;
                 binormal *= localOffset;
                 go.transform.position += binormal;
 
