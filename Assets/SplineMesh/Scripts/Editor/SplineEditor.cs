@@ -26,14 +26,14 @@ namespace SplineMesh {
         private SplineNode selection;
         private SelectionType selectionType;
         private bool mustCreateNewNode = false;
-        private SerializedProperty nodes;
+        private SerializedProperty nodesProp;
         private Spline spline;
 
         private GUIStyle nodeButtonStyle, directionButtonStyle, upButtonStyle;
 
         private void OnEnable() {
             spline = (Spline)target;
-            nodes = serializedObject.FindProperty("nodes");
+            nodesProp = serializedObject.FindProperty("nodes");
 
             Texture2D t = new Texture2D(1, 1);
             t.SetPixel(0, 0, CURVE_BUTTON_COLOR);
@@ -52,6 +52,7 @@ namespace SplineMesh {
             t.Apply();
             upButtonStyle = new GUIStyle();
             upButtonStyle.normal.background = t;
+            selection = null;
         }
 
         SplineNode AddClonedNode(SplineNode node) {
@@ -207,53 +208,73 @@ namespace SplineMesh {
             showUpVector = GUILayout.Toggle(showUpVector, "Show up vector");
 
             // nodes
-            EditorGUILayout.PropertyField(nodes);
+            EditorGUILayout.PropertyField(nodesProp);
             EditorGUI.indentLevel++;
-            if (nodes.isExpanded) {
-                for (int i = 0; i < nodes.arraySize; i++) {
-                    SerializedProperty node = nodes.GetArrayElementAtIndex(i);
-                    EditorGUILayout.PropertyField(node);
+            if (nodesProp.isExpanded) {
+                for (int i = 0; i < nodesProp.arraySize; i++) {
+                    SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(i);
+                    EditorGUILayout.PropertyField(nodeProp);
                     EditorGUI.indentLevel++;
-                    if (node.isExpanded) {
-                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
-                            EditorGUILayout.PropertyField(node.FindPropertyRelative("position"), new GUIContent("Position"));
-                            if (check.changed) {
-                                ((Spline)target).nodes[i].Position = node.FindPropertyRelative("position").vector3Value;
-                            }
-                        }
-
-                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
-                            EditorGUILayout.PropertyField(node.FindPropertyRelative("direction"), new GUIContent("Direction"));
-                            if (check.changed) {
-                                ((Spline)target).nodes[i].Direction = node.FindPropertyRelative("direction").vector3Value;
-                            }
-                        }
-
-                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
-                            EditorGUILayout.PropertyField(node.FindPropertyRelative("up"), new GUIContent("Up"));
-                            if (check.changed) {
-                                ((Spline)target).nodes[i].Up = node.FindPropertyRelative("up").vector3Value;
-                            }
-                        }
-
-                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
-                            EditorGUILayout.PropertyField(node.FindPropertyRelative("scale"), new GUIContent("Scale"));
-                            if (check.changed) {
-                                ((Spline)target).nodes[i].Scale = node.FindPropertyRelative("scale").vector2Value;
-                            }
-                        }
-
-                        using (EditorGUI.ChangeCheckScope check = new EditorGUI.ChangeCheckScope()) {
-                            EditorGUILayout.PropertyField(node.FindPropertyRelative("roll"), new GUIContent("Roll"));
-                            if (check.changed) {
-                                ((Spline)target).nodes[i].Roll = node.FindPropertyRelative("roll").floatValue;
-                            }
-                        }
+                    if (nodeProp.isExpanded) {
+                        drawNodeData(nodeProp, spline.nodes[i]);
                     }
                     EditorGUI.indentLevel--;
                 }
             }
             EditorGUI.indentLevel--;
+
+            if (selection != null) {
+                int index = spline.nodes.IndexOf(selection);
+                SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(index);
+                EditorGUILayout.LabelField("Selected node (node " + index + ")");
+                EditorGUI.indentLevel++;
+                drawNodeData(nodeProp, selection);
+                EditorGUI.indentLevel--;
+            } else {
+                EditorGUILayout.LabelField("No selected node");
+            }
+        }
+
+        private void drawNodeData(SerializedProperty nodeProperty, SplineNode node) {
+            using (var check = new EditorGUI.ChangeCheckScope()) {
+                var positionProp = nodeProperty.FindPropertyRelative("position");
+                EditorGUILayout.PropertyField(positionProp, new GUIContent("Position"));
+                if (check.changed) {
+                    node.Position = positionProp.vector3Value;
+                }
+            }
+
+            using (var check = new EditorGUI.ChangeCheckScope()) {
+                var directionProp = nodeProperty.FindPropertyRelative("direction");
+                EditorGUILayout.PropertyField(directionProp, new GUIContent("Direction"));
+                if (check.changed) {
+                    node.Direction = directionProp.vector3Value;
+                }
+            }
+
+            using (var check = new EditorGUI.ChangeCheckScope()) {
+                var upProp = nodeProperty.FindPropertyRelative("up");
+                EditorGUILayout.PropertyField(upProp, new GUIContent("Up"));
+                if (check.changed) {
+                    node.Up = upProp.vector3Value;
+                }
+            }
+
+            using (var check = new EditorGUI.ChangeCheckScope()) {
+                var scaleProp = nodeProperty.FindPropertyRelative("scale");
+                EditorGUILayout.PropertyField(scaleProp, new GUIContent("Scale"));
+                if (check.changed) {
+                    node.Scale = scaleProp.vector2Value;
+                }
+            }
+
+            using (var check = new EditorGUI.ChangeCheckScope()) {
+                var rollProp = nodeProperty.FindPropertyRelative("roll");
+                EditorGUILayout.PropertyField(rollProp, new GUIContent("Roll"));
+                if (check.changed) {
+                    node.Roll = rollProp.floatValue;
+                }
+            }
         }
 
         [MenuItem("GameObject/3D Object/Spline")]
