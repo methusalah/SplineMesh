@@ -34,8 +34,7 @@ namespace SplineMesh {
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
 
-            spline = GetComponent<Spline>();
-            PlaceFollower();
+            spline = GetComponent<Spline>(); 
 #if UNITY_EDITOR
             EditorApplication.update += EditorUpdate;
 #endif
