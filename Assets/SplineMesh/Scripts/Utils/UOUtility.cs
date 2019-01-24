@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System;
 
 namespace SplineMesh {
     public static class UOUtility {
-        public static GameObject Create(string name, GameObject parent) {
-            var res = new GameObject(name);
+        public static GameObject Create(string name, GameObject parent, params Type[] components) {
+            var res = new GameObject(name, components);
             res.transform.parent = parent.transform;
             res.transform.localPosition = Vector3.zero;
             res.transform.localScale = Vector3.one;
@@ -15,9 +16,9 @@ namespace SplineMesh {
 
         public static void Destroy(GameObject go) {
             if (Application.isPlaying) {
-                Object.Destroy(go);
+                UnityEngine.Object.Destroy(go);
             } else {
-                Object.DestroyImmediate(go);
+                UnityEngine.Object.DestroyImmediate(go);
             }
         }
 
