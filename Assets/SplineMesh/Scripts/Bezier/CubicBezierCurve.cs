@@ -79,9 +79,8 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public Vector3 GetLocation(float t) {
-            if (t < 0 || t > 1)
-                throw new ArgumentException("Time must be between 0 and 1. Given time was " + t);
+        private Vector3 GetLocation(float t) {
+            AssertTimeInBounds(t);
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
@@ -97,9 +96,8 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public Vector3 GetTangent(float t) {
-            if (t < 0 || t > 1)
-                throw new ArgumentException("Time must be between 0 and 1. Given time was " + t);
+        private Vector3 GetTangent(float t) {
+            AssertTimeInBounds(t);
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
@@ -111,15 +109,15 @@ namespace SplineMesh {
             return tangent.normalized;
         }
 
-        public Vector3 GetUp(float t) {
+        private Vector3 GetUp(float t) {
             return Vector3.Lerp(n1.Up, n2.Up, t);
         }
 
-        public Vector2 GetScale(float t) {
+        private Vector2 GetScale(float t) {
             return Vector2.Lerp(n1.Scale, n2.Scale, t);
         }
 
-        public float GetRoll(float t) {
+        private float GetRoll(float t) {
             return Mathf.Lerp(n1.Roll, n2.Roll, t);
         }
 
@@ -128,43 +126,34 @@ namespace SplineMesh {
             Length = 0;
             Vector3 previousPosition = GetLocation(0);
             for (float t = 0; t < 1; t += T_STEP) {
-                CurveSample sample = new CurveSample();
-                sample.location = GetLocation(t);
-                sample.tangent = GetTangent(t);
-                sample.up = GetUp(t);
-                sample.roll = GetRoll(t);
-
-                //Vector3.Cross(sample.tangent, Vector3.Cross(Quaternion.AngleAxis(GetRoll(t), Vector3.forward) * previousUp, sample.tangent).normalized);
-                //sample.up = Quaternion.AngleAxis(GetRoll(t), Vector3.forward) * previousUp;
-                Length += Vector3.Distance(previousPosition, sample.location);
-                sample.distance = Length;
-
-                previousPosition = sample.location;
-                samples.Add(sample);
+                Vector3 position = GetLocation(t);
+                Length += Vector3.Distance(previousPosition, position);
+                previousPosition = position;
+                samples.Add(CreateSample(Length, t));
             }
-            CurveSample lastSample = new CurveSample();
-            lastSample.location = GetLocation(1);
-            lastSample.tangent = GetTangent(1);
-            lastSample.up = GetUp(1);
-            lastSample.roll = GetRoll(1);
+            Length += Vector3.Distance(previousPosition, GetLocation(1));
+            samples.Add(CreateSample(Length, 1));
 
-            //lastSample.upPitch = Vector3.Cross(lastSample.tangent, Vector3.Cross(Quaternion.AngleAxis(GetRoll(1), Vector3.forward) * previousUp, lastSample.tangent).normalized);
-            Length += Vector3.Distance(previousPosition, lastSample.location);
-            lastSample.distance = Length;
-            samples.Add(lastSample);
-
-            if (Changed != null)
-                Changed.Invoke();
+            if (Changed != null) Changed.Invoke();
         }
 
-        private CurveSample getCurvePointAtDistance(float d) {
-            if (d < 0 || d > Length)
-                throw new ArgumentException("Distance must be positive and less than curve length. Length = " + Length + ", given distance was " + d);
+        private CurveSample CreateSample(float distance, float time) {
+            return new CurveSample(
+                    GetLocation(time),
+                    GetTangent(time),
+                    GetUp(time),
+                    GetScale(time),
+                    GetRoll(time),
+                    distance,
+                    time);
+        }
 
+        public CurveSample GetSample(float time) {
+            AssertTimeInBounds(time);
             CurveSample previous = samples[0];
             CurveSample next = null;
             foreach (CurveSample cp in samples) {
-                if (cp.distance >= d) {
+                if (cp.timeInCurve >= time) {
                     next = cp;
                     break;
                 }
@@ -173,45 +162,30 @@ namespace SplineMesh {
             if (next == null) {
                 throw new Exception("Can't find curve samples.");
             }
-            float t = next == previous ? 0 : (d - previous.distance) / (next.distance - previous.distance);
+            float t = next == previous ? 0 : (time - previous.timeInCurve) / (next.timeInCurve - previous.timeInCurve);
 
-            CurveSample res = new CurveSample();
-            res.distance = d;
-            res.location = Vector3.Lerp(previous.location, next.location, t);
-            res.tangent = Vector3.Lerp(previous.tangent, next.tangent, t).normalized;
-            res.up = Vector3.Lerp(previous.up, next.up, t);
-            res.roll = Mathf.Lerp(previous.roll, next.roll, t);
-            return res;
+            return CurveSample.Lerp(previous, next, t);
         }
 
-        /// <summary>
-        /// Returns point on curve at distance. Distance must be between 0 and curve length.
-        /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public Vector3 GetLocationAtDistance(float d) {
-            return getCurvePointAtDistance(d).location;
-        }
+        public CurveSample GetSampleAtDistance(float d) {
+            if (d < 0 || d > Length)
+                throw new ArgumentException("Distance must be positive and less than curve length. Length = " + Length + ", given distance was " + d);
 
-        /// <summary>
-        /// Returns tangent of curve at distance. Distance must be between 0 and curve length.
-        /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public Vector3 GetTangentAtDistance(float d) {
-            return getCurvePointAtDistance(d).tangent;
-        }
+            CurveSample previous = samples[0];
+            CurveSample next = null;
+            foreach (CurveSample cp in samples) {
+                if (cp.distanceInCurve >= d) {
+                    next = cp;
+                    break;
+                }
+                previous = cp;
+            }
+            if (next == null) {
+                throw new Exception("Can't find curve samples.");
+            }
+            float t = next == previous ? 0 : (d - previous.distanceInCurve) / (next.distanceInCurve - previous.distanceInCurve);
 
-        public Vector3 GetUpAtDistance(float d) {
-            return getCurvePointAtDistance(d).up;
-        }
-
-        private class CurveSample {
-            public Vector3 location;
-            public Vector3 tangent;
-            public Vector3 up;
-            public float roll;
-            public float distance;
+            return CurveSample.Lerp(previous, next, t);
         }
 
         /// <summary>
@@ -225,22 +199,8 @@ namespace SplineMesh {
             return Quaternion.LookRotation(Tangent, Vector3.Cross(Tangent, Vector3.Cross(Quaternion.AngleAxis(roll, Vector3.forward)* Vector3.up, Tangent).normalized));
         }
 
-        public Quaternion GetRotation(float t) {
-            var sample = new CurveSample();
-            sample.location = GetLocation(t);
-            sample.tangent = GetTangent(t);
-            sample.up = GetUp(t);
-            sample.roll = GetRoll(t);
-            return GetRotation(sample);
-        }
-
-        public Quaternion GetRotationAtDistance(float d) {
-            return GetRotation(getCurvePointAtDistance(d));
-        }
-
-        private Quaternion GetRotation(CurveSample sample) {
-            var upVector = Vector3.Cross(sample.tangent, Vector3.Cross(Quaternion.AngleAxis(sample.roll, Vector3.forward) * sample.up, sample.tangent).normalized);
-            return Quaternion.LookRotation(sample.tangent, upVector);
+        private static void AssertTimeInBounds(float time) {
+            if (time < 0 || time > 1) throw new ArgumentException("Time must be between 0 and 1 (was " + time + ").");
         }
     }
 }

@@ -54,19 +54,22 @@ namespace SplineMesh {
 
         private List<OrientedPoint> GetPath() {
             var path = new List<OrientedPoint>();
+            CurveSample sample;
             for (float t = 0; t < 1; t += 1 / 30.0f) {
+                sample = curve.GetSample(t);
                 path.Add(new OrientedPoint() {
-                    position = curve.GetLocation(t),
-                    rotation = curve.GetRotation(t),
-                    scale = curve.GetScale(t),
-                    roll = curve.GetRoll(t)
+                    position = sample.location,
+                    rotation = sample.Rotation,
+                    scale = sample.scale,
+                    roll = sample.roll
                 });
             }
+            sample = curve.GetSample(1);
             path.Add(new OrientedPoint() {
-                position = curve.GetLocation(1),
-                rotation = curve.GetRotation(1),
-                scale = curve.GetScale(1),
-                roll = curve.GetRoll(1)
+                position = sample.location,
+                rotation = sample.Rotation,
+                scale = sample.scale,
+                roll = sample.roll
             });
             return path;
         }
