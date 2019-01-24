@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SplineMesh {
     /// <summary>
@@ -13,9 +14,11 @@ namespace SplineMesh {
     [RequireComponent(typeof(MeshFilter))]
     [ExecuteInEditMode]
     public class MeshBender : MonoBehaviour {
-        private readonly List<Vertex> vertices = new List<Vertex>();
         private bool isDirty = false;
         private Mesh result;
+        private List<Vertex> vertices = new List<Vertex>();
+        private List<Vertex> transformedVertices = new List<Vertex>();
+        private float minX, length;
 
         private Mesh source;
         /// <summary>
@@ -113,6 +116,7 @@ namespace SplineMesh {
                 scale.x = Mathf.Clamp(scale.x, -1, 1);
             }
         }
+
         private void OnEnable() {
             if(GetComponent<MeshFilter>().sharedMesh != null) {
                 result = GetComponent<MeshFilter>().sharedMesh;
@@ -122,12 +126,15 @@ namespace SplineMesh {
             }
         }
 
-        private void Compute() {
-            if (source == null)
-                return;
-            int nbVert = source.vertices.Length;
+        /// <summary>
+        /// Build data that are consistent between computations if no property has been changed.
+        /// This method allows the computation due to curve changes to be faster.
+        /// </summary>
+        private void BuildData() {
+            if (source == null) throw new Exception(GetType().Name + " can't compute because there is no source mesh.");
+
             // find the bounds along x
-            float minX = float.MaxValue;
+            minX = float.MaxValue;
             float maxX = float.MinValue;
             foreach (Vertex vert in vertices) {
                 Vector3 p = vert.v;
@@ -140,65 +147,106 @@ namespace SplineMesh {
                 maxX = Math.Max(maxX, p.x);
                 minX = Math.Min(minX, p.x);
             }
-            float length = Math.Abs(maxX - minX);
+            length = Math.Abs(maxX - minX);
 
-            List<Vector3> deformedVerts = new List<Vector3>(nbVert);
-            List<Vector3> deformedNormals = new List<Vector3>(nbVert);
-            // for each mesh vertex, we found its projection on the curve
             // if the mesh is reversed by scale, we must change the culling of the faces by inversing all triangles.
             // the mesh is reverse only if the number of resersing axes is impair.
             bool reversed = scale.x < 0;
             if (scale.y < 0) reversed = !reversed;
             if (scale.z < 0) reversed = !reversed;
             result.triangles = reversed ? MeshUtility.GetReversedTriangles(source) : source.triangles;
+
+            // we transform the source mesh vertices according to rotation/translation/scale
+            transformedVertices.Clear();
             foreach (Vertex vert in vertices) {
-                Vector3 p = vert.v;
-                Vector3 n = vert.n;
+                Vertex transformed = new Vertex() {
+                    v = vert.v,
+                    n = vert.n
+                };
+                if (scale != Vector3.one) {
+                    transformed.v = Vector3.Scale(transformed.v, scale);
+                    transformed.n = Vector3.Scale(transformed.n, scale);
+                }
                 //  application of rotation
-                if (sourceRotation != Quaternion.identity) {
-                    p = sourceRotation * p;
-                    n = sourceRotation * n;
+                if (rotation != Quaternion.identity) {
+                    transformed.v = rotation * transformed.v;
+                    transformed.n = rotation * transformed.n;
                 }
-                if (sourceTranslation != Vector3.zero) {
-                    p += sourceTranslation;
+                if (translation != Vector3.zero) {
+                    transformed.v += translation;
                 }
-                float distanceRate = Math.Abs(p.x - minX) / length;
-
-                Vector3 curvePoint = curve.GetLocationAtDistance(curve.Length * distanceRate);
-                Vector3 curveTangent = curve.GetTangentAtDistance(curve.Length * distanceRate);
-                float roll = curve.GetRoll(distanceRate);
-                var scale = curve.GetScale(distanceRate);
-
-                Quaternion q = curve.GetRotationAtDistance(curve.Length * distanceRate) * Quaternion.Euler(0, -90, 0);
-
-                // application of scale (todo : we need the interpolation based on the distance, not time)
-                p = Vector3.Scale(p, new Vector3(0, scale.y, scale.x));
-
-                // application of roll (todo : we need the interpolation based on the distance, not time)
-                p = Quaternion.AngleAxis(roll, Vector3.right) * p;
-                n = Quaternion.AngleAxis(roll, Vector3.right) * n;
-
-                // reset X value of p
-                p = new Vector3(0, p.y, p.z);
-
-                deformedVerts.Add(q * p + curvePoint);
-                deformedNormals.Add(q * n);
+                transformedVertices.Add(transformed);
             }
-
-            result.vertices = deformedVerts.ToArray();
-            result.normals = deformedNormals.ToArray();
-            result.uv = source.uv;
-            result.triangles = source.triangles;
-            GetComponent<MeshFilter>().mesh = result;
         }
 
+        /// <summary>
+        /// Bend the mesh only if a property has changed since the last compute.
+        /// </summary>
+        public void ComputeIfNeeded() {
+            if (!isDirty) return;
+            Compute();
+        }
+
+        /// <summary>
+        /// Bend the mesh. This method may take time and should not be called more than necessary.
+        /// Consider using <see cref="ComputeIfNeeded"/> for faster result.
+        /// </summary>
+        public void Compute() {
+            if (isDirty) {
+                BuildData();
+            }
+            isDirty = false;
+
+            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
+            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
+
+            List<Vertex> bentVertices = new List<Vertex>(vertices.Count);
+            // for each mesh vertex, we found its projection on the curve
+            foreach (Vertex vert in transformedVertices) {
+                Vertex bent = new Vertex() {
+                    v = vert.v,
+                    n = vert.n
+                };
+                float distanceRate = Math.Abs(bent.v.x - minX) / length;
+                CurveSample sample;
+                if(!sampleCache.TryGetValue(distanceRate, out sample)){
+                    sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
+                    sampleCache[distanceRate] = sample;
+                }
+
+                Quaternion q = sample.Rotation * Quaternion.Euler(0, -90, 0);
+
+                // application of scale
+                bent.v = Vector3.Scale(bent.v, new Vector3(0, sample.scale.y, sample.scale.x));
+
+                // application of roll
+                bent.v = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.v;
+                bent.n = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.n;
+
+                // reset X value
+                bent.v.x = 0;
+
+                // application of the rotation + location
+                bent.v = q * bent.v + sample.location;
+                bent.n = q * bent.n;
+                bentVertices.Add(bent);
+            }
+
+            result.vertices = bentVertices.Select(b => b.v).ToArray();
+            result.normals = bentVertices.Select(b => b.n).ToArray();
+            result.RecalculateBounds();
+        }
+
+        [Serializable]
         private struct Vertex {
             public Vector3 v;
             public Vector3 n;
         }
 
         private void OnDestroy() {
-            curve.Changed.RemoveListener(() => Compute());
+            if(curve != null) {
+                curve.Changed.RemoveListener(Compute);
+            }
         }
     }
 }
