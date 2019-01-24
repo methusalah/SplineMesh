@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SplineMesh {
     /// <summary>
@@ -13,145 +14,239 @@ namespace SplineMesh {
     [RequireComponent(typeof(MeshFilter))]
     [ExecuteInEditMode]
     public class MeshBender : MonoBehaviour {
-        private Mesh source, result;
-        private readonly List<Vertex> vertices = new List<Vertex>();
+        private bool isDirty = false;
+        private Mesh result;
+        private List<Vertex> vertices = new List<Vertex>();
+        private List<Vertex> transformedVertices = new List<Vertex>();
+        private float minX, length;
 
-        private Quaternion sourceRotation;
-        private Vector3 sourceTranslation;
-
-        private CubicBezierCurve curve;
-
-        private void OnEnable() {
-            result = new Mesh();
-            GetComponent<MeshFilter>().sharedMesh = result;
-        }
-
+        private Mesh source;
         /// <summary>
-        /// Set the cubic Bézier curve to use to bend the source mesh, and begin to listen to curve control points for changes.
+        /// The source mesh to bend.
         /// </summary>
-        /// <param name="curve"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetCurve(CubicBezierCurve curve, bool update = true) {
-            if (this.curve != null) {
-                this.curve.Changed.RemoveListener(() => Compute());
-            }
-            this.curve = curve;
-            curve.Changed.AddListener(() => Compute());
-            if (update) Compute();
-        }
-
-        /// <summary>
-        /// Set the source mesh.
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetSourceMesh(Mesh mesh, bool update = true) {
-            if (source != mesh) {
-                this.source = mesh;
+        public Mesh Source {
+            get { return source; }
+            set {
+                if (value == source) return;
+                isDirty = true;
+                source = value;
                 vertices.Clear();
                 int i = 0;
                 foreach (Vector3 vert in source.vertices) {
-                    Vertex v = new Vertex();
-                    v.v = vert;
-                    v.n = source.normals[i++];
+                    Vertex v = new Vertex {
+                        v = vert,
+                        n = source.normals[i++]
+                    };
                     vertices.Add(v);
                 }
+
+                result.hideFlags = source.hideFlags;
+                result.indexFormat = source.indexFormat;
+                result.vertices = source.vertices.ToArray();
+                result.triangles = source.triangles.ToArray();
+
+                result.uv = source.uv.ToArray();
+                result.uv2 = source.uv2.ToArray();
+                result.uv3 = source.uv3.ToArray();
+                result.uv4 = source.uv4.ToArray();
+                result.uv5 = source.uv5.ToArray();
+                result.uv6 = source.uv6.ToArray();
+                result.uv7 = source.uv7.ToArray();
+                result.uv8 = source.uv8.ToArray();
+                result.tangents = source.tangents.ToArray();
             }
-            if (update) Compute();
+        }
 
+        private CubicBezierCurve curve;
+        /// <summary>
+        /// The cubic Bézier curve to use to bend the source mesh. The curve is observed and the mesh is bended again each time it changes.
+        /// </summary>
+        public CubicBezierCurve Curve {
+            get { return curve; }
+            set {
+                if (value == curve) return;
+                if(value == null) throw new ArgumentNullException(nameof(value));
+                isDirty = true;
+                if (curve != null) {
+                    curve.Changed.RemoveListener(Compute);
+                }
+                curve = value;
+                curve.Changed.AddListener(Compute);
+            }
+        }
+
+        private Vector3 translation;
+        /// <summary>
+        /// The offset to apply to the source mesh before bending it.
+        /// </summary>
+        public Vector3 Translation {
+            get { return translation; }
+            set {
+                if (value == translation) return;
+                isDirty = true;
+                translation = value;
+            }
+        }
+
+        private Quaternion rotation;
+        /// <summary>
+        /// The rotation to apply to the source mesh before bending it.
+        /// Because source mesh will always be bended along the X axis but may be oriented differently.
+        /// </summary>
+        public Quaternion Rotation {
+            get { return rotation; }
+            set {
+                if (value == rotation) return;
+                isDirty = true;
+                rotation = value;
+            }
+        }
+
+        private Vector3 scale;
+        /// <summary>
+        /// The scale to apply to the source mesh before bending it.
+        /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
+        /// </summary>
+        public Vector3 Scale {
+            get { return scale; }
+            set {
+                if (value == scale) return;
+                isDirty = true;
+                scale = value;
+                scale.x = Mathf.Clamp(scale.x, -1, 1);
+            }
+        }
+
+        private void OnEnable() {
+            if(GetComponent<MeshFilter>().sharedMesh != null) {
+                result = GetComponent<MeshFilter>().sharedMesh;
+            } else {
+                GetComponent<MeshFilter>().sharedMesh = result = new Mesh();
+                result.name = "Generated by " + GetType().Name;
+            }
         }
 
         /// <summary>
-        /// Set the rotation to apply to the source mesh before anything happens. Because source mesh will always be bended along the X axis but may be oriented differently.
+        /// Build data that are consistent between computations if no property has been changed.
+        /// This method allows the computation due to curve changes to be faster.
         /// </summary>
-        /// <param name="rotation"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetRotation(Quaternion rotation, bool update = true) {
-            this.sourceRotation = rotation;
-            if (update) Compute();
-        }
+        private void BuildData() {
+            if (source == null) throw new Exception(GetType().Name + " can't compute because there is no source mesh.");
 
-        /// <summary>
-        /// Set an offset to bend the mesh outside the spline.
-        /// </summary>
-        /// <param name="translation"></param>
-        /// <param name="update"></param>
-        public void SetTranslation(Vector3 translation, bool update = true) {
-            sourceTranslation = translation;
-            if (update) Compute();
-        }
-
-        private void Compute() {
-            if (source == null)
-                return;
-            int nbVert = source.vertices.Length;
             // find the bounds along x
-            float minX = float.MaxValue;
+            minX = float.MaxValue;
             float maxX = float.MinValue;
             foreach (Vertex vert in vertices) {
                 Vector3 p = vert.v;
-                if (sourceRotation != Quaternion.identity) {
-                    p = sourceRotation * p;
+                if (rotation != Quaternion.identity) {
+                    p = rotation * p;
                 }
-                if (sourceTranslation != Vector3.zero) {
-                    p += sourceTranslation;
+                if (translation != Vector3.zero) {
+                    p += translation;
                 }
                 maxX = Math.Max(maxX, p.x);
                 minX = Math.Min(minX, p.x);
             }
-            float length = Math.Abs(maxX - minX);
+            length = Math.Abs(maxX - minX);
 
-            List<Vector3> deformedVerts = new List<Vector3>(nbVert);
-            List<Vector3> deformedNormals = new List<Vector3>(nbVert);
-            // for each mesh vertex, we found its projection on the curve
+            // if the mesh is reversed by scale, we must change the culling of the faces by inversing all triangles.
+            // the mesh is reverse only if the number of resersing axes is impair.
+            bool reversed = scale.x < 0;
+            if (scale.y < 0) reversed = !reversed;
+            if (scale.z < 0) reversed = !reversed;
+            result.triangles = reversed ? MeshUtility.GetReversedTriangles(source) : source.triangles;
+
+            // we transform the source mesh vertices according to rotation/translation/scale
+            transformedVertices.Clear();
             foreach (Vertex vert in vertices) {
-                Vector3 p = vert.v;
-                Vector3 n = vert.n;
+                Vertex transformed = new Vertex() {
+                    v = vert.v,
+                    n = vert.n
+                };
+                if (scale != Vector3.one) {
+                    transformed.v = Vector3.Scale(transformed.v, scale);
+                    transformed.n = Vector3.Scale(transformed.n, scale);
+                }
                 //  application of rotation
-                if (sourceRotation != Quaternion.identity) {
-                    p = sourceRotation * p;
-                    n = sourceRotation * n;
+                if (rotation != Quaternion.identity) {
+                    transformed.v = rotation * transformed.v;
+                    transformed.n = rotation * transformed.n;
                 }
-                if (sourceTranslation != Vector3.zero) {
-                    p += sourceTranslation;
+                if (translation != Vector3.zero) {
+                    transformed.v += translation;
                 }
-                float distanceRate = Math.Abs(p.x - minX) / length;
-
-                Vector3 curvePoint = curve.GetLocationAtDistance(curve.Length * distanceRate);
-                Vector3 curveTangent = curve.GetTangentAtDistance(curve.Length * distanceRate);
-                float roll = curve.GetRoll(distanceRate);
-                var scale = curve.GetScale(distanceRate);
-
-                Quaternion q = curve.GetRotationAtDistance(curve.Length * distanceRate) * Quaternion.Euler(0, -90, 0);
-
-                // application of scale (todo : we need the interpolation based on the distance, not time)
-                p = Vector3.Scale(p, new Vector3(0, scale.y, scale.x));
-
-                // application of roll (todo : we need the interpolation based on the distance, not time)
-                p = Quaternion.AngleAxis(roll, Vector3.right) * p;
-                n = Quaternion.AngleAxis(roll, Vector3.right) * n;
-
-                // reset X value of p
-                p = new Vector3(0, p.y, p.z);
-
-                deformedVerts.Add(q * p + curvePoint);
-                deformedNormals.Add(q * n);
+                transformedVertices.Add(transformed);
             }
-
-            result.vertices = deformedVerts.ToArray();
-            result.normals = deformedNormals.ToArray();
-            result.uv = source.uv;
-            result.triangles = source.triangles;
-            GetComponent<MeshFilter>().mesh = result;
         }
 
+        /// <summary>
+        /// Bend the mesh only if a property has changed since the last compute.
+        /// </summary>
+        public void ComputeIfNeeded() {
+            if (!isDirty) return;
+            Compute();
+        }
+
+        /// <summary>
+        /// Bend the mesh. This method may take time and should not be called more than necessary.
+        /// Consider using <see cref="ComputeIfNeeded"/> for faster result.
+        /// </summary>
+        public void Compute() {
+            if (isDirty) {
+                BuildData();
+            }
+            isDirty = false;
+
+            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
+            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
+
+            List<Vertex> bentVertices = new List<Vertex>(vertices.Count);
+            // for each mesh vertex, we found its projection on the curve
+            foreach (Vertex vert in transformedVertices) {
+                Vertex bent = new Vertex() {
+                    v = vert.v,
+                    n = vert.n
+                };
+                float distanceRate = Math.Abs(bent.v.x - minX) / length;
+                CurveSample sample;
+                if(!sampleCache.TryGetValue(distanceRate, out sample)){
+                    sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
+                    sampleCache[distanceRate] = sample;
+                }
+
+                Quaternion q = sample.Rotation * Quaternion.Euler(0, -90, 0);
+
+                // application of scale
+                bent.v = Vector3.Scale(bent.v, new Vector3(0, sample.scale.y, sample.scale.x));
+
+                // application of roll
+                bent.v = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.v;
+                bent.n = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.n;
+
+                // reset X value
+                bent.v.x = 0;
+
+                // application of the rotation + location
+                bent.v = q * bent.v + sample.location;
+                bent.n = q * bent.n;
+                bentVertices.Add(bent);
+            }
+
+            result.vertices = bentVertices.Select(b => b.v).ToArray();
+            result.normals = bentVertices.Select(b => b.n).ToArray();
+            result.RecalculateBounds();
+        }
+
+        [Serializable]
         private struct Vertex {
             public Vector3 v;
             public Vector3 n;
         }
 
         private void OnDestroy() {
-            curve.Changed.RemoveListener(() => Compute());
+            if(curve != null) {
+                curve.Changed.RemoveListener(Compute);
+            }
         }
     }
 }

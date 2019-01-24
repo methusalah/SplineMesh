@@ -69,9 +69,10 @@ namespace SplineMesh {
 
                 go.GetComponent<MeshRenderer>().material = material;
                 MeshBender mb = go.GetComponent<MeshBender>();
-                mb.SetSourceMesh(mesh, false);
-                mb.SetRotation(Quaternion.Euler(rotation), false);
-                mb.SetCurve(curve, true);
+                mb.Source = mesh;
+                mb.Rotation = Quaternion.Euler(rotation);
+                mb.Curve = curve;
+                mb.ComputeIfNeeded();
                 meshes.Add(go);
             }
         }
