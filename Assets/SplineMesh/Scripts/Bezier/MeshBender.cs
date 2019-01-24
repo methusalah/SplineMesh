@@ -13,69 +13,106 @@ namespace SplineMesh {
     [RequireComponent(typeof(MeshFilter))]
     [ExecuteInEditMode]
     public class MeshBender : MonoBehaviour {
-        private Mesh source, result;
         private readonly List<Vertex> vertices = new List<Vertex>();
+        private bool isDirty = false;
+        private Mesh result;
 
-        private Quaternion sourceRotation;
-        private Vector3 sourceTranslation;
-
-        private CubicBezierCurve curve;
-
-        }
-
+        private Mesh source;
         /// <summary>
-        /// Set the cubic Bézier curve to use to bend the source mesh, and begin to listen to curve control points for changes.
+        /// The source mesh to bend.
         /// </summary>
-        /// <param name="curve"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetCurve(CubicBezierCurve curve, bool update = true) {
-            if (this.curve != null) {
-                this.curve.Changed.RemoveListener(() => Compute());
-            }
-            this.curve = curve;
-            curve.Changed.AddListener(() => Compute());
-            if (update) Compute();
-        }
-
-        /// <summary>
-        /// Set the source mesh.
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetSourceMesh(Mesh mesh, bool update = true) {
-            if (source != mesh) {
-                this.source = mesh;
+        public Mesh Source {
+            get { return source; }
+            set {
+                if (value == source) return;
+                isDirty = true;
+                source = value;
                 vertices.Clear();
                 int i = 0;
                 foreach (Vector3 vert in source.vertices) {
-                    Vertex v = new Vertex();
-                    v.v = vert;
-                    v.n = source.normals[i++];
+                    Vertex v = new Vertex {
+                        v = vert,
+                        n = source.normals[i++]
+                    };
                     vertices.Add(v);
                 }
+
+                result.hideFlags = source.hideFlags;
+                result.indexFormat = source.indexFormat;
+                result.vertices = source.vertices.ToArray();
+                result.triangles = source.triangles.ToArray();
+
+                result.uv = source.uv.ToArray();
+                result.uv2 = source.uv2.ToArray();
+                result.uv3 = source.uv3.ToArray();
+                result.uv4 = source.uv4.ToArray();
+                result.uv5 = source.uv5.ToArray();
+                result.uv6 = source.uv6.ToArray();
+                result.uv7 = source.uv7.ToArray();
+                result.uv8 = source.uv8.ToArray();
+                result.tangents = source.tangents.ToArray();
             }
-            if (update) Compute();
-
         }
 
+        private CubicBezierCurve curve;
         /// <summary>
-        /// Set the rotation to apply to the source mesh before anything happens. Because source mesh will always be bended along the X axis but may be oriented differently.
+        /// The cubic Bézier curve to use to bend the source mesh. The curve is observed and the mesh is bended again each time it changes.
         /// </summary>
-        /// <param name="rotation"></param>
-        /// <param name="update">If let to true, update the resulting mesh immediatly.</param>
-        public void SetRotation(Quaternion rotation, bool update = true) {
-            this.sourceRotation = rotation;
-            if (update) Compute();
+        public CubicBezierCurve Curve {
+            get { return curve; }
+            set {
+                if (value == curve) return;
+                if(value == null) throw new ArgumentNullException(nameof(value));
+                isDirty = true;
+                if (curve != null) {
+                    curve.Changed.RemoveListener(Compute);
+                }
+                curve = value;
+                curve.Changed.AddListener(Compute);
+            }
         }
 
+        private Vector3 translation;
         /// <summary>
-        /// Set an offset to bend the mesh outside the spline.
+        /// The offset to apply to the source mesh before bending it.
         /// </summary>
-        /// <param name="translation"></param>
-        /// <param name="update"></param>
-        public void SetTranslation(Vector3 translation, bool update = true) {
-            sourceTranslation = translation;
-            if (update) Compute();
+        public Vector3 Translation {
+            get { return translation; }
+            set {
+                if (value == translation) return;
+                isDirty = true;
+                translation = value;
+            }
+        }
+
+        private Quaternion rotation;
+        /// <summary>
+        /// The rotation to apply to the source mesh before bending it.
+        /// Because source mesh will always be bended along the X axis but may be oriented differently.
+        /// </summary>
+        public Quaternion Rotation {
+            get { return rotation; }
+            set {
+                if (value == rotation) return;
+                isDirty = true;
+                rotation = value;
+            }
+        }
+
+        private Vector3 scale;
+        /// <summary>
+        /// The scale to apply to the source mesh before bending it.
+        /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
+        /// </summary>
+        public Vector3 Scale {
+            get { return scale; }
+            set {
+                if (value == scale) return;
+                isDirty = true;
+                scale = value;
+                scale.x = Mathf.Clamp(scale.x, -1, 1);
+            }
+        }
         private void OnEnable() {
             if(GetComponent<MeshFilter>().sharedMesh != null) {
                 result = GetComponent<MeshFilter>().sharedMesh;
@@ -94,11 +131,11 @@ namespace SplineMesh {
             float maxX = float.MinValue;
             foreach (Vertex vert in vertices) {
                 Vector3 p = vert.v;
-                if (sourceRotation != Quaternion.identity) {
-                    p = sourceRotation * p;
+                if (rotation != Quaternion.identity) {
+                    p = rotation * p;
                 }
-                if (sourceTranslation != Vector3.zero) {
-                    p += sourceTranslation;
+                if (translation != Vector3.zero) {
+                    p += translation;
                 }
                 maxX = Math.Max(maxX, p.x);
                 minX = Math.Min(minX, p.x);
