@@ -145,6 +145,12 @@ namespace SplineMesh {
             List<Vector3> deformedVerts = new List<Vector3>(nbVert);
             List<Vector3> deformedNormals = new List<Vector3>(nbVert);
             // for each mesh vertex, we found its projection on the curve
+            // if the mesh is reversed by scale, we must change the culling of the faces by inversing all triangles.
+            // the mesh is reverse only if the number of resersing axes is impair.
+            bool reversed = scale.x < 0;
+            if (scale.y < 0) reversed = !reversed;
+            if (scale.z < 0) reversed = !reversed;
+            result.triangles = reversed ? MeshUtility.GetReversedTriangles(source) : source.triangles;
             foreach (Vertex vert in vertices) {
                 Vector3 p = vert.v;
                 Vector3 n = vert.n;
