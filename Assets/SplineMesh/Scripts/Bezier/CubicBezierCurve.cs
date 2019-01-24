@@ -79,9 +79,8 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public Vector3 GetLocation(float t) {
-            if (t < 0 || t > 1)
-                throw new ArgumentException("Time must be between 0 and 1. Given time was " + t);
+        private Vector3 GetLocation(float t) {
+            AssertTimeInBounds(t);
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
@@ -97,9 +96,8 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public Vector3 GetTangent(float t) {
-            if (t < 0 || t > 1)
-                throw new ArgumentException("Time must be between 0 and 1. Given time was " + t);
+        private Vector3 GetTangent(float t) {
+            AssertTimeInBounds(t);
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
@@ -158,9 +156,8 @@ namespace SplineMesh {
         }
 
         private CurveSample getCurvePointAtDistance(float d) {
-            if (d < 0 || d > Length)
-                throw new ArgumentException("Distance must be positive and less than curve length. Length = " + Length + ", given distance was " + d);
 
+            AssertTimeInBounds(time);
             CurveSample previous = samples[0];
             CurveSample next = null;
             foreach (CurveSample cp in samples) {
