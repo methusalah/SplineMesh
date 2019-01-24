@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SplineMesh {
@@ -26,7 +25,6 @@ namespace SplineMesh {
                 return rotation;
             }
         }
-
 
         public CurveSample(Vector3 location, Vector3 tangent, Vector3 up, Vector2 scale, float roll, float distanceInCurve, float timeInCurve) {
             this.location = location;
