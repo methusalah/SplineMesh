@@ -102,7 +102,7 @@ namespace SplineMesh {
             }
         }
 
-        private Vector3 scale;
+        private Vector3 scale = Vector3.one;
         /// <summary>
         /// The scale to apply to the source mesh before bending it.
         /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
