@@ -43,12 +43,12 @@ namespace SplineMesh {
 
         private void OnEnable() {
             spline = GetComponent<Spline>();
-            spline.NodeCountChanged.AddListener(() => {
+            spline.NodeListChanged += (s, e) => {
                 toUpdate = true;
                 foreach (CubicBezierCurve curve in spline.GetCurves()) {
                     curve.Changed.AddListener(() => toUpdate = true);
                 }
-            });
+            };
             foreach (CubicBezierCurve curve in spline.GetCurves()) {
                 curve.Changed.AddListener(() => toUpdate = true);
             }

@@ -30,7 +30,7 @@ namespace SplineMesh {
 
         private void OnEnable() {
             spline = GetComponent<Spline>();
-            spline.NodeCountChanged.AddListener(() => { toUpdate = true; });
+            spline.NodeListChanged += (s, e) => { toUpdate = true; };
         }
 
         private void OnValidate() {

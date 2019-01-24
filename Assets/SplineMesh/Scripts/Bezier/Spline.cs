@@ -36,8 +36,7 @@ namespace SplineMesh {
         /// <summary>
         /// Event raised when the node collection changes
         /// </summary>
-        [HideInInspector]
-        public UnityEvent NodeCountChanged = new UnityEvent();
+        public event ListChangeHandler<SplineNode> NodeListChanged;
 
         /// <summary>
         /// Event raised when one of the curve changes.
@@ -53,7 +52,9 @@ namespace SplineMesh {
             curves.Clear();
             AddNode(new SplineNode(new Vector3(5, 0, 0), new Vector3(5, 0, -3)));
             AddNode(new SplineNode(new Vector3(10, 0, 0), new Vector3(10, 0, 3)));
-            RaiseNodeCountChanged();
+            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+                type = ListChangeType.clear
+            });
             UpdateAfterCurveChanged();
         }
 
@@ -67,7 +68,9 @@ namespace SplineMesh {
                 curve.Changed.AddListener(() => UpdateAfterCurveChanged());
                 curves.Add(curve);
             }
-            RaiseNodeCountChanged();
+            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+                type = ListChangeType.clear
+            });
             UpdateAfterCurveChanged();
         }
 
@@ -75,9 +78,9 @@ namespace SplineMesh {
             return curves.AsReadOnly();
         }
 
-        private void RaiseNodeCountChanged() {
-            if (NodeCountChanged != null)
-                NodeCountChanged.Invoke();
+        private void RaiseNodeListeChanged(ListChangedEventArgs<SplineNode> args) {
+            if (NodeListChanged != null)
+                NodeListChanged.Invoke(this, args);
         }
 
         private void UpdateAfterCurveChanged() {
@@ -134,7 +137,11 @@ namespace SplineMesh {
                 curve.Changed.AddListener(() => UpdateAfterCurveChanged());
                 curves.Add(curve);
             }
-            RaiseNodeCountChanged();
+            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+                type = ListChangeType.Add,
+                newItems = new List<SplineNode>() { node }
+            });
+
             UpdateAfterCurveChanged();
         }
 
@@ -157,7 +164,11 @@ namespace SplineMesh {
             CubicBezierCurve curve = new CubicBezierCurve(node, nextNode);
             curve.Changed.AddListener(() => UpdateAfterCurveChanged());
             curves.Insert(index, curve);
-            RaiseNodeCountChanged();
+            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+                type = ListChangeType.Insert,
+                newItems = new List<SplineNode>() { node },
+                insertIndex = index
+            });
             UpdateAfterCurveChanged();
         }
 
@@ -182,8 +193,27 @@ namespace SplineMesh {
             toRemove.Changed.RemoveListener(() => UpdateAfterCurveChanged());
             curves.Remove(toRemove);
 
-            RaiseNodeCountChanged();
+            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+                type = ListChangeType.Remove,
+                removedItems = new List<SplineNode>() { node },
+                removeIndex = index
+            });
             UpdateAfterCurveChanged();
         }
     }
+
+    public enum ListChangeType {
+        Add,
+        Insert,
+        Remove,
+        clear,
+    }
+    public class ListChangedEventArgs<T> : EventArgs {
+        public ListChangeType type;
+        public List<T> newItems;
+        public List<T> removedItems;
+        public int insertIndex, removeIndex;
+    }
+    public delegate void ListChangeHandler<T2>(object sender, ListChangedEventArgs<T2> args);
+
 }
