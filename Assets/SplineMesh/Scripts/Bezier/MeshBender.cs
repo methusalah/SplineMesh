@@ -214,8 +214,6 @@ namespace SplineMesh {
                     sampleCache[distanceRate] = sample;
                 }
 
-                Quaternion q = sample.Rotation * Quaternion.Euler(0, -90, 0);
-
                 // application of scale
                 bent.v = Vector3.Scale(bent.v, new Vector3(0, sample.scale.y, sample.scale.x));
 
@@ -227,6 +225,7 @@ namespace SplineMesh {
                 bent.v.x = 0;
 
                 // application of the rotation + location
+                Quaternion q = sample.Rotation * Quaternion.Euler(0, -90, 0);
                 bent.v = q * bent.v + sample.location;
                 bent.n = q * bent.n;
                 bentVertices.Add(bent);
