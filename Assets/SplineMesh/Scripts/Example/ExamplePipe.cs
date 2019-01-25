@@ -20,6 +20,7 @@ namespace SplineMesh {
     /// </summary>
     [ExecuteInEditMode]
     [SelectionBase]
+    [RequireComponent(typeof(Spline))]
     public class ExamplePipe : MonoBehaviour {
         private GameObject generated;
         private Spline spline = null;

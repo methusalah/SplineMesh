@@ -17,6 +17,7 @@ namespace SplineMesh {
     /// </summary>
     [ExecuteInEditMode]
     [SelectionBase]
+    [RequireComponent(typeof(Spline))]
     public class ExampleRailling : MonoBehaviour {
         private GameObject generated;
         private Spline spline = null;
