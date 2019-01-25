@@ -163,14 +163,14 @@ namespace SplineMesh {
                     v = vert.v,
                     n = vert.n
                 };
-                if (scale != Vector3.one) {
-                    transformed.v = Vector3.Scale(transformed.v, scale);
-                    transformed.n = Vector3.Scale(transformed.n, scale);
-                }
                 //  application of rotation
                 if (rotation != Quaternion.identity) {
                     transformed.v = rotation * transformed.v;
                     transformed.n = rotation * transformed.n;
+                }
+                if (scale != Vector3.one) {
+                    transformed.v = Vector3.Scale(transformed.v, scale);
+                    transformed.n = Vector3.Scale(transformed.n, scale);
                 }
                 if (translation != Vector3.zero) {
                     transformed.v += translation;
