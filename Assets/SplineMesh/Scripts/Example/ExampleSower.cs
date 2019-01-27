@@ -99,8 +99,6 @@ namespace SplineMesh {
                 if (isRandomYaw) {
                     go.transform.Rotate(0, 0, UnityEngine.Random.Range(-180, 180));
                 } else {
-                    Vector3 horTangent = sample.tangent;
-                    horTangent.y = 0;
                     go.transform.rotation = sample.Rotation;
                 }
                 // move orthogonaly to the spline, according to offset + random
