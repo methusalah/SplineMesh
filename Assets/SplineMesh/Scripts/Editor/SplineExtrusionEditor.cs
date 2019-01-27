@@ -37,7 +37,7 @@ namespace SplineMesh {
             var spline = se.GetComponent<Spline>();
 
             CurveSample startSample = spline.GetSample(0);
-            Quaternion q = CubicBezierCurve.GetRotationFromTangent(startSample.tangent, startSample.roll);
+            Quaternion q = startSample.Rotation;
             foreach (ExtrusionSegment.Vertex v in se.shapeVertices) {
                 // we create point and normal relative to the spline start where the shape is drawn
                 Vector3 point = se.transform.TransformPoint(q * v.point + startSample.location);

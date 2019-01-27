@@ -188,17 +188,6 @@ namespace SplineMesh {
             return CurveSample.Lerp(previous, next, t);
         }
 
-        /// <summary>
-        /// Convenient method that returns a quaternion used rotate an object in the tangent direction, considering Y-axis as up vector.
-        /// </summary>
-        /// <param name="Tangent"></param>
-        /// <returns></returns>
-        public static Quaternion GetRotationFromTangent(Vector3 Tangent, float roll = 0) {
-            if (Tangent == Vector3.zero)
-                return Quaternion.identity;
-            return Quaternion.LookRotation(Tangent, Vector3.Cross(Tangent, Vector3.Cross(Quaternion.AngleAxis(roll, Vector3.forward)* Vector3.up, Tangent).normalized));
-        }
-
         private static void AssertTimeInBounds(float time) {
             if (time < 0 || time > 1) throw new ArgumentException("Time must be between 0 and 1 (was " + time + ").");
         }
