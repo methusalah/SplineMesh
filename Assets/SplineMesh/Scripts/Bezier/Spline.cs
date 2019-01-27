@@ -93,11 +93,23 @@ namespace SplineMesh {
             }
         }
 
+        /// <summary>
+        /// Returns an interpolated sample of the spline, containing all curve data at this time.
+        /// Time must be between 0 and the number of nodes.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public CurveSample GetSample(float t) {
             int index = GetNodeIndexForTime(t);
             return curves[index].GetSample(t - index);
         }
 
+        /// <summary>
+        /// Returns the curve at the given time.
+        /// Time must be between 0 and the number of nodes.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public CubicBezierCurve GetCurve(float t) {
             return curves[GetNodeIndexForTime(t)];
         }
@@ -112,6 +124,12 @@ namespace SplineMesh {
             return res;
         }
 
+        /// <summary>
+        /// Returns an interpolated sample of the spline, containing all curve data at this distance.
+        /// Distance must be between 0 and the spline length.
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public CurveSample GetSampleAtDistance(float d) {
             if (d < 0 || d > Length)
                 throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));

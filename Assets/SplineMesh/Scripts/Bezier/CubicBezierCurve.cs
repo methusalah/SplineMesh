@@ -148,6 +148,11 @@ namespace SplineMesh {
                     time);
         }
 
+        /// <summary>
+        /// Returns an interpolated sample of the curve, containing all curve data at this time.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public CurveSample GetSample(float time) {
             AssertTimeInBounds(time);
             CurveSample previous = samples[0];
@@ -167,6 +172,11 @@ namespace SplineMesh {
             return CurveSample.Lerp(previous, next, t);
         }
 
+        /// <summary>
+        /// Returns an interpolated sample of the curve, containing all curve data at this distance.
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public CurveSample GetSampleAtDistance(float d) {
             if (d < 0 || d > Length)
                 throw new ArgumentException("Distance must be positive and less than curve length. Length = " + Length + ", given distance was " + d);

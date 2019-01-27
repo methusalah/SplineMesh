@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine;
 
 namespace SplineMesh {
+    /// <summary>
+    /// Imutable class containing all data about a point on a cubic bezier curve.
+    /// </summary>
     public class CurveSample {
         public readonly Vector3 location;
         public readonly Vector3 tangent;
@@ -16,6 +19,9 @@ namespace SplineMesh {
 
         private Quaternion rotation = Quaternion.identity;
 
+        /// <summary>
+        /// Rotation is a look-at quaternion calculated from the tangent, roll and up vector. Mixing non zero roll and custom up vector is not advised.
+        /// </summary>
         public Quaternion Rotation {
             get {
                 if (rotation.Equals(Quaternion.identity)) {
@@ -36,6 +42,13 @@ namespace SplineMesh {
             this.timeInCurve = timeInCurve;
         }
 
+        /// <summary>
+        /// Linearly interpolates between two curve samples.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public static CurveSample Lerp(CurveSample a, CurveSample b, float t) {
             return new CurveSample(
                 Vector3.Lerp(a.location, b.location, t),

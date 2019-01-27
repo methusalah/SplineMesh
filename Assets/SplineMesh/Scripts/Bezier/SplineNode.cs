@@ -46,6 +46,11 @@ namespace SplineMesh {
         [SerializeField]
         private Vector3 direction;
 
+        /// <summary>
+        /// Up vector to apply at this node.
+        /// Usefull to specify the orientation when the tangent blend with the world UP (gimball lock)
+        /// This value is not used on the spline itself but is commonly used on bended content.
+        /// </summary>
         public Vector3 Up {
             get { return up; }
             set {
@@ -61,8 +66,8 @@ namespace SplineMesh {
         private Vector3 up = Vector3.up;
 
         /// <summary>
-        /// Scale to apply at this node. This value is not used on the spline itself but
-        /// is commonly used on bended content.
+        /// Scale to apply at this node.
+        /// This value is not used on the spline itself but is commonly used on bended content.
         /// </summary>
         public Vector2 Scale {
             get { return scale; }
@@ -78,8 +83,8 @@ namespace SplineMesh {
         private Vector2 scale = Vector2.one;
 
         /// <summary>
-        /// Roll to apply at this node. This value is not used on the spline itself but
-        /// is commonly used on bended content.
+        /// Roll to apply at this node.
+        /// This value is not used on the spline itself but is commonly used on bended content.
         /// </summary>
         public float Roll {
             get { return roll; }
