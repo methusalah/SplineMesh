@@ -139,13 +139,13 @@ namespace SplineMesh {
 
         private CurveSample CreateSample(float distance, float time) {
             return new CurveSample(
-                    GetLocation(time),
-                    GetTangent(time),
-                    GetUp(time),
-                    GetScale(time),
-                    GetRoll(time),
-                    distance,
-                    time);
+                GetLocation(time),
+                GetTangent(time),
+                GetUp(time),
+                GetScale(time),
+                GetRoll(time),
+                distance,
+                time);
         }
 
         /// <summary>
