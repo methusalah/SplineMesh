@@ -43,6 +43,9 @@ namespace SplineMesh {
                 Vector3 point = se.transform.TransformPoint(q * v.point + startSample.location);
                 Vector3 normal = se.transform.TransformPoint(q * (v.point + v.normal) + startSample.location);
 
+                // first we check if at least one thing is in the camera field of view
+                if (!CameraUtility.IsOnScreen(point) && !CameraUtility.IsOnScreen(normal)) continue;
+
                 if (v == selection) {
                     // draw the handles for selected vertex position and normal
                     float size = HandleUtility.GetHandleSize(point) * 0.3f;
