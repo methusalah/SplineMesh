@@ -137,11 +137,23 @@ namespace SplineMesh {
             // draw the handles of all nodes, and manage selection motion
             Handles.BeginGUI();
             foreach (SplineNode n in spline.nodes) {
-                Vector3 guiPos = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Position));
+                var dir = spline.transform.TransformPoint(n.Direction);
+                var pos = spline.transform.TransformPoint(n.Position);
+                var invDir = spline.transform.TransformPoint(2 * n.Position - n.Direction);
+                var up = spline.transform.TransformPoint(n.Position + n.Up);
+                // first we check if at least one thing is in the camera field of view
+                if (!(CameraUtility.IsOnScreen(pos) ||
+                    CameraUtility.IsOnScreen(dir) ||
+                    CameraUtility.IsOnScreen(invDir) ||
+                    (showUpVector && CameraUtility.IsOnScreen(up)))) {
+                    continue;
+                }
+
+                Vector3 guiPos = HandleUtility.WorldToGUIPoint(pos);
                 if (n == selection) {
-                    Vector3 guiDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Direction));
-                    Vector3 guiInvDir = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(2 * n.Position - n.Direction));
-                    Vector3 guiUp = HandleUtility.WorldToGUIPoint(spline.transform.TransformPoint(n.Position + n.Up));
+                    Vector3 guiDir = HandleUtility.WorldToGUIPoint(dir);
+                    Vector3 guiInvDir = HandleUtility.WorldToGUIPoint(invDir);
+                    Vector3 guiUp = HandleUtility.WorldToGUIPoint(up);
 
                     // for the selected node, we also draw a line and place two buttons for directions
                     Handles.color = Color.red;
