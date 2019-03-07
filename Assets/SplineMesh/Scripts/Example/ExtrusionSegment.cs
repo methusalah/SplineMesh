@@ -61,7 +61,6 @@ namespace SplineMesh {
                     position = sample.location,
                     rotation = sample.Rotation,
                     scale = sample.scale,
-                    roll = sample.roll
                 });
             }
             sample = curve.GetSample(1);
@@ -69,7 +68,6 @@ namespace SplineMesh {
                 position = sample.location,
                 rotation = sample.Rotation,
                 scale = sample.scale,
-                roll = sample.roll
             });
             return path;
         }
@@ -93,9 +91,6 @@ namespace SplineMesh {
                     var position = v.point;
                     // apply scale
                     position = Vector3.Scale(position, new Vector3(op.scale.x, op.scale.y, 0));
-
-                    // apply roll
-                    position = Quaternion.AngleAxis(op.roll, Vector3.forward) * position;
 
                     vertices[index] = op.LocalToWorld(position);
                     normals[index] = op.LocalToWorldDirection(v.normal);
@@ -145,7 +140,6 @@ namespace SplineMesh {
             public Vector3 position;
             public Quaternion rotation;
             public Vector2 scale;
-            public float roll;
 
             public Vector3 LocalToWorld(Vector3 point) {
                 return position + rotation * point;
