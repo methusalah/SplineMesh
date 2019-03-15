@@ -27,6 +27,7 @@ namespace SplineMesh {
     [ExecuteInEditMode]
     [SelectionBase]
     [RequireComponent(typeof(Spline))]
+    [DisallowMultipleComponent]
     public class ExampleSower : MonoBehaviour {
         private GameObject generated;
         private Spline spline = null;

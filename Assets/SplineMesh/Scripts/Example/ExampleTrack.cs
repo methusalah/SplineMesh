@@ -28,6 +28,7 @@ namespace SplineMesh {
     [ExecuteInEditMode]
     [SelectionBase]
     [RequireComponent(typeof(Spline))]
+    [DisallowMultipleComponent]
     public class ExampleTrack : MonoBehaviour {
         private GameObject generated;
         private Spline spline = null;

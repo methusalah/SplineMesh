@@ -18,6 +18,7 @@ namespace SplineMesh {
     [ExecuteInEditMode]
     [SelectionBase]
     [RequireComponent(typeof(Spline))]
+    [DisallowMultipleComponent]
     public class ExampleTentacle : MonoBehaviour {
         private GameObject generated;
         private Spline spline = null;
