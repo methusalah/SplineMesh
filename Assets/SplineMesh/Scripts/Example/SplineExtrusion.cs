@@ -68,6 +68,7 @@ namespace SplineMesh {
             UOUtility.DestroyChildren(generated);
 
             int i = 0;
+            float textureOffset = 0.0f;
             foreach (CubicBezierCurve curve in spline.GetCurves()) {
                 GameObject go = UOUtility.Create("segment " + i++,
                     generated,
@@ -80,6 +81,8 @@ namespace SplineMesh {
                 mb.SetShapeVertices(shapeVertices, false);
                 mb.SetTextureScale(textureScale, false);
                 mb.SetCurve(curve, true);
+                mb.SetTextureOffset(textureOffset, true);
+                textureOffset += curve.Length;
             }
         }
 
