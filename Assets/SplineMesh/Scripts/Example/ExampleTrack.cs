@@ -27,7 +27,6 @@ namespace SplineMesh {
     /// </summary>
     [ExecuteInEditMode]
     [SelectionBase]
-    [RequireComponent(typeof(Spline))]
     [DisallowMultipleComponent]
     public class ExampleTrack : MonoBehaviour {
         private GameObject generated;
@@ -51,7 +50,7 @@ namespace SplineMesh {
             var generatedTranform = transform.Find(generatedName);
             generated = generatedTranform != null ? generatedTranform.gameObject : UOUtility.Create(generatedName, gameObject);
 
-            spline = GetComponent<Spline>();
+            spline = GetComponentInParent<Spline>();
 
             // we listen changes in the spline's node list and we update the list of segment accordingly
             // this way, if we insert a node between two others, a segment will be inserted too and the data won't shift
