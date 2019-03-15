@@ -15,6 +15,7 @@ namespace SplineMesh {
         private List<Vertex> shapeVertices = new List<Vertex>();
         private CubicBezierCurve curve;
         private float textureScale = 1;
+        private float textureOffset = 0;
 
         private void OnEnable() {
             mf = GetComponent<MeshFilter>();
@@ -52,6 +53,11 @@ namespace SplineMesh {
             if (update) Compute();
         }
 
+        public void SetTextureOffset(float textureOffset, bool update = true) {
+            this.textureOffset = textureOffset;
+            if (update) Compute();
+        }
+
         private List<OrientedPoint> GetPath() {
             var path = new List<OrientedPoint>();
             CurveSample sample;
@@ -61,7 +67,8 @@ namespace SplineMesh {
                     position = sample.location,
                     rotation = sample.Rotation,
                     scale = sample.scale,
-                    roll = sample.roll
+                    roll = sample.roll,
+                    distanceInCurve = sample.distanceInCurve
                 });
             }
             sample = curve.GetSample(1);
@@ -69,7 +76,8 @@ namespace SplineMesh {
                 position = sample.location,
                 rotation = sample.Rotation,
                 scale = sample.scale,
-                roll = sample.roll
+                roll = sample.roll,
+                distanceInCurve = sample.distanceInCurve
             });
             return path;
         }
@@ -99,8 +107,7 @@ namespace SplineMesh {
 
                     vertices[index] = op.LocalToWorld(position);
                     normals[index] = op.LocalToWorldDirection(v.normal);
-                    uvs[index] = new Vector2(v.uCoord, path.IndexOf(op) / ((float)edgeLoops) * textureScale);
-                    index++;
+                    uvs[index] = new Vector2(v.uCoord, textureScale * (op.distanceInCurve + textureOffset)); index++;
                 }
             }
             index = 0;
@@ -146,6 +153,7 @@ namespace SplineMesh {
             public Quaternion rotation;
             public Vector2 scale;
             public float roll;
+            public float distanceInCurve;
 
             public Vector3 LocalToWorld(Vector3 point) {
                 return position + rotation * point;
