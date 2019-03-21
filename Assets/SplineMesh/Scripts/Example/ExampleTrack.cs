@@ -125,7 +125,7 @@ namespace SplineMesh {
                     // we update the data in the bender. It will decide itself if the bending must be recalculated.
                     MeshBender mb = go.GetComponent<MeshBender>();
                     mb.Source = tm.mesh;
-                    mb.Curve = curve;
+                    mb.SetInterval(curve);
                     mb.Translation = tm.translation;
                     mb.Rotation = Quaternion.Euler(tm.rotation);
                     mb.Scale = tm.scale;

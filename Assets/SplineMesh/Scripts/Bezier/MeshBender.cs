@@ -3,6 +3,7 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static SplineMesh.ExtrusionSegment;
 
 namespace SplineMesh {
     /// <summary>
@@ -16,65 +17,40 @@ namespace SplineMesh {
     public class MeshBender : MonoBehaviour {
         private bool isDirty = false;
         private Mesh result;
-        private List<Vertex> vertices = new List<Vertex>();
-        private List<Vertex> transformedVertices = new List<Vertex>();
-        private float minX, length;
+        private bool useSpline;
+        private Spline spline;
+        private float startDistance, endDistance;
 
-        private Mesh source;
+        private SourceMesh source;
         /// <summary>
         /// The source mesh to bend.
         /// </summary>
-        public Mesh Source {
+        public SourceMesh Source {
             get { return source; }
             set {
                 if (value == source) return;
                 isDirty = true;
                 source = value;
-                vertices.Clear();
-                int i = 0;
-                foreach (Vector3 vert in source.vertices) {
-                    Vertex v = new Vertex {
-                        v = vert,
-                        n = source.normals[i++]
-                    };
-                    vertices.Add(v);
-                }
 
-                result.hideFlags = source.hideFlags;
-                result.indexFormat = source.indexFormat;
-                result.vertices = source.vertices.ToArray();
-                result.triangles = source.triangles.ToArray();
+                var m = source.Mesh;
+                result.hideFlags = m.hideFlags;
+                result.indexFormat = m.indexFormat;
+                result.vertices = m.vertices.ToArray();
 
-                result.uv = source.uv.ToArray();
-                result.uv2 = source.uv2.ToArray();
-                result.uv3 = source.uv3.ToArray();
-                result.uv4 = source.uv4.ToArray();
-                result.uv5 = source.uv5.ToArray();
-                result.uv6 = source.uv6.ToArray();
-                result.uv7 = source.uv7.ToArray();
-                result.uv8 = source.uv8.ToArray();
-                result.tangents = source.tangents.ToArray();
+                result.uv = m.uv.ToArray();
+                result.uv2 = m.uv2.ToArray();
+                result.uv3 = m.uv3.ToArray();
+                result.uv4 = m.uv4.ToArray();
+                result.uv5 = m.uv5.ToArray();
+                result.uv6 = m.uv6.ToArray();
+                result.uv7 = m.uv7.ToArray();
+                result.uv8 = m.uv8.ToArray();
+                result.tangents = m.tangents.ToArray();
+
+                result.triangles = source.Triangles;
             }
         }
-
-        private CubicBezierCurve curve;
-        /// <summary>
-        /// The cubic Bézier curve to use to bend the source mesh. The curve is observed and the mesh is bended again each time it changes.
-        /// </summary>
-        public CubicBezierCurve Curve {
-            get { return curve; }
-            set {
-                if (value == curve) return;
-                if(value == null) throw new ArgumentNullException("Value");
-                isDirty = true;
-                if (curve != null) {
-                    curve.Changed.RemoveListener(Compute);
-                }
-                curve = value;
-                curve.Changed.AddListener(Compute);
-            }
-        }
-
+        
         private Vector3 translation;
         /// <summary>
         /// The offset to apply to the source mesh before bending it.
@@ -113,9 +89,49 @@ namespace SplineMesh {
                 if (value == scale) return;
                 isDirty = true;
                 scale = value;
-                scale.x = Mathf.Clamp(scale.x, -1, 1);
             }
         }
+
+        private FillingMode mode = FillingMode.Once;
+        /// <summary>
+        /// The scale to apply to the source mesh before bending it.
+        /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
+        /// </summary>
+        public FillingMode Mode {
+            get { return mode; }
+            set {
+                if (value == mode) return;
+                isDirty = true;
+                mode = value;
+            }
+        }
+
+        private CubicBezierCurve curve = null;
+
+        public void SetInterval(CubicBezierCurve curve) {
+            if (this.curve == curve) return;
+            if (curve == null) throw new ArgumentNullException("curve");
+            if (this.curve != null) {
+                this.curve.Changed.RemoveListener(Compute);
+            }
+            this.curve = curve;
+            curve.Changed.AddListener(Compute);
+            useSpline = false;
+            isDirty = true;
+        }
+
+        public void SetInterval(Spline spline, float startDistance, float endDistance = 0) {
+            if (spline == null) throw new ArgumentNullException("spline");
+            if (startDistance <= 0 || startDistance >= spline.Length) {
+                throw new ArgumentOutOfRangeException("start distance must be greater than 0 and lesser than spline length (was " + startDistance + ")");
+            }
+            this.spline = spline;
+            this.startDistance = startDistance;
+            this.endDistance = endDistance;
+            useSpline = true;
+            isDirty = true;
+        }
+
 
         private void OnEnable() {
             if(GetComponent<MeshFilter>().sharedMesh != null) {
@@ -123,59 +139,6 @@ namespace SplineMesh {
             } else {
                 GetComponent<MeshFilter>().sharedMesh = result = new Mesh();
                 result.name = "Generated by " + GetType().Name;
-            }
-        }
-
-        /// <summary>
-        /// Build data that are consistent between computations if no property has been changed.
-        /// This method allows the computation due to curve changes to be faster.
-        /// </summary>
-        private void BuildData() {
-            if (source == null) throw new Exception(GetType().Name + " can't compute because there is no source mesh.");
-
-            // find the bounds along x
-            minX = float.MaxValue;
-            float maxX = float.MinValue;
-            foreach (Vertex vert in vertices) {
-                Vector3 p = vert.v;
-                if (rotation != Quaternion.identity) {
-                    p = rotation * p;
-                }
-                if (translation != Vector3.zero) {
-                    p += translation;
-                }
-                maxX = Math.Max(maxX, p.x);
-                minX = Math.Min(minX, p.x);
-            }
-            length = Math.Abs(maxX - minX);
-
-            // if the mesh is reversed by scale, we must change the culling of the faces by inversing all triangles.
-            // the mesh is reverse only if the number of resersing axes is impair.
-            bool reversed = scale.x < 0;
-            if (scale.y < 0) reversed = !reversed;
-            if (scale.z < 0) reversed = !reversed;
-            result.triangles = reversed ? MeshUtility.GetReversedTriangles(source) : source.triangles;
-
-            // we transform the source mesh vertices according to rotation/translation/scale
-            transformedVertices.Clear();
-            foreach (Vertex vert in vertices) {
-                Vertex transformed = new Vertex() {
-                    v = vert.v,
-                    n = vert.n
-                };
-                //  application of rotation
-                if (rotation != Quaternion.identity) {
-                    transformed.v = rotation * transformed.v;
-                    transformed.n = rotation * transformed.n;
-                }
-                if (scale != Vector3.one) {
-                    transformed.v = Vector3.Scale(transformed.v, scale);
-                    transformed.n = Vector3.Scale(transformed.n, scale);
-                }
-                if (translation != Vector3.zero) {
-                    transformed.v += translation;
-                }
-                transformedVertices.Add(transformed);
             }
         }
 
@@ -192,9 +155,6 @@ namespace SplineMesh {
         /// Consider using <see cref="ComputeIfNeeded"/> for faster result.
         /// </summary>
         public void Compute() {
-            if (isDirty) {
-                BuildData();
-            }
             isDirty = false;
 
             // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
@@ -207,10 +167,18 @@ namespace SplineMesh {
                     v = vert.v,
                     n = vert.n
                 };
-                float distanceRate = Math.Abs(bent.v.x - minX) / length;
+                float distanceRate = length == 0? 0 : Math.Abs(bent.v.x - minX) / length;
                 CurveSample sample;
                 if(!sampleCache.TryGetValue(distanceRate, out sample)){
-                    sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
+                    if(!useSpline) {
+                        sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
+                    } else {
+                        float distOnSpline = startDistance + length * distanceRate;
+                        while (distOnSpline > spline.Length) {
+                            distOnSpline -= spline.Length;
+                        }
+                        sample = spline.GetSampleAtDistance(distOnSpline);
+                    }
                     sampleCache[distanceRate] = sample;
                 }
 
@@ -236,16 +204,16 @@ namespace SplineMesh {
             result.RecalculateBounds();
         }
 
-        [Serializable]
-        private struct Vertex {
-            public Vector3 v;
-            public Vector3 n;
-        }
-
         private void OnDestroy() {
             if(curve != null) {
                 curve.Changed.RemoveListener(Compute);
             }
+        }
+
+        public enum FillingMode {
+            Once,
+            Repeat,
+            StretchToInterval
         }
     }
 }

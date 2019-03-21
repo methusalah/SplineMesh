@@ -64,7 +64,7 @@ namespace SplineMesh {
                 mb.Source = mesh;
                 mb.Rotation = Quaternion.Euler(rotation);
                 mb.Translation = new Vector3(0, YOffset, ZOffset);
-                mb.Curve = curve;
+                mb.SetInterval(curve);
                 mb.ComputeIfNeeded();
             }
         }
