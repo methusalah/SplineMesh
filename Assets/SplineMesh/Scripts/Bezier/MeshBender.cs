@@ -51,47 +51,6 @@ namespace SplineMesh {
             }
         }
         
-        private Vector3 translation;
-        /// <summary>
-        /// The offset to apply to the source mesh before bending it.
-        /// </summary>
-        public Vector3 Translation {
-            get { return translation; }
-            set {
-                if (value == translation) return;
-                isDirty = true;
-                translation = value;
-            }
-        }
-
-        private Quaternion rotation;
-        /// <summary>
-        /// The rotation to apply to the source mesh before bending it.
-        /// Because source mesh will always be bended along the X axis but may be oriented differently.
-        /// </summary>
-        public Quaternion Rotation {
-            get { return rotation; }
-            set {
-                if (value == rotation) return;
-                isDirty = true;
-                rotation = value;
-            }
-        }
-
-        private Vector3 scale = Vector3.one;
-        /// <summary>
-        /// The scale to apply to the source mesh before bending it.
-        /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
-        /// </summary>
-        public Vector3 Scale {
-            get { return scale; }
-            set {
-                if (value == scale) return;
-                isDirty = true;
-                scale = value;
-            }
-        }
-
         private FillingMode mode = FillingMode.Once;
         /// <summary>
         /// The scale to apply to the source mesh before bending it.
