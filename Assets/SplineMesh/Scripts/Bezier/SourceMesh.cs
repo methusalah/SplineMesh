@@ -101,7 +101,7 @@ namespace SplineMesh {
             var baseVertices = new List<MeshVertex>();
             int i = 0;
             foreach (Vector3 vert in mesh.vertices) {
-                var v = new MeshVertex(vert, mesh.normals[i++], 0);
+                var v = new MeshVertex(vert, mesh.normals[i++]);
                 baseVertices.Add(v);
             }
 
@@ -116,18 +116,18 @@ namespace SplineMesh {
             // we transform the source mesh vertices according to rotation/translation/scale
             vertices.Clear();
             foreach (var vert in baseVertices) {
-                var transformed = new MeshVertex(vert.v, vert.n, 0);
+                var transformed = new MeshVertex(vert.position, vert.normal);
                 //  application of rotation
                 if (rotation != Quaternion.identity) {
-                    transformed.v = rotation * transformed.v;
-                    transformed.n = rotation * transformed.n;
+                    transformed.position = rotation * transformed.position;
+                    transformed.normal = rotation * transformed.normal;
                 }
                 if (scale != Vector3.one) {
-                    transformed.v = Vector3.Scale(transformed.v, scale);
-                    transformed.n = Vector3.Scale(transformed.n, scale);
+                    transformed.position = Vector3.Scale(transformed.position, scale);
+                    transformed.normal = Vector3.Scale(transformed.normal, scale);
                 }
                 if (translation != Vector3.zero) {
-                    transformed.v += translation;
+                    transformed.position += translation;
                 }
                 vertices.Add(transformed);
             }
@@ -135,8 +135,8 @@ namespace SplineMesh {
             // find the bounds along x
             minX = float.MaxValue;
             float maxX = float.MinValue;
-            foreach (Vertex vert in vertices) {
-                Vector3 p = vert.v;
+            foreach (var vert in vertices) {
+                Vector3 p = vert.position;
                 maxX = Math.Max(maxX, p.x);
                 minX = Math.Min(minX, p.x);
             }
