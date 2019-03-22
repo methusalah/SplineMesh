@@ -79,6 +79,10 @@ namespace SplineMesh {
             return res;
         }
 
+        public SourceMesh Translate(float x, float y, float z) {
+            return Translate(new Vector3(x, y, z));
+        }
+
         public SourceMesh Rotate(Quaternion rotation) {
             var res = new SourceMesh(this) {
                 rotation = rotation
@@ -91,6 +95,10 @@ namespace SplineMesh {
                 scale = scale
             };
             return res;
+        }
+
+        public SourceMesh Scale(float x, float y, float z) {
+            return Scale(new Vector3(x, y, z));
         }
 
         /// <summary>
