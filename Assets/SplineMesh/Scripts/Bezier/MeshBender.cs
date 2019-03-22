@@ -192,7 +192,7 @@ namespace SplineMesh {
                     if (!useSpline) {
                         sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
                     } else {
-                        float distOnSpline = startDistance + length * distanceRate;
+                        float distOnSpline = startDistance + source.Length * distanceRate;
                         while (distOnSpline > spline.Length) {
                             distOnSpline -= spline.Length;
                         }
