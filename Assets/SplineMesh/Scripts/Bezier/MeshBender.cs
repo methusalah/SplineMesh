@@ -115,51 +115,19 @@ namespace SplineMesh {
         public void Compute() {
             isDirty = false;
 
-            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
-            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
 
-            List<Vertex> bentVertices = new List<Vertex>(vertices.Count);
-            // for each mesh vertex, we found its projection on the curve
-            foreach (Vertex vert in transformedVertices) {
-                Vertex bent = new Vertex() {
-                    v = vert.v,
-                    n = vert.n
-                };
-                float distanceRate = length == 0? 0 : Math.Abs(bent.v.x - minX) / length;
-                CurveSample sample;
-                if(!sampleCache.TryGetValue(distanceRate, out sample)){
-                    if(!useSpline) {
-                        sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
-                    } else {
-                        float distOnSpline = startDistance + length * distanceRate;
-                        while (distOnSpline > spline.Length) {
-                            distOnSpline -= spline.Length;
-                        }
-                        sample = spline.GetSampleAtDistance(distOnSpline);
-                    }
-                    sampleCache[distanceRate] = sample;
-                }
-
-                // application of scale
-                bent.v = Vector3.Scale(bent.v, new Vector3(0, sample.scale.y, sample.scale.x));
-
-                // application of roll
-                bent.v = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.v;
-                bent.n = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.n;
-
-                // reset X value
-                bent.v.x = 0;
-
-                // application of the rotation + location
-                Quaternion q = sample.Rotation * Quaternion.Euler(0, -90, 0);
-                bent.v = q * bent.v + sample.location;
-                bent.n = q * bent.n;
-                bentVertices.Add(bent);
+            switch (Mode) {
+                case FillingMode.Once:
+                    FillOnce();
+                    break;
+                case FillingMode.Repeat:
+                    FillRepeat();
+                    break;
+                case FillingMode.StretchToInterval:
+                    FillStretch();
+                    break;
             }
 
-            result.vertices = bentVertices.Select(b => b.v).ToArray();
-            result.normals = bentVertices.Select(b => b.n).ToArray();
-            result.RecalculateBounds();
         }
 
         private void OnDestroy() {
@@ -172,6 +140,73 @@ namespace SplineMesh {
             Once,
             Repeat,
             StretchToInterval
+        }
+
+        private void FillOnce() {
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
+            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
+            // for each mesh vertex, we found its projection on the curve
+            foreach (var vert in source.Vertices) {
+                float distance = vert.position.x - source.MinX;
+                CurveSample sample;
+                if (!sampleCache.TryGetValue(distance, out sample)) {
+                    if (!useSpline) {
+                        if (distance > curve.Length) continue;
+                        sample = curve.GetSampleAtDistance(distance);
+                    } else {
+                        float distOnSpline = startDistance + distance;
+                        if (true) { //spline.isLoop) {
+                            while (distOnSpline > spline.Length) {
+                                distOnSpline -= spline.Length;
+                            }
+                        } else if (distOnSpline > spline.Length) {
+                            continue;
+                        }
+                        sample = spline.GetSampleAtDistance(distOnSpline);
+                    }
+                    sampleCache[distance] = sample;
+                }
+
+                bentVertices.Add(sample.GetBent(vert));
+            }
+
+            result.vertices = bentVertices.Select(b => b.position).ToArray();
+            result.normals = bentVertices.Select(b => b.normal).ToArray();
+            result.RecalculateBounds();
+        }
+
+        private void FillRepeat() {
+
+        }
+
+        private void FillStretch() {
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
+            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
+            // for each mesh vertex, we found its projection on the curve
+            foreach (var vert in source.Vertices) {
+                float distanceRate = source.Length == 0 ? 0 : Math.Abs(vert.position.x - source.MinX) / source.Length;
+                CurveSample sample;
+                if (!sampleCache.TryGetValue(distanceRate, out sample)) {
+                    if (!useSpline) {
+                        sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
+                    } else {
+                        float distOnSpline = startDistance + length * distanceRate;
+                        while (distOnSpline > spline.Length) {
+                            distOnSpline -= spline.Length;
+                        }
+                        sample = spline.GetSampleAtDistance(distOnSpline);
+                    }
+                    sampleCache[distanceRate] = sample;
+                }
+
+                bentVertices.Add(sample.GetBent(vert));
+            }
+
+            result.vertices = bentVertices.Select(b => b.position).ToArray();
+            result.normals = bentVertices.Select(b => b.normal).ToArray();
+            result.RecalculateBounds();
         }
     }
 }
