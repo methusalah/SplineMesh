@@ -43,9 +43,9 @@ namespace SplineMesh {
             generated.transform.localScale = Vector3.one;
 
             meshBender = generated.GetComponent<MeshBender>();
-            meshBender.Source = mesh;
-            meshBender.Rotation = Quaternion.Euler(rotation);
-            meshBender.Scale = scale;
+            meshBender.Source = SourceMesh.Build(mesh)
+                .Rotate(Quaternion.Euler(rotation))
+                .Scale(scale);
 
             spline = GetComponent<Spline>(); 
 #if UNITY_EDITOR
@@ -60,9 +60,9 @@ namespace SplineMesh {
         }
 
         private void OnValidate() {
-            meshBender.Source = mesh;
-            meshBender.Rotation = Quaternion.Euler(rotation);
-            meshBender.Scale = scale;
+            meshBender.Source = SourceMesh.Build(mesh)
+                .Rotate(Quaternion.Euler(rotation))
+                .Scale(scale);
         }
 
         void EditorUpdate() {
