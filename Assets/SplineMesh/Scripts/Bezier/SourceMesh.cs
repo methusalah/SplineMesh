@@ -101,19 +101,7 @@ namespace SplineMesh {
             return Scale(new Vector3(x, y, z));
         }
 
-        /// <summary>
-        /// Build data that are consistent between computations if no property has been changed.
-        /// This method allows the computation due to curve changes to be faster.
-        /// </summary>
         private void BuildData() {
-            var baseVertices = new List<MeshVertex>();
-            int i = 0;
-            foreach (Vector3 vert in mesh.vertices) {
-                var v = new MeshVertex(vert, mesh.normals[i++]);
-                baseVertices.Add(v);
-            }
-
-
             // if the mesh is reversed by scale, we must change the culling of the faces by inversing all triangles.
             // the mesh is reverse only if the number of resersing axes is impair.
             bool reversed = scale.x < 0;
@@ -122,9 +110,10 @@ namespace SplineMesh {
             triangles = reversed ? MeshUtility.GetReversedTriangles(mesh) : mesh.triangles;
 
             // we transform the source mesh vertices according to rotation/translation/scale
-            vertices.Clear();
-            foreach (var vert in baseVertices) {
-                var transformed = new MeshVertex(vert.position, vert.normal);
+            int i = 0;
+            vertices = new List<MeshVertex>(mesh.vertexCount);
+            foreach (Vector3 vert in mesh.vertices) {
+                var transformed = new MeshVertex(vert, mesh.normals[i++]);
                 //  application of rotation
                 if (rotation != Quaternion.identity) {
                     transformed.position = rotation * transformed.position;
