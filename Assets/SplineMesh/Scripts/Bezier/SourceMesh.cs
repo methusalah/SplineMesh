@@ -44,7 +44,7 @@ namespace SplineMesh {
         internal float Length {
             get {
                 if (vertices == null) BuildData();
-                return minX;
+                return length;
             }
         }
 
