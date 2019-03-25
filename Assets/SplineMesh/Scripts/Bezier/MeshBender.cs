@@ -18,7 +18,7 @@ namespace SplineMesh {
         private Mesh result;
         private bool useSpline;
         private Spline spline;
-        private float startDistance, endDistance;
+        private float intervalStart, intervalEnd;
 
         private SourceMesh source;
         /// <summary>
@@ -78,14 +78,14 @@ namespace SplineMesh {
             isDirty = true;
         }
 
-        public void SetInterval(Spline spline, float startDistance, float endDistance = 0) {
+        public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
             if (spline == null) throw new ArgumentNullException("spline");
-            if (startDistance <= 0 || startDistance >= spline.Length) {
-                throw new ArgumentOutOfRangeException("start distance must be greater than 0 and lesser than spline length (was " + startDistance + ")");
+            if (intervalStart <= 0 || intervalStart >= spline.Length) {
+                throw new ArgumentOutOfRangeException("interval start must be greater than 0 and lesser than spline length (was " + intervalStart + ")");
             }
             this.spline = spline;
-            this.startDistance = startDistance;
-            this.endDistance = endDistance;
+            this.intervalStart = intervalStart;
+            this.intervalEnd = intervalEnd;
             useSpline = true;
             isDirty = true;
         }
@@ -155,7 +155,7 @@ namespace SplineMesh {
                         if (distance > curve.Length) continue;
                         sample = curve.GetSampleAtDistance(distance);
                     } else {
-                        float distOnSpline = startDistance + distance;
+                        float distOnSpline = intervalStart + distance;
                         if (true) { //spline.isLoop) {
                             while (distOnSpline > spline.Length) {
                                 distOnSpline -= spline.Length;
