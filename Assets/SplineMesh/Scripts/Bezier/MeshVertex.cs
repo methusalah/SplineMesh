@@ -8,7 +8,7 @@ namespace SplineMesh {
         public Vector3 position;
         public Vector3 normal;
 
-        public MeshVertex(Vector2 position, Vector2 normal) {
+        public MeshVertex(Vector3 position, Vector3 normal) {
             this.position = position;
             this.normal = normal;
         }
