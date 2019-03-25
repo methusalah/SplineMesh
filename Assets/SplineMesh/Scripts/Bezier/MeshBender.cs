@@ -173,7 +173,57 @@ namespace SplineMesh {
         }
 
         private void FillRepeat() {
+            var intervalLength = useSpline ? intervalEnd - intervalStart : curve.Length;
+            var repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            var triangles = new List<int>();
+            var uv = new List<Vector2>();
+            var uv2 = new List<Vector2>();
+            var tangents = new List<Vector4>();
+            float offset = 0;
+            for (int i = 0; i < repetitionCount; i++) {
+                foreach(var index in source.Triangles) {
+                    triangles.Add(index + source.Vertices.Count * i);
+                }
+                uv.AddRange(source.Mesh.uv);
+                uv2.AddRange(source.Mesh.uv2);
+                tangents.AddRange(source.Mesh.tangents);
 
+                sampleCache.Clear();
+                // for each mesh vertex, we found its projection on the curve
+                foreach (var vert in source.Vertices) {
+                    float distance = vert.position.x - source.MinX + offset;
+                    CurveSample sample;
+                    if (!sampleCache.TryGetValue(distance, out sample)) {
+                        if (!useSpline) {
+                            if (distance > curve.Length) continue;
+                            sample = curve.GetSampleAtDistance(distance);
+                        } else {
+                            float distOnSpline = intervalStart + distance;
+                            if (true) { //spline.isLoop) {
+                                while (distOnSpline > spline.Length) {
+                                    distOnSpline -= spline.Length;
+                                }
+                            } else if (distOnSpline > spline.Length) {
+                                continue;
+                            }
+                            sample = spline.GetSampleAtDistance(distOnSpline);
+                        }
+                        sampleCache[distance] = sample;
+                    }
+                    bentVertices.Add(sample.GetBent(vert));
+                }
+                offset += source.Length;
+            }
+
+            result.triangles = triangles.ToArray();
+            result.vertices = bentVertices.Select(b => b.position).ToArray();
+            result.normals = bentVertices.Select(b => b.normal).ToArray();
+            result.uv = uv.ToArray();
+            result.uv2 = uv2.ToArray();
+            result.tangents = tangents.ToArray();
+
+            result.RecalculateBounds();
         }
 
         private void FillStretch() {
