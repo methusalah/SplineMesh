@@ -80,8 +80,8 @@ namespace SplineMesh {
 
         public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
             if (spline == null) throw new ArgumentNullException("spline");
-            if (intervalStart <= 0 || intervalStart >= spline.Length) {
-                throw new ArgumentOutOfRangeException("interval start must be greater than 0 and lesser than spline length (was " + intervalStart + ")");
+            if (intervalStart < 0 || intervalStart >= spline.Length) {
+                throw new ArgumentOutOfRangeException("interval start must be 0or greater and lesser than spline length (was " + intervalStart + ")");
             }
             this.spline = spline;
             this.intervalStart = intervalStart;
