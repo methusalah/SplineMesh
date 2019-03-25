@@ -19,6 +19,8 @@ namespace SplineMesh {
         private bool useSpline;
         private Spline spline;
         private float intervalStart, intervalEnd;
+        private CubicBezierCurve curve;
+        private Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
 
         private SourceMesh source;
         /// <summary>
@@ -63,8 +65,6 @@ namespace SplineMesh {
                 mode = value;
             }
         }
-
-        private CubicBezierCurve curve = null;
 
         public void SetInterval(CubicBezierCurve curve) {
             if (this.curve == curve) return;
@@ -114,8 +114,6 @@ namespace SplineMesh {
         /// </summary>
         public void Compute() {
             isDirty = false;
-
-
             switch (Mode) {
                 case FillingMode.Once:
                     FillOnce();
@@ -127,7 +125,6 @@ namespace SplineMesh {
                     FillStretch();
                     break;
             }
-
         }
 
         private void OnDestroy() {
@@ -143,9 +140,8 @@ namespace SplineMesh {
         }
 
         private void FillOnce() {
+            sampleCache.Clear();
             var bentVertices = new List<MeshVertex>(source.Vertices.Count);
-            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
-            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
             // for each mesh vertex, we found its projection on the curve
             foreach (var vert in source.Vertices) {
                 float distance = vert.position.x - source.MinX;
@@ -182,8 +178,7 @@ namespace SplineMesh {
 
         private void FillStretch() {
             var bentVertices = new List<MeshVertex>(source.Vertices.Count);
-            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
-            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
+            sampleCache.Clear();
             // for each mesh vertex, we found its projection on the curve
             foreach (var vert in source.Vertices) {
                 float distanceRate = source.Length == 0 ? 0 : Math.Abs(vert.position.x - source.MinX) / source.Length;
