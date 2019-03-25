@@ -173,7 +173,12 @@ namespace SplineMesh {
         }
 
         private void FillRepeat() {
-            var intervalLength = useSpline ? intervalEnd - intervalStart : curve.Length;
+            float intervalLength;
+            if (!useSpline) {
+                intervalLength = curve.Length;
+            } else {
+                intervalLength = (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart;
+            }
             var repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
             var bentVertices = new List<MeshVertex>(source.Vertices.Count);
             var triangles = new List<int>();
