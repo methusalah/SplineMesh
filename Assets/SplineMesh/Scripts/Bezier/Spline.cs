@@ -134,13 +134,18 @@ namespace SplineMesh {
             if (d < 0 || d > Length)
                 throw new ArgumentException(string.Format("Distance must be between 0 and spline length ({0}). Given distance was {1}.", Length, d));
             foreach (CubicBezierCurve curve in curves) {
+                // test if distance is approximatly equals to curve length, because spline
+                // length may be greater than cumulated curve length due to float precision
+                if(d > curve.Length && d < curve.Length + 0.0001f) {
+                    d = curve.Length;
+                }
                 if (d > curve.Length) {
                     d -= curve.Length;
                 } else {
                     return curve.GetSampleAtDistance(d);
                 }
             }
-            throw new Exception("Something went wrong with GetSampleAtDistance");
+            throw new Exception("Something went wrong with GetSampleAtDistance.");
         }
 
         /// <summary>
