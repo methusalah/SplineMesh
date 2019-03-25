@@ -192,10 +192,13 @@ namespace SplineMesh {
                     if (!useSpline) {
                         sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
                     } else {
-                        float distOnSpline = startDistance + source.Length * distanceRate;
-                        while (distOnSpline > spline.Length) {
-                            distOnSpline -= spline.Length;
+                        float intervalLength = intervalEnd == 0 ? spline.Length - intervalStart : intervalEnd - intervalStart;
+                        float distOnSpline = intervalStart + intervalLength * distanceRate;
+                        if(distOnSpline > spline.Length) {
+                            distOnSpline = spline.Length;
+                            Debug.Log("dist " + distOnSpline + " spline length " + spline.Length + " start " + intervalStart);
                         }
+
                         sample = spline.GetSampleAtDistance(distOnSpline);
                     }
                     sampleCache[distanceRate] = sample;
