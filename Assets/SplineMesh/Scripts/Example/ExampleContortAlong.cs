@@ -35,17 +35,12 @@ namespace SplineMesh {
                     typeof(MeshFilter),
                     typeof(MeshRenderer),
                     typeof(MeshBender));
-                generated.GetComponent<MeshRenderer>().material = material;
                 generated.transform.parent = transform;
             }
             generated.transform.localRotation = Quaternion.identity;
             generated.transform.localPosition = Vector3.zero;
             generated.transform.localScale = Vector3.one;
-
-            meshBender = generated.GetComponent<MeshBender>();
-            meshBender.Mode = MeshBender.FillingMode.StretchToInterval;
-            SetSource();
-
+            Init();
             spline = GetComponent<Spline>(); 
 #if UNITY_EDITOR
             EditorApplication.update += EditorUpdate;
@@ -59,7 +54,7 @@ namespace SplineMesh {
         }
 
         private void OnValidate() {
-            SetSource();
+            Init();
         }
 
         void EditorUpdate() {
@@ -67,7 +62,6 @@ namespace SplineMesh {
             if (rate > 1) {
                 rate --;
             }
-
             Contort();
         }
 
@@ -78,7 +72,10 @@ namespace SplineMesh {
             }
         }
 
-        private void SetSource() {
+        private void Init() {
+            generated.GetComponent<MeshRenderer>().material = material;
+
+            meshBender = generated.GetComponent<MeshBender>();
             meshBender.Source = SourceMesh.Build(mesh)
                 .Rotate(Quaternion.Euler(rotation))
                 .Scale(scale);
