@@ -73,17 +73,20 @@ namespace SplineMesh {
                 this.curve.Changed.RemoveListener(Compute);
             }
             this.curve = curve;
+            spline = null;
             curve.Changed.AddListener(Compute);
             useSpline = false;
             isDirty = true;
         }
 
         public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
+            if (this.spline == spline && this.intervalStart == intervalStart && this.intervalEnd == intervalEnd) return;
             if (spline == null) throw new ArgumentNullException("spline");
             if (intervalStart < 0 || intervalStart >= spline.Length) {
-                throw new ArgumentOutOfRangeException("interval start must be 0or greater and lesser than spline length (was " + intervalStart + ")");
+                throw new ArgumentOutOfRangeException("interval start must be 0 or greater and lesser than spline length (was " + intervalStart + ")");
             }
             this.spline = spline;
+            curve = null;
             this.intervalStart = intervalStart;
             this.intervalEnd = intervalEnd;
             useSpline = true;
