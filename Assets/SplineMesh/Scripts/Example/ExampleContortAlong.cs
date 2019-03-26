@@ -79,6 +79,7 @@ namespace SplineMesh {
             meshBender.Source = SourceMesh.Build(mesh)
                 .Rotate(Quaternion.Euler(rotation))
                 .Scale(scale);
+            meshBender.Mode = MeshBender.FillingMode.Once;
         }
     }
 }
