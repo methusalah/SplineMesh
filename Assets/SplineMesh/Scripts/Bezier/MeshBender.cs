@@ -36,19 +36,20 @@ namespace SplineMesh {
                 var m = source.Mesh;
                 result.hideFlags = m.hideFlags;
                 result.indexFormat = m.indexFormat;
-                result.vertices = m.vertices.ToArray();
 
-                result.uv = m.uv.ToArray();
-                result.uv2 = m.uv2.ToArray();
-                result.uv3 = m.uv3.ToArray();
-                result.uv4 = m.uv4.ToArray();
-                result.uv5 = m.uv5.ToArray();
-                result.uv6 = m.uv6.ToArray();
-                result.uv7 = m.uv7.ToArray();
-                result.uv8 = m.uv8.ToArray();
-                result.tangents = m.tangents.ToArray();
-
-                result.triangles = source.Triangles;
+                MeshUtility.Update(result,
+                    m.triangles,
+                    m.vertices,
+                    m.normals,
+                    m.tangents,
+                    m.uv,
+                    m.uv2,
+                    m.uv3,
+                    m.uv4,
+                    m.uv5,
+                    m.uv6,
+                    m.uv7,
+                    m.uv8);
             }
         }
         
@@ -170,9 +171,9 @@ namespace SplineMesh {
                 bentVertices.Add(sample.GetBent(vert));
             }
 
-            result.vertices = bentVertices.Select(b => b.position).ToArray();
-            result.normals = bentVertices.Select(b => b.normal).ToArray();
-            result.RecalculateBounds();
+            MeshUtility.Update(result, source.Triangles,
+                bentVertices.Select(b => b.position),
+                bentVertices.Select(b => b.normal));
         }
 
         private void FillRepeat() {
@@ -190,7 +191,7 @@ namespace SplineMesh {
             var tangents = new List<Vector4>();
             float offset = 0;
             for (int i = 0; i < repetitionCount; i++) {
-                foreach(var index in source.Triangles) {
+                foreach (var index in source.Triangles) {
                     triangles.Add(index + source.Vertices.Count * i);
                 }
                 uv.AddRange(source.Mesh.uv);
@@ -224,14 +225,13 @@ namespace SplineMesh {
                 offset += source.Length;
             }
 
-            result.triangles = triangles.ToArray();
-            result.vertices = bentVertices.Select(b => b.position).ToArray();
-            result.normals = bentVertices.Select(b => b.normal).ToArray();
-            result.uv = uv.ToArray();
-            result.uv2 = uv2.ToArray();
-            result.tangents = tangents.ToArray();
-
-            result.RecalculateBounds();
+            MeshUtility.Update(result,
+                triangles,
+                bentVertices.Select(b => b.position),
+                bentVertices.Select(b => b.normal),
+                tangents,
+                uv,
+                uv2);
         }
 
         private void FillStretch() {
@@ -260,9 +260,11 @@ namespace SplineMesh {
                 bentVertices.Add(sample.GetBent(vert));
             }
 
-            result.vertices = bentVertices.Select(b => b.position).ToArray();
-            result.normals = bentVertices.Select(b => b.normal).ToArray();
-            result.RecalculateBounds();
+            MeshUtility.Update(result, source.Triangles,
+                bentVertices.Select(b => b.position),
+                bentVertices.Select(b => b.normal));
         }
+
+
     }
 }
