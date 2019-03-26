@@ -16,106 +16,84 @@ namespace SplineMesh {
     public class MeshBender : MonoBehaviour {
         private bool isDirty = false;
         private Mesh result;
-        private List<Vertex> vertices = new List<Vertex>();
-        private List<Vertex> transformedVertices = new List<Vertex>();
-        private float minX, length;
+        private bool useSpline;
+        private Spline spline;
+        private float intervalStart, intervalEnd;
+        private CubicBezierCurve curve;
+        private Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
 
-        private Mesh source;
+        private SourceMesh source;
         /// <summary>
         /// The source mesh to bend.
         /// </summary>
-        public Mesh Source {
+        public SourceMesh Source {
             get { return source; }
             set {
                 if (value == source) return;
                 isDirty = true;
                 source = value;
-                vertices.Clear();
-                int i = 0;
-                foreach (Vector3 vert in source.vertices) {
-                    Vertex v = new Vertex {
-                        v = vert,
-                        n = source.normals[i++]
-                    };
-                    vertices.Add(v);
-                }
 
-                result.hideFlags = source.hideFlags;
-                result.indexFormat = source.indexFormat;
-                result.vertices = source.vertices.ToArray();
-                result.triangles = source.triangles.ToArray();
+                var m = source.Mesh;
+                result.hideFlags = m.hideFlags;
+                result.indexFormat = m.indexFormat;
 
-                result.uv = source.uv.ToArray();
-                result.uv2 = source.uv2.ToArray();
-                result.uv3 = source.uv3.ToArray();
-                result.uv4 = source.uv4.ToArray();
-                result.uv5 = source.uv5.ToArray();
-                result.uv6 = source.uv6.ToArray();
-                result.uv7 = source.uv7.ToArray();
-                result.uv8 = source.uv8.ToArray();
-                result.tangents = source.tangents.ToArray();
+                MeshUtility.Update(result,
+                    m.triangles,
+                    m.vertices,
+                    m.normals,
+                    m.tangents,
+                    m.uv,
+                    m.uv2,
+                    m.uv3,
+                    m.uv4,
+                    m.uv5,
+                    m.uv6,
+                    m.uv7,
+                    m.uv8);
             }
         }
-
-        private CubicBezierCurve curve;
-        /// <summary>
-        /// The cubic Bézier curve to use to bend the source mesh. The curve is observed and the mesh is bended again each time it changes.
-        /// </summary>
-        public CubicBezierCurve Curve {
-            get { return curve; }
-            set {
-                if (value == curve) return;
-                if(value == null) throw new ArgumentNullException("Value");
-                isDirty = true;
-                if (curve != null) {
-                    curve.Changed.RemoveListener(Compute);
-                }
-                curve = value;
-                curve.Changed.AddListener(Compute);
-            }
-        }
-
-        private Vector3 translation;
-        /// <summary>
-        /// The offset to apply to the source mesh before bending it.
-        /// </summary>
-        public Vector3 Translation {
-            get { return translation; }
-            set {
-                if (value == translation) return;
-                isDirty = true;
-                translation = value;
-            }
-        }
-
-        private Quaternion rotation;
-        /// <summary>
-        /// The rotation to apply to the source mesh before bending it.
-        /// Because source mesh will always be bended along the X axis but may be oriented differently.
-        /// </summary>
-        public Quaternion Rotation {
-            get { return rotation; }
-            set {
-                if (value == rotation) return;
-                isDirty = true;
-                rotation = value;
-            }
-        }
-
-        private Vector3 scale = Vector3.one;
+        
+        private FillingMode mode = FillingMode.StretchToInterval;
         /// <summary>
         /// The scale to apply to the source mesh before bending it.
         /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
         /// </summary>
-        public Vector3 Scale {
-            get { return scale; }
+        public FillingMode Mode {
+            get { return mode; }
             set {
-                if (value == scale) return;
+                if (value == mode) return;
                 isDirty = true;
-                scale = value;
-                scale.x = Mathf.Clamp(scale.x, -1, 1);
+                mode = value;
             }
         }
+
+        public void SetInterval(CubicBezierCurve curve) {
+            if (this.curve == curve) return;
+            if (curve == null) throw new ArgumentNullException("curve");
+            if (this.curve != null) {
+                this.curve.Changed.RemoveListener(Compute);
+            }
+            this.curve = curve;
+            spline = null;
+            curve.Changed.AddListener(Compute);
+            useSpline = false;
+            isDirty = true;
+        }
+
+        public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
+            if (this.spline == spline && this.intervalStart == intervalStart && this.intervalEnd == intervalEnd) return;
+            if (spline == null) throw new ArgumentNullException("spline");
+            if (intervalStart < 0 || intervalStart >= spline.Length) {
+                throw new ArgumentOutOfRangeException("interval start must be 0 or greater and lesser than spline length (was " + intervalStart + ")");
+            }
+            this.spline = spline;
+            curve = null;
+            this.intervalStart = intervalStart;
+            this.intervalEnd = intervalEnd;
+            useSpline = true;
+            isDirty = true;
+        }
+
 
         private void OnEnable() {
             if(GetComponent<MeshFilter>().sharedMesh != null) {
@@ -123,59 +101,6 @@ namespace SplineMesh {
             } else {
                 GetComponent<MeshFilter>().sharedMesh = result = new Mesh();
                 result.name = "Generated by " + GetType().Name;
-            }
-        }
-
-        /// <summary>
-        /// Build data that are consistent between computations if no property has been changed.
-        /// This method allows the computation due to curve changes to be faster.
-        /// </summary>
-        private void BuildData() {
-            if (source == null) throw new Exception(GetType().Name + " can't compute because there is no source mesh.");
-
-            // find the bounds along x
-            minX = float.MaxValue;
-            float maxX = float.MinValue;
-            foreach (Vertex vert in vertices) {
-                Vector3 p = vert.v;
-                if (rotation != Quaternion.identity) {
-                    p = rotation * p;
-                }
-                if (translation != Vector3.zero) {
-                    p += translation;
-                }
-                maxX = Math.Max(maxX, p.x);
-                minX = Math.Min(minX, p.x);
-            }
-            length = Math.Abs(maxX - minX);
-
-            // if the mesh is reversed by scale, we must change the culling of the faces by inversing all triangles.
-            // the mesh is reverse only if the number of resersing axes is impair.
-            bool reversed = scale.x < 0;
-            if (scale.y < 0) reversed = !reversed;
-            if (scale.z < 0) reversed = !reversed;
-            result.triangles = reversed ? MeshUtility.GetReversedTriangles(source) : source.triangles;
-
-            // we transform the source mesh vertices according to rotation/translation/scale
-            transformedVertices.Clear();
-            foreach (Vertex vert in vertices) {
-                Vertex transformed = new Vertex() {
-                    v = vert.v,
-                    n = vert.n
-                };
-                //  application of rotation
-                if (rotation != Quaternion.identity) {
-                    transformed.v = rotation * transformed.v;
-                    transformed.n = rotation * transformed.n;
-                }
-                if (scale != Vector3.one) {
-                    transformed.v = Vector3.Scale(transformed.v, scale);
-                    transformed.n = Vector3.Scale(transformed.n, scale);
-                }
-                if (translation != Vector3.zero) {
-                    transformed.v += translation;
-                }
-                transformedVertices.Add(transformed);
             }
         }
 
@@ -192,54 +117,18 @@ namespace SplineMesh {
         /// Consider using <see cref="ComputeIfNeeded"/> for faster result.
         /// </summary>
         public void Compute() {
-            if (isDirty) {
-                BuildData();
-            }
             isDirty = false;
-
-            // we manage a cache because in most situations, the mesh will contain several vertices located at the same curve distance.
-            Dictionary<float, CurveSample> sampleCache = new Dictionary<float, CurveSample>();
-
-            List<Vertex> bentVertices = new List<Vertex>(vertices.Count);
-            // for each mesh vertex, we found its projection on the curve
-            foreach (Vertex vert in transformedVertices) {
-                Vertex bent = new Vertex() {
-                    v = vert.v,
-                    n = vert.n
-                };
-                float distanceRate = Math.Abs(bent.v.x - minX) / length;
-                CurveSample sample;
-                if(!sampleCache.TryGetValue(distanceRate, out sample)){
-                    sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
-                    sampleCache[distanceRate] = sample;
-                }
-
-                // application of scale
-                bent.v = Vector3.Scale(bent.v, new Vector3(0, sample.scale.y, sample.scale.x));
-
-                // application of roll
-                bent.v = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.v;
-                bent.n = Quaternion.AngleAxis(sample.roll, Vector3.right) * bent.n;
-
-                // reset X value
-                bent.v.x = 0;
-
-                // application of the rotation + location
-                Quaternion q = sample.Rotation * Quaternion.Euler(0, -90, 0);
-                bent.v = q * bent.v + sample.location;
-                bent.n = q * bent.n;
-                bentVertices.Add(bent);
+            switch (Mode) {
+                case FillingMode.Once:
+                    FillOnce();
+                    break;
+                case FillingMode.Repeat:
+                    FillRepeat();
+                    break;
+                case FillingMode.StretchToInterval:
+                    FillStretch();
+                    break;
             }
-
-            result.vertices = bentVertices.Select(b => b.v).ToArray();
-            result.normals = bentVertices.Select(b => b.n).ToArray();
-            result.RecalculateBounds();
-        }
-
-        [Serializable]
-        private struct Vertex {
-            public Vector3 v;
-            public Vector3 n;
         }
 
         private void OnDestroy() {
@@ -247,5 +136,135 @@ namespace SplineMesh {
                 curve.Changed.RemoveListener(Compute);
             }
         }
+
+        public enum FillingMode {
+            Once,
+            Repeat,
+            StretchToInterval
+        }
+
+        private void FillOnce() {
+            sampleCache.Clear();
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            // for each mesh vertex, we found its projection on the curve
+            foreach (var vert in source.Vertices) {
+                float distance = vert.position.x - source.MinX;
+                CurveSample sample;
+                if (!sampleCache.TryGetValue(distance, out sample)) {
+                    if (!useSpline) {
+                        if (distance > curve.Length) continue;
+                        sample = curve.GetSampleAtDistance(distance);
+                    } else {
+                        float distOnSpline = intervalStart + distance;
+                        if (true) { //spline.isLoop) {
+                            while (distOnSpline > spline.Length) {
+                                distOnSpline -= spline.Length;
+                            }
+                        } else if (distOnSpline > spline.Length) {
+                            continue;
+                        }
+                        sample = spline.GetSampleAtDistance(distOnSpline);
+                    }
+                    sampleCache[distance] = sample;
+                }
+
+                bentVertices.Add(sample.GetBent(vert));
+            }
+
+            MeshUtility.Update(result, source.Triangles,
+                bentVertices.Select(b => b.position),
+                bentVertices.Select(b => b.normal));
+        }
+
+        private void FillRepeat() {
+            float intervalLength;
+            if (!useSpline) {
+                intervalLength = curve.Length;
+            } else {
+                intervalLength = (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart;
+            }
+            var repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            var triangles = new List<int>();
+            var uv = new List<Vector2>();
+            var uv2 = new List<Vector2>();
+            var tangents = new List<Vector4>();
+            float offset = 0;
+            for (int i = 0; i < repetitionCount; i++) {
+                foreach (var index in source.Triangles) {
+                    triangles.Add(index + source.Vertices.Count * i);
+                }
+                uv.AddRange(source.Mesh.uv);
+                uv2.AddRange(source.Mesh.uv2);
+                tangents.AddRange(source.Mesh.tangents);
+
+                sampleCache.Clear();
+                // for each mesh vertex, we found its projection on the curve
+                foreach (var vert in source.Vertices) {
+                    float distance = vert.position.x - source.MinX + offset;
+                    CurveSample sample;
+                    if (!sampleCache.TryGetValue(distance, out sample)) {
+                        if (!useSpline) {
+                            if (distance > curve.Length) continue;
+                            sample = curve.GetSampleAtDistance(distance);
+                        } else {
+                            float distOnSpline = intervalStart + distance;
+                            if (true) { //spline.isLoop) {
+                                while (distOnSpline > spline.Length) {
+                                    distOnSpline -= spline.Length;
+                                }
+                            } else if (distOnSpline > spline.Length) {
+                                continue;
+                            }
+                            sample = spline.GetSampleAtDistance(distOnSpline);
+                        }
+                        sampleCache[distance] = sample;
+                    }
+                    bentVertices.Add(sample.GetBent(vert));
+                }
+                offset += source.Length;
+            }
+
+            MeshUtility.Update(result,
+                triangles,
+                bentVertices.Select(b => b.position),
+                bentVertices.Select(b => b.normal),
+                tangents,
+                uv,
+                uv2);
+        }
+
+        private void FillStretch() {
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            sampleCache.Clear();
+            // for each mesh vertex, we found its projection on the curve
+            foreach (var vert in source.Vertices) {
+                float distanceRate = source.Length == 0 ? 0 : Math.Abs(vert.position.x - source.MinX) / source.Length;
+                CurveSample sample;
+                if (!sampleCache.TryGetValue(distanceRate, out sample)) {
+                    if (!useSpline) {
+                        sample = curve.GetSampleAtDistance(curve.Length * distanceRate);
+                    } else {
+                        float intervalLength = intervalEnd == 0 ? spline.Length - intervalStart : intervalEnd - intervalStart;
+                        float distOnSpline = intervalStart + intervalLength * distanceRate;
+                        if(distOnSpline > spline.Length) {
+                            distOnSpline = spline.Length;
+                            Debug.Log("dist " + distOnSpline + " spline length " + spline.Length + " start " + intervalStart);
+                        }
+
+                        sample = spline.GetSampleAtDistance(distOnSpline);
+                    }
+                    sampleCache[distanceRate] = sample;
+                }
+
+                bentVertices.Add(sample.GetBent(vert));
+            }
+
+            MeshUtility.Update(result, source.Triangles,
+                bentVertices.Select(b => b.position),
+                bentVertices.Select(b => b.normal));
+        }
+
+
     }
 }

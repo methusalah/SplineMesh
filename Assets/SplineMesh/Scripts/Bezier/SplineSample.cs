@@ -59,5 +59,26 @@ namespace SplineMesh {
                 Mathf.Lerp(a.distanceInCurve, b.distanceInCurve, t),
                 Mathf.Lerp(a.timeInCurve, b.timeInCurve, t));
         }
+
+        public MeshVertex GetBent(MeshVertex vert) {
+            var res = new MeshVertex(vert.position, vert.normal);
+
+            // application of scale
+            res.position = Vector3.Scale(res.position, new Vector3(0, scale.y, scale.x));
+
+            // application of roll
+            res.position = Quaternion.AngleAxis(roll, Vector3.right) * res.position;
+            res.normal = Quaternion.AngleAxis(roll, Vector3.right) * res.normal;
+
+            // reset X value
+            res.position.x = 0;
+
+            // application of the rotation + location
+            Quaternion q = Rotation * Quaternion.Euler(0, -90, 0);
+            res.position = q * res.position + location;
+            res.normal = q * res.normal;
+            return res;
+        }
+
     }
 }

@@ -28,6 +28,7 @@ namespace SplineMesh {
             rate = 0;
             if (go == null) {
                 go = Instantiate(Follower, transform);
+                go.name = "generated follower";
             }
 
             go.transform.localRotation = Quaternion.identity;
