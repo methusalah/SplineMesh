@@ -78,13 +78,13 @@ namespace SplineMesh {
             this.spline = spline;
             // listening new spline
             spline.CurveChanged.AddListener(Compute);
+
             curve = null;
             this.intervalStart = intervalStart;
             this.intervalEnd = intervalEnd;
             useSpline = true;
             isDirty = true;
         }
-
 
         private void OnEnable() {
             if(GetComponent<MeshFilter>().sharedMesh != null) {
@@ -170,14 +170,10 @@ namespace SplineMesh {
         }
 
         private void FillRepeat() {
-            float intervalLength;
-            if (!useSpline) {
-                intervalLength = curve.Length;
-            } else {
-                intervalLength = (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart;
-            }
-            var repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
-            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            float intervalLength = useSpline?
+                (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart :
+                curve.Length;
+            int repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
 
 
             // building triangles and UVs for the repeated mesh
@@ -277,7 +273,9 @@ namespace SplineMesh {
                 bentVertices.Add(sample.GetBent(vert));
             }
 
-            MeshUtility.Update(result, source.Triangles,
+            MeshUtility.Update(result,
+                source.Mesh,
+                source.Triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal));
         }
