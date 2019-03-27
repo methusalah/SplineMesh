@@ -68,6 +68,9 @@ namespace SplineMesh {
             if (intervalStart < 0 || intervalStart >= spline.Length) {
                 throw new ArgumentOutOfRangeException("interval start must be 0 or greater and lesser than spline length (was " + intervalStart + ")");
             }
+            if (intervalEnd != 0 && intervalEnd <= intervalStart || intervalEnd > spline.Length) {
+                throw new ArgumentOutOfRangeException("interval end must be 0 or greater than interval start, and lesser than spline length (was " + intervalEnd + ")");
+            }
             this.spline = spline;
             curve = null;
             this.intervalStart = intervalStart;
