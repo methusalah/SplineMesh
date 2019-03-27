@@ -32,24 +32,6 @@ namespace SplineMesh {
                 if (value == source) return;
                 isDirty = true;
                 source = value;
-
-                var m = source.Mesh;
-                result.hideFlags = m.hideFlags;
-                result.indexFormat = m.indexFormat;
-
-                MeshUtility.Update(result,
-                    m.triangles,
-                    m.vertices,
-                    m.normals,
-                    m.tangents,
-                    m.uv,
-                    m.uv2,
-                    m.uv3,
-                    m.uv4,
-                    m.uv5,
-                    m.uv6,
-                    m.uv7,
-                    m.uv8);
             }
         }
         
@@ -171,7 +153,9 @@ namespace SplineMesh {
                 bentVertices.Add(sample.GetBent(vert));
             }
 
-            MeshUtility.Update(result, source.Triangles,
+            MeshUtility.Update(result,
+                source.Mesh,
+                source.Triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal));
         }
@@ -185,18 +169,36 @@ namespace SplineMesh {
             }
             var repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
             var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+
+
+            // building triangles and UVs for the repeated mesh
             var triangles = new List<int>();
             var uv = new List<Vector2>();
             var uv2 = new List<Vector2>();
-            var tangents = new List<Vector4>();
-            float offset = 0;
+            var uv3 = new List<Vector2>();
+            var uv4 = new List<Vector2>();
+            var uv5 = new List<Vector2>();
+            var uv6 = new List<Vector2>();
+            var uv7 = new List<Vector2>();
+            var uv8 = new List<Vector2>();
             for (int i = 0; i < repetitionCount; i++) {
                 foreach (var index in source.Triangles) {
                     triangles.Add(index + source.Vertices.Count * i);
                 }
                 uv.AddRange(source.Mesh.uv);
                 uv2.AddRange(source.Mesh.uv2);
-                tangents.AddRange(source.Mesh.tangents);
+                uv3.AddRange(source.Mesh.uv3);
+                uv4.AddRange(source.Mesh.uv4);
+                uv5.AddRange(source.Mesh.uv5);
+                uv6.AddRange(source.Mesh.uv6);
+                uv7.AddRange(source.Mesh.uv7);
+                uv8.AddRange(source.Mesh.uv8);
+            }
+
+            // computing vertices and normals
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            float offset = 0;
+            for (int i = 0; i < repetitionCount; i++) {
 
                 sampleCache.Clear();
                 // for each mesh vertex, we found its projection on the curve
@@ -226,12 +228,18 @@ namespace SplineMesh {
             }
 
             MeshUtility.Update(result,
+                source.Mesh,
                 triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal),
-                tangents,
                 uv,
-                uv2);
+                uv2,
+                uv3,
+                uv4,
+                uv5,
+                uv6,
+                uv7,
+                uv8);
         }
 
         private void FillStretch() {
