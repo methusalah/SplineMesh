@@ -52,7 +52,7 @@ namespace SplineMesh {
             curves.Clear();
             AddNode(new SplineNode(new Vector3(5, 0, 0), new Vector3(5, 0, -3)));
             AddNode(new SplineNode(new Vector3(10, 0, 0), new Vector3(10, 0, 3)));
-            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.clear
             });
             UpdateAfterCurveChanged();
@@ -65,10 +65,10 @@ namespace SplineMesh {
                 SplineNode next = nodes[i + 1];
 
                 CubicBezierCurve curve = new CubicBezierCurve(n, next);
-                curve.Changed.AddListener(() => UpdateAfterCurveChanged());
+                curve.Changed.AddListener(UpdateAfterCurveChanged);
                 curves.Add(curve);
             }
-            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.clear
             });
             UpdateAfterCurveChanged();
@@ -78,7 +78,7 @@ namespace SplineMesh {
             return curves.AsReadOnly();
         }
 
-        private void RaiseNodeListeChanged(ListChangedEventArgs<SplineNode> args) {
+        private void RaiseNodeListChanged(ListChangedEventArgs<SplineNode> args) {
             if (NodeListChanged != null)
                 NodeListChanged.Invoke(this, args);
         }
@@ -88,9 +88,7 @@ namespace SplineMesh {
             foreach (var curve in curves) {
                 Length += curve.Length;
             }
-            if (CurveChanged != null) {
-                CurveChanged.Invoke();
-            }
+            CurveChanged.Invoke();
         }
 
         /// <summary>
@@ -157,10 +155,10 @@ namespace SplineMesh {
             if (nodes.Count != 1) {
                 SplineNode previousNode = nodes[nodes.IndexOf(node) - 1];
                 CubicBezierCurve curve = new CubicBezierCurve(previousNode, node);
-                curve.Changed.AddListener(() => UpdateAfterCurveChanged());
+                curve.Changed.AddListener(UpdateAfterCurveChanged);
                 curves.Add(curve);
             }
-            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.Add,
                 newItems = new List<SplineNode>() { node }
             });
@@ -185,9 +183,9 @@ namespace SplineMesh {
             curves[index - 1].ConnectEnd(node);
 
             CubicBezierCurve curve = new CubicBezierCurve(node, nextNode);
-            curve.Changed.AddListener(() => UpdateAfterCurveChanged());
+            curve.Changed.AddListener(UpdateAfterCurveChanged);
             curves.Insert(index, curve);
-            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.Insert,
                 newItems = new List<SplineNode>() { node },
                 insertIndex = index
@@ -213,10 +211,10 @@ namespace SplineMesh {
             }
 
             nodes.RemoveAt(index);
-            toRemove.Changed.RemoveListener(() => UpdateAfterCurveChanged());
+            toRemove.Changed.RemoveListener(UpdateAfterCurveChanged);
             curves.Remove(toRemove);
 
-            RaiseNodeListeChanged(new ListChangedEventArgs<SplineNode>() {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.Remove,
                 removedItems = new List<SplineNode>() { node },
                 removeIndex = index
