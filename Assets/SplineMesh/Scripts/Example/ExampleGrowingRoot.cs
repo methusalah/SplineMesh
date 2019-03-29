@@ -43,7 +43,6 @@ namespace SplineMesh {
             generated.transform.localPosition = Vector3.zero;
             generated.transform.localScale = Vector3.one;
             Init();
-            spline = GetComponent<Spline>(); 
 #if UNITY_EDITOR
             EditorApplication.update += EditorUpdate;
 #endif
@@ -57,6 +56,10 @@ namespace SplineMesh {
 
         private void OnValidate() {
             Init();
+        }
+
+        private void Update() {
+            if (Application.isPlaying) EditorUpdate();
         }
 
         void EditorUpdate() {
@@ -74,14 +77,14 @@ namespace SplineMesh {
                 float nodeDistanceRate = nodeDistance / spline.Length;
                 float nodeScale = startScale * (rate - nodeDistanceRate);
                 n.Scale = new Vector2(nodeScale, nodeScale);
-                if(i < spline.curves.Count) {
+                if (i < spline.curves.Count) {
                     nodeDistance += spline.curves[i++].Length;
                 }
             }
 
             if (generated != null) {
                 meshBender.SetInterval(spline, 0, spline.Length * rate);
-                meshBender.Compute();
+                meshBender.ComputeIfNeeded();
             }
         }
 
@@ -89,10 +92,13 @@ namespace SplineMesh {
             generated.GetComponent<MeshRenderer>().material = material;
 
             meshBender = generated.GetComponent<MeshBender>();
+            spline = GetComponent<Spline>();
+
             meshBender.Source = SourceMesh.Build(mesh)
                 .Rotate(Quaternion.Euler(rotation))
                 .Scale(scale);
             meshBender.Mode = MeshBender.FillingMode.StretchToInterval;
+            meshBender.SetInterval(spline, 0, 0.01f);
         }
     }
 }

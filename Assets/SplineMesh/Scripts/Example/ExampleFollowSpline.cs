@@ -47,6 +47,10 @@ namespace SplineMesh {
 #endif
         }
 
+        private void Update() {
+            if (Application.isPlaying) EditorUpdate();
+        }
+
         void EditorUpdate() {
             rate += Time.deltaTime / DurationInSecond;
             if (rate > spline.nodes.Count - 1) {
