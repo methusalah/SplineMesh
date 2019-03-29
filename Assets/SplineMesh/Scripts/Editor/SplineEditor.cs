@@ -218,6 +218,7 @@ namespace SplineMesh {
             GUI.enabled = true;
 
             showUpVector = GUILayout.Toggle(showUpVector, "Show up vector");
+            spline.IsLoop = GUILayout.Toggle(spline.IsLoop, "Is loop (experimental)");
 
             // nodes
             EditorGUILayout.PropertyField(nodesProp);
