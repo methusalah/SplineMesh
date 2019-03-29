@@ -30,26 +30,8 @@ namespace SplineMesh {
             get { return source; }
             set {
                 if (value == source) return;
-                isDirty = true;
+                SetDirty();
                 source = value;
-
-                var m = source.Mesh;
-                result.hideFlags = m.hideFlags;
-                result.indexFormat = m.indexFormat;
-
-                MeshUtility.Update(result,
-                    m.triangles,
-                    m.vertices,
-                    m.normals,
-                    m.tangents,
-                    m.uv,
-                    m.uv2,
-                    m.uv3,
-                    m.uv4,
-                    m.uv5,
-                    m.uv6,
-                    m.uv7,
-                    m.uv8);
             }
         }
         
@@ -62,7 +44,7 @@ namespace SplineMesh {
             get { return mode; }
             set {
                 if (value == mode) return;
-                isDirty = true;
+                SetDirty();
                 mode = value;
             }
         }
@@ -71,13 +53,13 @@ namespace SplineMesh {
             if (this.curve == curve) return;
             if (curve == null) throw new ArgumentNullException("curve");
             if (this.curve != null) {
-                this.curve.Changed.RemoveListener(Compute);
+                this.curve.Changed.RemoveListener(SetDirty);
             }
             this.curve = curve;
             spline = null;
-            curve.Changed.AddListener(Compute);
+            curve.Changed.AddListener(SetDirty);
             useSpline = false;
-            isDirty = true;
+            SetDirty();
         }
 
         public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
@@ -86,14 +68,23 @@ namespace SplineMesh {
             if (intervalStart < 0 || intervalStart >= spline.Length) {
                 throw new ArgumentOutOfRangeException("interval start must be 0 or greater and lesser than spline length (was " + intervalStart + ")");
             }
+            if (intervalEnd != 0 && intervalEnd <= intervalStart || intervalEnd > spline.Length) {
+                throw new ArgumentOutOfRangeException("interval end must be 0 or greater than interval start, and lesser than spline length (was " + intervalEnd + ")");
+            }
+            if (this.spline != null) {
+                // unlistening previous spline
+                this.spline.CurveChanged.RemoveListener(SetDirty);
+            }
             this.spline = spline;
+            // listening new spline
+            spline.CurveChanged.AddListener(SetDirty);
+
             curve = null;
             this.intervalStart = intervalStart;
             this.intervalEnd = intervalEnd;
             useSpline = true;
-            isDirty = true;
+            SetDirty();
         }
-
 
         private void OnEnable() {
             if(GetComponent<MeshFilter>().sharedMesh != null) {
@@ -104,19 +95,25 @@ namespace SplineMesh {
             }
         }
 
-        /// <summary>
-        /// Bend the mesh only if a property has changed since the last compute.
-        /// </summary>
+        private void Update() {
+            ComputeIfNeeded();
+        }
+
         public void ComputeIfNeeded() {
-            if (!isDirty) return;
-            Compute();
+            if (isDirty) {
+                Compute();
+            }
+        }
+
+        private void SetDirty() {
+            isDirty = true;
         }
 
         /// <summary>
         /// Bend the mesh. This method may take time and should not be called more than necessary.
         /// Consider using <see cref="ComputeIfNeeded"/> for faster result.
         /// </summary>
-        public void Compute() {
+        private  void Compute() {
             isDirty = false;
             switch (Mode) {
                 case FillingMode.Once:
@@ -171,32 +168,48 @@ namespace SplineMesh {
                 bentVertices.Add(sample.GetBent(vert));
             }
 
-            MeshUtility.Update(result, source.Triangles,
+            MeshUtility.Update(result,
+                source.Mesh,
+                source.Triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal));
         }
 
         private void FillRepeat() {
-            float intervalLength;
-            if (!useSpline) {
-                intervalLength = curve.Length;
-            } else {
-                intervalLength = (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart;
-            }
-            var repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
-            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            float intervalLength = useSpline?
+                (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart :
+                curve.Length;
+            int repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
+
+
+            // building triangles and UVs for the repeated mesh
             var triangles = new List<int>();
             var uv = new List<Vector2>();
             var uv2 = new List<Vector2>();
-            var tangents = new List<Vector4>();
-            float offset = 0;
+            var uv3 = new List<Vector2>();
+            var uv4 = new List<Vector2>();
+            var uv5 = new List<Vector2>();
+            var uv6 = new List<Vector2>();
+            var uv7 = new List<Vector2>();
+            var uv8 = new List<Vector2>();
             for (int i = 0; i < repetitionCount; i++) {
                 foreach (var index in source.Triangles) {
                     triangles.Add(index + source.Vertices.Count * i);
                 }
                 uv.AddRange(source.Mesh.uv);
                 uv2.AddRange(source.Mesh.uv2);
-                tangents.AddRange(source.Mesh.tangents);
+                uv3.AddRange(source.Mesh.uv3);
+                uv4.AddRange(source.Mesh.uv4);
+                uv5.AddRange(source.Mesh.uv5);
+                uv6.AddRange(source.Mesh.uv6);
+                uv7.AddRange(source.Mesh.uv7);
+                uv8.AddRange(source.Mesh.uv8);
+            }
+
+            // computing vertices and normals
+            var bentVertices = new List<MeshVertex>(source.Vertices.Count);
+            float offset = 0;
+            for (int i = 0; i < repetitionCount; i++) {
 
                 sampleCache.Clear();
                 // for each mesh vertex, we found its projection on the curve
@@ -226,12 +239,18 @@ namespace SplineMesh {
             }
 
             MeshUtility.Update(result,
+                source.Mesh,
                 triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal),
-                tangents,
                 uv,
-                uv2);
+                uv2,
+                uv3,
+                uv4,
+                uv5,
+                uv6,
+                uv7,
+                uv8);
         }
 
         private void FillStretch() {
@@ -260,7 +279,9 @@ namespace SplineMesh {
                 bentVertices.Add(sample.GetBent(vert));
             }
 
-            MeshUtility.Update(result, source.Triangles,
+            MeshUtility.Update(result,
+                source.Mesh,
+                source.Triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal));
         }

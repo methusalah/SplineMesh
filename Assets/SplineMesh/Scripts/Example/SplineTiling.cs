@@ -85,7 +85,6 @@ namespace SplineMesh {
                         .Scale(scale);
                     mb.SetInterval(curve);
                     mb.Mode = mode;
-                    mb.ComputeIfNeeded();
                     used.Add(go);
                 }
             } else {
@@ -110,9 +109,8 @@ namespace SplineMesh {
                     .Translate(translation)
                     .Rotate(Quaternion.Euler(rotation))
                     .Scale(scale);
-                mb.SetInterval(spline, 0, spline.Length);
+                mb.SetInterval(spline, 0);
                 mb.Mode = mode;
-                mb.ComputeIfNeeded();
                 used.Add(go);
 
             }
