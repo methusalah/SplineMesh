@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44643652, g: 0.4962545, b: 0.57473135, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -52,7 +52,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
@@ -179,7 +179,7 @@ MonoBehaviour:
   - position: {x: 0.98568577, y: 0.43299007, z: 0.29244265}
     direction: {x: 0.7412934, y: 0.8728734, z: 0.31067088}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.3904135, y: 0.3904135}
+    scale: {x: 0.21574147, y: 0.21574147}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -189,7 +189,7 @@ MonoBehaviour:
   - position: {x: 0.52324677, y: 0.72200584, z: 0.18689477}
     direction: {x: 0.27885437, y: 0.7987348, z: 0.205123}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.26015484, y: 0.26015484}
+    scale: {x: 0.085482806, y: 0.085482806}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -199,7 +199,7 @@ MonoBehaviour:
   - position: {x: 0.32932386, y: 0.8350123, z: 0.61059666}
     direction: {x: 0.41009626, y: 0.72716165, z: 0.71581763}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.13670844, y: 0.13670844}
+    scale: {x: -0.037963584, y: -0.037963584}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -209,7 +209,7 @@ MonoBehaviour:
   - position: {x: 0.4733312, y: 0.50501776, z: 0.94335675}
     direction: {x: 0.25768638, y: 0.50567293, z: 1.0010254}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.016065747, y: 0.016065747}
+    scale: {x: -0.15860628, y: -0.15860628}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -219,7 +219,7 @@ MonoBehaviour:
   - position: {x: 0.5210506, y: 0.31774458, z: 0.6044626}
     direction: {x: 0.81425077, y: 0.21535546, z: 0.4775508}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.10958651, y: -0.10958651}
+    scale: {x: -0.28425854, y: -0.28425854}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -231,7 +231,7 @@ MonoBehaviour:
       position: {x: 0.98568577, y: 0.43299007, z: 0.29244265}
       direction: {x: 0.7412934, y: 0.8728734, z: 0.31067088}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.3904135, y: 0.3904135}
+      scale: {x: 0.21574147, y: 0.21574147}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -242,7 +242,7 @@ MonoBehaviour:
       position: {x: 0.52324677, y: 0.72200584, z: 0.18689477}
       direction: {x: 0.27885437, y: 0.7987348, z: 0.205123}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.26015484, y: 0.26015484}
+      scale: {x: 0.085482806, y: 0.085482806}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -258,7 +258,7 @@ MonoBehaviour:
       position: {x: 0.52324677, y: 0.72200584, z: 0.18689477}
       direction: {x: 0.27885437, y: 0.7987348, z: 0.205123}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.26015484, y: 0.26015484}
+      scale: {x: 0.085482806, y: 0.085482806}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -269,7 +269,7 @@ MonoBehaviour:
       position: {x: 0.32932386, y: 0.8350123, z: 0.61059666}
       direction: {x: 0.41009626, y: 0.72716165, z: 0.71581763}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.13670844, y: 0.13670844}
+      scale: {x: -0.037963584, y: -0.037963584}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -285,7 +285,7 @@ MonoBehaviour:
       position: {x: 0.32932386, y: 0.8350123, z: 0.61059666}
       direction: {x: 0.41009626, y: 0.72716165, z: 0.71581763}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.13670844, y: 0.13670844}
+      scale: {x: -0.037963584, y: -0.037963584}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -296,7 +296,7 @@ MonoBehaviour:
       position: {x: 0.4733312, y: 0.50501776, z: 0.94335675}
       direction: {x: 0.25768638, y: 0.50567293, z: 1.0010254}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.016065747, y: 0.016065747}
+      scale: {x: -0.15860628, y: -0.15860628}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -312,7 +312,7 @@ MonoBehaviour:
       position: {x: 0.4733312, y: 0.50501776, z: 0.94335675}
       direction: {x: 0.25768638, y: 0.50567293, z: 1.0010254}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.016065747, y: 0.016065747}
+      scale: {x: -0.15860628, y: -0.15860628}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -323,7 +323,7 @@ MonoBehaviour:
       position: {x: 0.5210506, y: 0.31774458, z: 0.6044626}
       direction: {x: 0.81425077, y: 0.21535546, z: 0.4775508}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.10958651, y: -0.10958651}
+      scale: {x: -0.28425854, y: -0.28425854}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3375,7 +3375,7 @@ MonoBehaviour:
   - position: {x: 1.0965282, y: 0.44653305, z: 0.36017942}
     direction: {x: 1.21515, y: 0.72151184, z: 0.4662627}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.2342481, y: 0.2342481}
+    scale: {x: 0.12944488, y: 0.12944488}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -3385,7 +3385,7 @@ MonoBehaviour:
   - position: {x: 1.3681183, y: 0.54701877, z: 0.44029933}
     direction: {x: 1.4530716, y: 0.5783042, z: 0.5525289}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.17355902, y: 0.17355902}
+    scale: {x: 0.068755805, y: 0.068755805}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -3395,7 +3395,7 @@ MonoBehaviour:
   - position: {x: 1.0562744, y: 0.52288294, z: 0.7519206}
     direction: {x: 0.905365, y: 0.4941225, z: 0.616582}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.08419485, y: 0.08419485}
+    scale: {x: -0.02060837, y: -0.02060837}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -3405,7 +3405,7 @@ MonoBehaviour:
   - position: {x: 1.1648102, y: 0.5950213, z: 0.53383774}
     direction: {x: 1.239006, y: 0.59774375, z: 0.5441081}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.027497472, y: 0.027497472}
+    scale: {x: -0.07730575, y: -0.07730575}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -3415,7 +3415,7 @@ MonoBehaviour:
   - position: {x: 1.3726654, y: 0.6010011, z: 0.74389964}
     direction: {x: 1.3407974, y: 0.5449944, z: 0.87333804}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.026144244, y: -0.026144244}
+    scale: {x: -0.13094746, y: -0.13094746}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -3425,7 +3425,7 @@ MonoBehaviour:
   - position: {x: 1.2127914, y: 0.5345702, z: 0.8795549}
     direction: {x: 1.1109772, y: 0.5371272, z: 0.8941673}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.06575191, y: -0.06575191}
+    scale: {x: -0.17055513, y: -0.17055513}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -3437,7 +3437,7 @@ MonoBehaviour:
       position: {x: 1.0965282, y: 0.44653305, z: 0.36017942}
       direction: {x: 1.21515, y: 0.72151184, z: 0.4662627}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.2342481, y: 0.2342481}
+      scale: {x: 0.12944488, y: 0.12944488}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3448,7 +3448,7 @@ MonoBehaviour:
       position: {x: 1.3681183, y: 0.54701877, z: 0.44029933}
       direction: {x: 1.4530716, y: 0.5783042, z: 0.5525289}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.17355902, y: 0.17355902}
+      scale: {x: 0.068755805, y: 0.068755805}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3464,7 +3464,7 @@ MonoBehaviour:
       position: {x: 1.3681183, y: 0.54701877, z: 0.44029933}
       direction: {x: 1.4530716, y: 0.5783042, z: 0.5525289}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.17355902, y: 0.17355902}
+      scale: {x: 0.068755805, y: 0.068755805}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3475,7 +3475,7 @@ MonoBehaviour:
       position: {x: 1.0562744, y: 0.52288294, z: 0.7519206}
       direction: {x: 0.905365, y: 0.4941225, z: 0.616582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.08419485, y: 0.08419485}
+      scale: {x: -0.02060837, y: -0.02060837}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3491,7 +3491,7 @@ MonoBehaviour:
       position: {x: 1.0562744, y: 0.52288294, z: 0.7519206}
       direction: {x: 0.905365, y: 0.4941225, z: 0.616582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.08419485, y: 0.08419485}
+      scale: {x: -0.02060837, y: -0.02060837}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3502,7 +3502,7 @@ MonoBehaviour:
       position: {x: 1.1648102, y: 0.5950213, z: 0.53383774}
       direction: {x: 1.239006, y: 0.59774375, z: 0.5441081}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.027497472, y: 0.027497472}
+      scale: {x: -0.07730575, y: -0.07730575}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3518,7 +3518,7 @@ MonoBehaviour:
       position: {x: 1.1648102, y: 0.5950213, z: 0.53383774}
       direction: {x: 1.239006, y: 0.59774375, z: 0.5441081}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.027497472, y: 0.027497472}
+      scale: {x: -0.07730575, y: -0.07730575}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3529,7 +3529,7 @@ MonoBehaviour:
       position: {x: 1.3726654, y: 0.6010011, z: 0.74389964}
       direction: {x: 1.3407974, y: 0.5449944, z: 0.87333804}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.026144244, y: -0.026144244}
+      scale: {x: -0.13094746, y: -0.13094746}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3545,7 +3545,7 @@ MonoBehaviour:
       position: {x: 1.3726654, y: 0.6010011, z: 0.74389964}
       direction: {x: 1.3407974, y: 0.5449944, z: 0.87333804}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.026144244, y: -0.026144244}
+      scale: {x: -0.13094746, y: -0.13094746}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3556,7 +3556,7 @@ MonoBehaviour:
       position: {x: 1.2127914, y: 0.5345702, z: 0.8795549}
       direction: {x: 1.1109772, y: 0.5371272, z: 0.8941673}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.06575191, y: -0.06575191}
+      scale: {x: -0.17055513, y: -0.17055513}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -3841,7 +3841,7 @@ MonoBehaviour:
   physicMaterial: {fileID: 0}
   translation: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 90, z: 0}
-  scale: {x: 0.1, y: 0.3, z: 0.3}
+  scale: {x: 0.12, y: 0.3, z: 0.3}
   updateInPlayMode: 0
   curveSpace: 1
   mode: 0
@@ -5225,8 +5225,6 @@ GameObject:
   m_Component:
   - component: {fileID: 943384588}
   - component: {fileID: 943384587}
-  - component: {fileID: 943384586}
-  - component: {fileID: 943384585}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5234,22 +5232,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &943384585
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943384584}
-  m_Enabled: 1
---- !u!124 &943384586
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943384584}
-  m_Enabled: 1
 --- !u!20 &943384587
 Camera:
   m_ObjectHideFlags: 0
@@ -6623,8 +6605,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1385924879}
+  m_Children: []
   m_Father: {fileID: 1396600154}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6642,7 +6623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Follower: {fileID: 1931018082507708, guid: 65290c8a0968be743bf5b4c95114c272, type: 3}
   DurationInSecond: 5
-  go: {fileID: 1385924878}
+  go: {fileID: 0}
 --- !u!114 &1128775311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6656,8 +6637,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: -1.6553497, y: 2.0840836, z: 1.2066312}
-    direction: {x: -1.6553497, y: 2.0840836, z: -1.793365}
+  - position: {x: -2.014862, y: 2.0840836, z: 1.7740531}
+    direction: {x: -2.014862, y: 2.0840836, z: -1.2259431}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 0, y: 0}
     roll: 0
@@ -6696,8 +6677,8 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - position: {x: -1.65535, y: 2.084084, z: 1.206631}
-    direction: {x: -1.65535, y: 2.084084, z: -1.793365}
+  - position: {x: -2.014862, y: 2.0840836, z: 1.7740531}
+    direction: {x: -2.014862, y: 2.0840836, z: -1.2259431}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 0, y: 0}
     roll: 0
@@ -6708,8 +6689,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   curves:
   - n1:
-      position: {x: -1.6553497, y: 2.0840836, z: 1.2066312}
-      direction: {x: -1.6553497, y: 2.0840836, z: -1.793365}
+      position: {x: -2.014862, y: 2.0840836, z: 1.7740531}
+      direction: {x: -2.014862, y: 2.0840836, z: -1.2259431}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 0, y: 0}
       roll: 0
@@ -6800,8 +6781,8 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
     n2:
-      position: {x: -1.65535, y: 2.084084, z: 1.206631}
-      direction: {x: -1.65535, y: 2.084084, z: -1.793365}
+      position: {x: -2.014862, y: 2.0840836, z: 1.7740531}
+      direction: {x: -2.014862, y: 2.0840836, z: -1.2259431}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 0, y: 0}
       roll: 0
@@ -6815,7 +6796,7 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  Length: 22.487911
+  Length: 23.060366
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6888,7 +6869,7 @@ MonoBehaviour:
   - position: {x: 1.0579845, y: 0.4121512, z: 0.28619385}
     direction: {x: 1.1208125, y: 0.85203457, z: 0.03419037}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.3904135, y: 0.3904135}
+    scale: {x: 0.21574147, y: 0.21574147}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -6898,7 +6879,7 @@ MonoBehaviour:
   - position: {x: 1.3743906, y: 0.9122891, z: 0.018990993}
     direction: {x: 1.5212258, y: 0.94871634, z: 0.06874582}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.26176897, y: 0.26176897}
+    scale: {x: 0.087096944, y: 0.087096944}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -6908,7 +6889,7 @@ MonoBehaviour:
   - position: {x: 1.7120523, y: 0.74845743, z: 0.13280642}
     direction: {x: 1.6171173, y: 0.511441, z: 0.010301903}
     up: {x: 0.6152222, y: 0.40862685, z: -0.67418534}
-    scale: {x: 0.16462839, y: 0.16462839}
+    scale: {x: -0.010043636, y: -0.010043636}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -6918,7 +6899,7 @@ MonoBehaviour:
   - position: {x: 1.7505646, y: 0.5950213, z: 0.40189946}
     direction: {x: 1.4574203, y: 0.7395141, z: 0.6113548}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.054941148, y: 0.054941148}
+    scale: {x: -0.119730875, y: -0.119730875}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -6928,7 +6909,7 @@ MonoBehaviour:
   - position: {x: 1.5679932, y: 0.6711932, z: 1.1265873}
     direction: {x: 1.7545471, y: 0.42937827, z: 1.362588}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.10958651, y: -0.10958651}
+    scale: {x: -0.28425854, y: -0.28425854}
     roll: 0
     Changed:
       m_PersistentCalls:
@@ -6940,7 +6921,7 @@ MonoBehaviour:
       position: {x: 1.0579845, y: 0.4121512, z: 0.28619385}
       direction: {x: 1.1208125, y: 0.85203457, z: 0.03419037}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.3904135, y: 0.3904135}
+      scale: {x: 0.21574147, y: 0.21574147}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -6951,7 +6932,7 @@ MonoBehaviour:
       position: {x: 1.3743906, y: 0.9122891, z: 0.018990993}
       direction: {x: 1.5212258, y: 0.94871634, z: 0.06874582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.26176897, y: 0.26176897}
+      scale: {x: 0.087096944, y: 0.087096944}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -6967,7 +6948,7 @@ MonoBehaviour:
       position: {x: 1.3743906, y: 0.9122891, z: 0.018990993}
       direction: {x: 1.5212258, y: 0.94871634, z: 0.06874582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.26176897, y: 0.26176897}
+      scale: {x: 0.087096944, y: 0.087096944}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -6978,7 +6959,7 @@ MonoBehaviour:
       position: {x: 1.7120523, y: 0.74845743, z: 0.13280642}
       direction: {x: 1.6171173, y: 0.511441, z: 0.010301903}
       up: {x: 0.6152222, y: 0.40862685, z: -0.67418534}
-      scale: {x: 0.16462839, y: 0.16462839}
+      scale: {x: -0.010043636, y: -0.010043636}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -6994,7 +6975,7 @@ MonoBehaviour:
       position: {x: 1.7120523, y: 0.74845743, z: 0.13280642}
       direction: {x: 1.6171173, y: 0.511441, z: 0.010301903}
       up: {x: 0.6152222, y: 0.40862685, z: -0.67418534}
-      scale: {x: 0.16462839, y: 0.16462839}
+      scale: {x: -0.010043636, y: -0.010043636}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -7005,7 +6986,7 @@ MonoBehaviour:
       position: {x: 1.7505646, y: 0.5950213, z: 0.40189946}
       direction: {x: 1.4574203, y: 0.7395141, z: 0.6113548}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.054941148, y: 0.054941148}
+      scale: {x: -0.119730875, y: -0.119730875}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -7021,7 +7002,7 @@ MonoBehaviour:
       position: {x: 1.7505646, y: 0.5950213, z: 0.40189946}
       direction: {x: 1.4574203, y: 0.7395141, z: 0.6113548}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.054941148, y: 0.054941148}
+      scale: {x: -0.119730875, y: -0.119730875}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -7032,7 +7013,7 @@ MonoBehaviour:
       position: {x: 1.5679932, y: 0.6711932, z: 1.1265873}
       direction: {x: 1.7545471, y: 0.42937827, z: 1.362588}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.10958651, y: -0.10958651}
+      scale: {x: -0.28425854, y: -0.28425854}
       roll: 0
       Changed:
         m_PersistentCalls:
@@ -7522,8 +7503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: -87.45859, y: 0.7753124, z: -1.1672807}
-    direction: {x: -86.78076, y: 0.7753124, z: -2.5765462}
+  - position: {x: -87.497765, y: 0.7753124, z: -1.2023208}
+    direction: {x: -86.81994, y: 0.7753124, z: -2.6115863}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
@@ -7564,8 +7545,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   curves:
   - n1:
-      position: {x: -87.45859, y: 0.7753124, z: -1.1672807}
-      direction: {x: -86.78076, y: 0.7753124, z: -2.5765462}
+      position: {x: -87.497765, y: 0.7753124, z: -1.2023208}
+      direction: {x: -86.81994, y: 0.7753124, z: -2.6115863}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
@@ -7644,7 +7625,7 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  Length: 7.1697617
+  Length: 7.137041
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8357,98 +8338,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1385924878
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1385924879}
-  - component: {fileID: 1385924882}
-  - component: {fileID: 1385924881}
-  - component: {fileID: 1385924880}
-  m_Layer: 0
-  m_Name: Capsule(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1385924879
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385924878}
-  m_LocalRotation: {x: -0.017375994, y: 0.97809166, z: -0.09121676, w: -0.18631788}
-  m_LocalPosition: {x: -1.5175356, y: 4.777631, z: 0.83035135}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1128775309}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1385924880
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385924878}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!136 &1385924881
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385924878}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1385924882
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385924878}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1395136702
 GameObject:
   m_ObjectHideFlags: 0
@@ -10086,8 +9975,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: -2.5534363, y: 2.0840836, z: 1.0008192}
-    direction: {x: -2.5534363, y: 2.0840836, z: -1.999177}
+  - position: {x: -2.8239212, y: 2.0840836, z: 1.1614413}
+    direction: {x: -2.8239212, y: 2.0840836, z: -1.8385549}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
@@ -10136,8 +10025,8 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - position: {x: -2.553436, y: 2.084084, z: 1.000819}
-    direction: {x: -2.553436, y: 2.084084, z: -1.999177}
+  - position: {x: -2.8239212, y: 2.0840836, z: 1.1614413}
+    direction: {x: -2.8239212, y: 2.0840836, z: -1.8385549}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
@@ -10148,8 +10037,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   curves:
   - n1:
-      position: {x: -2.5534363, y: 2.0840836, z: 1.0008192}
-      direction: {x: -2.5534363, y: 2.0840836, z: -1.999177}
+      position: {x: -2.8239212, y: 2.0840836, z: 1.1614413}
+      direction: {x: -2.8239212, y: 2.0840836, z: -1.8385549}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
@@ -10267,8 +10156,8 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
     n2:
-      position: {x: -2.553436, y: 2.084084, z: 1.000819}
-      direction: {x: -2.553436, y: 2.084084, z: -1.999177}
+      position: {x: -2.8239212, y: 2.0840836, z: 1.1614413}
+      direction: {x: -2.8239212, y: 2.0840836, z: -1.8385549}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
@@ -10282,7 +10171,7 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  Length: 39.14309
+  Length: 39.36897
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
