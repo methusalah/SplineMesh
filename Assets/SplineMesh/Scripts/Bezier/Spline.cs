@@ -33,6 +33,16 @@ namespace SplineMesh {
         /// </summary>
         public float Length;
 
+        private bool isLoop;
+
+        public bool IsLoop {
+            get { return isLoop; }
+            set {
+                isLoop = value;
+                updateLoopBinding();
+            }
+        }
+
         /// <summary>
         /// Event raised when the node collection changes
         /// </summary>
@@ -164,6 +174,7 @@ namespace SplineMesh {
             });
 
             UpdateAfterCurveChanged();
+            updateLoopBinding();
         }
 
         /// <summary>
@@ -191,6 +202,7 @@ namespace SplineMesh {
                 insertIndex = index
             });
             UpdateAfterCurveChanged();
+            updateLoopBinding();
         }
 
         /// <summary>
@@ -220,6 +232,47 @@ namespace SplineMesh {
                 removeIndex = index
             });
             UpdateAfterCurveChanged();
+            updateLoopBinding();
+        }
+
+        SplineNode start, end;
+        private void updateLoopBinding() {
+            if(start != null) {
+                if(start.Changed != null) start.Changed.RemoveListener(StartNodeChanged);
+            }
+            if(end != null) {
+                if (end.Changed != null) end.Changed.RemoveListener(EndNodeChanged);
+            }
+            if (isLoop) {
+                start = nodes[0];
+                end = nodes[nodes.Count - 1];
+                start.Changed.AddListener(StartNodeChanged);
+                end.Changed.AddListener(EndNodeChanged);
+                StartNodeChanged();
+            } else {
+                start = null;
+                end = null;
+            }
+        }
+
+        private void StartNodeChanged() {
+            end.Changed.RemoveListener(EndNodeChanged);
+            end.Position = start.Position;
+            end.Direction = start.Direction;
+            end.Roll = start.Roll;
+            end.Scale = start.Scale;
+            end.Up = start.Up;
+            end.Changed.AddListener(EndNodeChanged);
+        }
+
+        private void EndNodeChanged() {
+            start.Changed.RemoveListener(StartNodeChanged);
+            start.Position = end.Position;
+            start.Direction = end.Direction;
+            start.Roll = end.Roll;
+            start.Scale = end.Scale;
+            start.Up = end.Up;
+            start.Changed.AddListener(StartNodeChanged);
         }
     }
 
