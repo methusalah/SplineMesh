@@ -30,7 +30,7 @@ namespace SplineMesh {
             get { return source; }
             set {
                 if (value == source) return;
-                isDirty = true;
+                SetDirty();
                 source = value;
             }
         }
@@ -44,7 +44,7 @@ namespace SplineMesh {
             get { return mode; }
             set {
                 if (value == mode) return;
-                isDirty = true;
+                SetDirty();
                 mode = value;
             }
         }
@@ -53,13 +53,13 @@ namespace SplineMesh {
             if (this.curve == curve) return;
             if (curve == null) throw new ArgumentNullException("curve");
             if (this.curve != null) {
-                this.curve.Changed.RemoveListener(Compute);
+                this.curve.Changed.RemoveListener(SetDirty);
             }
             this.curve = curve;
             spline = null;
-            curve.Changed.AddListener(Compute);
+            curve.Changed.AddListener(SetDirty);
             useSpline = false;
-            isDirty = true;
+            SetDirty();
         }
 
         public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
@@ -73,17 +73,17 @@ namespace SplineMesh {
             }
             if (this.spline != null) {
                 // unlistening previous spline
-                this.spline.CurveChanged.RemoveListener(Compute);
+                this.spline.CurveChanged.RemoveListener(SetDirty);
             }
             this.spline = spline;
             // listening new spline
-            spline.CurveChanged.AddListener(Compute);
+            spline.CurveChanged.AddListener(SetDirty);
 
             curve = null;
             this.intervalStart = intervalStart;
             this.intervalEnd = intervalEnd;
             useSpline = true;
-            isDirty = true;
+            SetDirty();
         }
 
         private void OnEnable() {
@@ -95,19 +95,25 @@ namespace SplineMesh {
             }
         }
 
-        /// <summary>
-        /// Bend the mesh only if a property has changed since the last compute.
-        /// </summary>
+        private void Update() {
+            ComputeIfNeeded();
+        }
+
         public void ComputeIfNeeded() {
-            if (!isDirty) return;
-            Compute();
+            if (isDirty) {
+                Compute();
+            }
+        }
+
+        private void SetDirty() {
+            isDirty = true;
         }
 
         /// <summary>
         /// Bend the mesh. This method may take time and should not be called more than necessary.
         /// Consider using <see cref="ComputeIfNeeded"/> for faster result.
         /// </summary>
-        public void Compute() {
+        private  void Compute() {
             isDirty = false;
             switch (Mode) {
                 case FillingMode.Once:
