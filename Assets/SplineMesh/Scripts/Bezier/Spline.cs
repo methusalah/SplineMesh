@@ -33,6 +33,7 @@ namespace SplineMesh {
         /// </summary>
         public float Length;
 
+        [SerializeField]
         private bool isLoop;
 
         public bool IsLoop {
