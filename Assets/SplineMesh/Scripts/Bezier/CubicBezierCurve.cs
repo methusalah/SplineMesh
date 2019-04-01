@@ -18,13 +18,14 @@ namespace SplineMesh {
         private const int STEP_COUNT = 30;
         private const float T_STEP = 1.0f / STEP_COUNT;
 
+        private readonly List<CurveSample> samples = new List<CurveSample>(STEP_COUNT);
+
         public SplineNode n1, n2;
 
         /// <summary>
         /// Length of the curve in world unit.
         /// </summary>
         public float Length { get; private set; }
-        private readonly List<CurveSample> samples = new List<CurveSample>(STEP_COUNT);
 
         /// <summary>
         /// This event is raised when of of the control points has moved.
@@ -80,7 +81,6 @@ namespace SplineMesh {
         /// <param name="t"></param>
         /// <returns></returns>
         private Vector3 GetLocation(float t) {
-            AssertTimeInBounds(t);
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
@@ -97,7 +97,6 @@ namespace SplineMesh {
         /// <param name="t"></param>
         /// <returns></returns>
         private Vector3 GetTangent(float t) {
-            AssertTimeInBounds(t);
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
