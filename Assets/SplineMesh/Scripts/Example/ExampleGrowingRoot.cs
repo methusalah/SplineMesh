@@ -5,11 +5,15 @@ using UnityEngine;
 
 namespace SplineMesh {
     /// <summary>
-    /// Example of component to show that the spline is an independant mathematical component and can be used for other purposes than mesh deformation.
+    /// Example of component to show the deformation of the mesh on a changing
+    /// interval and changing spline nodes.
+    /// 
+    /// In this example, as the MeshBender is working on spline space, it will update
+    /// the mesh if one of the curve change. Each change make the MeshBender "dirty" and
+    /// it will compute the mesh only once on it's next update call.
+    /// 
     /// 
     /// This component is only for demo purpose and is not intended to be used as-is.
-    /// 
-    /// We only move an object along the spline. Imagine a camera route, a ship patrol...
     /// </summary>
     [ExecuteInEditMode]
     [RequireComponent(typeof(Spline))]

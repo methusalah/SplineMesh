@@ -6,9 +6,11 @@ using System.Linq;
 
 namespace SplineMesh {
     /// <summary>
-    /// A component that create a deformed mesh from a given one, according to a cubic Bézier curve and other parameters.
-    /// The mesh will always be bended along the X axis. Extreme X coordinates of source mesh verticies will be used as a bounding to the deformed mesh.
-    /// The resulting mesh is stored in a MeshFilter component and automaticaly updated each time the cubic Bézier curve control points are changed.
+    /// A component that creates a deformed mesh from a given one along the given spline segment.
+    /// The source mesh will always be bended along the X axis.
+    /// It can work on a cubic bezier curve or on any interval of a given spline.
+    /// On the given interval, the mesh can be place with original scale, stretched, or repeated.
+    /// The resulting mesh is stored in a MeshFilter component and automaticaly updated on the next update if the spline segment change.
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(MeshFilter))]
@@ -37,8 +39,7 @@ namespace SplineMesh {
         
         private FillingMode mode = FillingMode.StretchToInterval;
         /// <summary>
-        /// The scale to apply to the source mesh before bending it.
-        /// Scale on X axis is internaly limited to -1;1 to restrain the mesh inside the curve bounds.
+        /// The scaling mode along the spline
         /// </summary>
         public FillingMode Mode {
             get { return mode; }
@@ -49,6 +50,11 @@ namespace SplineMesh {
             }
         }
 
+        /// <summary>
+        /// Sets a curve along which the mesh will be bent.
+        /// The mesh will be updated if the curve changes.
+        /// </summary>
+        /// <param name="curve">The <see cref="CubicBezierCurve"/> to bend the source mesh along.</param>
         public void SetInterval(CubicBezierCurve curve) {
             if (this.curve == curve) return;
             if (curve == null) throw new ArgumentNullException("curve");
@@ -62,6 +68,15 @@ namespace SplineMesh {
             SetDirty();
         }
 
+        /// <summary>
+        /// Sets a spline's interval along which the mesh will be bent.
+        /// If interval end is absent or set to 0, the interval goes from start to spline length.
+        /// The mesh will be update if any of the curve changes on the spline, including curves
+        /// outside the given interval.
+        /// </summary>
+        /// <param name="spline">The <see cref="SplineMesh"/> to bend the source mesh along.</param>
+        /// <param name="intervalStart">Distance from the spline start to place the mesh minimum X.<param>
+        /// <param name="intervalEnd">Distance from the spline start to stop deforming the source mesh.</param>
         public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
             if (this.spline == spline && this.intervalStart == intervalStart && this.intervalEnd == intervalEnd) return;
             if (spline == null) throw new ArgumentNullException("spline");
@@ -134,9 +149,25 @@ namespace SplineMesh {
             }
         }
 
+        /// <summary>
+        /// The mode used by <see cref="MeshBender"/> to bend meshes on the interval.
+        /// </summary>
         public enum FillingMode {
+            /// <summary>
+            /// In this mode, source mesh will be placed on the interval by preserving mesh scale.
+            /// Vertices that are beyond interval end will be placed on the interval end.
+            /// </summary>
             Once,
+            /// <summary>
+            /// In this mode, the mesh will be repeated to fill the interval, preserving
+            /// mesh scale.
+            /// This filling process will stop when the remaining space is not enough to
+            /// place a whole mesh, leading to an empty interval.
+            /// </summary>
             Repeat,
+            /// <summary>
+            /// In this mode, the mesh is deformed along the X axis to fill exactly the interval.
+            /// </summary>
             StretchToInterval
         }
 

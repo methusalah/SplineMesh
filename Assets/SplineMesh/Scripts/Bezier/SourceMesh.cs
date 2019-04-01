@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using System;
 
 namespace SplineMesh {
+    /// <summary>
+    /// This class returns a transformed version of a given source mesh, plus others
+    /// informations to help bending the mesh along a curve.
+    /// It is imutable to ensure better performances.
+    /// 
+    /// To obtain an instance, call the static method <see cref="Build(Mesh)"/>.
+    /// The building is made in a fluent way.
+    /// </summary>
     public class SourceMesh {
         private Vector3 translation;
         private Quaternion rotation;

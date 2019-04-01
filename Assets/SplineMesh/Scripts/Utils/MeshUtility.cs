@@ -7,6 +7,12 @@ using UnityEngine;
 namespace SplineMesh {
     public class MeshUtility {
 
+        /// <summary>
+        /// Returns a mesh with reserved triangles to turn back the face culling.
+        /// This is usefull when a mesh needs to have a negative scale.
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <returns></returns>
         public static int[] GetReversedTriangles(Mesh mesh) {
             var res = mesh.triangles.ToArray();
             var triangleCount = res.Length / 3;
@@ -18,6 +24,22 @@ namespace SplineMesh {
             return res;
         }
 
+        /// <summary>
+        /// Returns a mesh similar to the given source plus given optionnal parameters.
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="source"></param>
+        /// <param name="triangles"></param>
+        /// <param name="vertices"></param>
+        /// <param name="normals"></param>
+        /// <param name="uv"></param>
+        /// <param name="uv2"></param>
+        /// <param name="uv3"></param>
+        /// <param name="uv4"></param>
+        /// <param name="uv5"></param>
+        /// <param name="uv6"></param>
+        /// <param name="uv7"></param>
+        /// <param name="uv8"></param>
         public static void Update(Mesh mesh,
             Mesh source,
             IEnumerable<int> triangles = null,
