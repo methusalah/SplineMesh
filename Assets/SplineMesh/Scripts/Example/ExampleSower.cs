@@ -80,12 +80,7 @@ namespace SplineMesh {
                 CurveSample sample = spline.GetSampleAtDistance(distance);
 
                 GameObject go;
-                if (Application.isPlaying) {
-                    go = Instantiate(prefab, generated.transform);
-                } else {
-                    go = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab((UnityEngine.Object)prefab);
-                    go.transform.parent = generated.transform;
-                }
+                go = Instantiate(prefab, generated.transform);
                 go.transform.localRotation = Quaternion.identity;
                 go.transform.localPosition = Vector3.zero;
                 go.transform.localScale = Vector3.one;
