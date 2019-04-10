@@ -233,10 +233,12 @@ namespace SplineMesh {
                 uv2.AddRange(source.Mesh.uv2);
                 uv3.AddRange(source.Mesh.uv3);
                 uv4.AddRange(source.Mesh.uv4);
+#if UNITY_2018_2_OR_NEWER
                 uv5.AddRange(source.Mesh.uv5);
                 uv6.AddRange(source.Mesh.uv6);
                 uv7.AddRange(source.Mesh.uv7);
                 uv8.AddRange(source.Mesh.uv8);
+#endif
             }
 
             // computing vertices and normals
