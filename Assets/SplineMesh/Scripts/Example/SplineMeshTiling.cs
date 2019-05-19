@@ -50,6 +50,7 @@ namespace SplineMesh {
             generated = generatedTranform != null ? generatedTranform.gameObject : UOUtility.Create(generatedName, gameObject);
 
             spline = GetComponentInParent<Spline>();
+            spline.NodeListChanged += (s, e) => toUpdate = true;
 
             toUpdate = true;
         }
