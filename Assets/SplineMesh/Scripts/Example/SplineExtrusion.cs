@@ -31,6 +31,7 @@ namespace SplineMesh {
         public List<ExtrusionSegment.Vertex> shapeVertices = new List<ExtrusionSegment.Vertex>();
         public Material material;
         public float textureScale = 1;
+        public float sampleSpacing = 1f;
 
         /// <summary>
         /// Clear shape vertices, then create three vertices with three normals for the extrusion to be visible
@@ -78,10 +79,12 @@ namespace SplineMesh {
                     typeof(MeshCollider));
                 go.GetComponent<MeshRenderer>().material = material;
                 ExtrusionSegment mb = go.GetComponent<ExtrusionSegment>();
-                mb.SetShapeVertices(shapeVertices, false);
-                mb.SetTextureScale(textureScale, false);
-                mb.SetCurve(curve, true);
-                mb.SetTextureOffset(textureOffset, true);
+                mb.ShapeVertices = shapeVertices;
+                mb.TextureScale = textureScale;
+                mb.TextureOffset = textureOffset;
+                mb.SampleSpacing = sampleSpacing;
+                mb.SetInterval(curve);
+
                 textureOffset += curve.Length;
             }
         }

@@ -9,6 +9,7 @@ namespace SplineMesh {
         private Color CURVE_COLOR = new Color(0.8f, 0.8f, 0.8f);
         private bool mustCreateNewNode = false;
         private SerializedProperty textureScale;
+        private SerializedProperty sampleSpacing;
         private SerializedProperty material;
         private SerializedProperty vertices;
 
@@ -18,6 +19,7 @@ namespace SplineMesh {
         private void OnEnable() {
             se = (SplineExtrusion)target;
             textureScale = serializedObject.FindProperty("textureScale");
+            sampleSpacing = serializedObject.FindProperty("sampleSpacing");
             material = serializedObject.FindProperty("material");
             vertices = serializedObject.FindProperty("shapeVertices");
         }
@@ -143,6 +145,7 @@ namespace SplineMesh {
 
             // Properties
             EditorGUILayout.PropertyField(textureScale, true);
+            EditorGUILayout.PropertyField(sampleSpacing, true);
             EditorGUILayout.PropertyField(material, true);
 
             EditorGUILayout.PropertyField(vertices);
