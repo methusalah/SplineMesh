@@ -66,11 +66,6 @@ namespace SplineMesh {
             return res;
         }
 
-        void DeleteNode(SplineNode node) {
-            if (spline.nodes.Count > 2)
-                spline.RemoveNode(node);
-        }
-
         void OnSceneGUI() {
             Event e = Event.current;
             if (e.type == EventType.MouseDown) {
@@ -206,13 +201,30 @@ namespace SplineMesh {
             // hint
             EditorGUILayout.HelpBox("Hold Alt and drag a node to create a new one.", MessageType.Info);
 
+            // add button
+            if (selection == null) {
+                GUI.enabled = false;
+            }
+            if (GUILayout.Button("Add node after selected")) {
+                Undo.RegisterCompleteObjectUndo(spline, "add spline node");
+                SplineNode newNode = new SplineNode(selection.Direction, selection.Direction + selection.Direction - selection.Position);
+                var index = spline.nodes.IndexOf(selection);
+                if(index == spline.nodes.Count - 1) {
+                    spline.AddNode(newNode);
+                } else {
+                    spline.InsertNode(index + 1, newNode);
+                }
+                selection = newNode;
+            }
+            GUI.enabled = true;
+
             // delete button
             if (selection == null || spline.nodes.Count <= 2) {
                 GUI.enabled = false;
             }
             if (GUILayout.Button("Delete selected node")) {
                 Undo.RegisterCompleteObjectUndo(spline, "delete spline node");
-                DeleteNode(selection);
+                spline.RemoveNode(selection);
                 selection = null;
             }
             GUI.enabled = true;
