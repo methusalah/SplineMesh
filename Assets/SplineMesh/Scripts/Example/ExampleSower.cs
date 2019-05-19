@@ -97,8 +97,7 @@ namespace SplineMesh {
                     go.transform.rotation = sample.Rotation;
                 }
                 // move orthogonaly to the spline, according to offset + random
-                Vector3 binormal = sample.tangent;
-                binormal = Quaternion.LookRotation(Vector3.right, Vector3.up) * binormal;
+                var binormal = (Quaternion.LookRotation(sample.tangent, sample.up) * Vector3.right).normalized;
                 var localOffset = offset + UnityEngine.Random.Range(0, offsetRange * Math.Sign(offset));
                 localOffset *=  sample.scale.x;
                 binormal *= localOffset;
