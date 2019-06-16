@@ -67,7 +67,7 @@ namespace SplineMesh {
             get { return sampleSpacing; }
             set {
                 if (value == sampleSpacing) return;
-                if (sampleSpacing <= 0) throw new ArgumentOutOfRangeException(nameof(SampleSpacing), "Must be greater than 0");
+                if (value <= 0) throw new ArgumentOutOfRangeException(nameof(SampleSpacing), "Must be greater than 0");
                 SetDirty();
                 sampleSpacing = value;
             }
