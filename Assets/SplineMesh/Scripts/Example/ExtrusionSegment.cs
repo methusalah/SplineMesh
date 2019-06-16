@@ -198,7 +198,8 @@ namespace SplineMesh {
                 mf.sharedMesh,
                 triangleIndices,
                 bentVertices.Select(b => b.position),
-                bentVertices.Select(b => b.normal));
+                bentVertices.Select(b => b.normal),
+                bentVertices.Select(b => b.uv));
         }
 
         [Serializable]

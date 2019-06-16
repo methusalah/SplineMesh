@@ -61,7 +61,7 @@ namespace SplineMesh {
         }
 
         public MeshVertex GetBent(MeshVertex vert) {
-            var res = new MeshVertex(vert.position, vert.normal);
+            var res = new MeshVertex(vert.position, vert.normal, vert.uv);
 
             // application of scale
             res.position = Vector3.Scale(res.position, new Vector3(0, scale.y, scale.x));
