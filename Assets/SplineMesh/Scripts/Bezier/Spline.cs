@@ -239,41 +239,41 @@ namespace SplineMesh {
         SplineNode start, end;
         private void updateLoopBinding() {
             if(start != null) {
-                if(start.Changed != null) start.Changed.RemoveListener(StartNodeChanged);
+                start.Changed -= StartNodeChanged;
             }
             if(end != null) {
-                if (end.Changed != null) end.Changed.RemoveListener(EndNodeChanged);
+                end.Changed -= EndNodeChanged;
             }
             if (isLoop) {
                 start = nodes[0];
                 end = nodes[nodes.Count - 1];
-                start.Changed.AddListener(StartNodeChanged);
-                end.Changed.AddListener(EndNodeChanged);
-                StartNodeChanged();
+                start.Changed += StartNodeChanged;
+                end.Changed += EndNodeChanged;
+                StartNodeChanged(null, null);
             } else {
                 start = null;
                 end = null;
             }
         }
 
-        private void StartNodeChanged() {
-            end.Changed.RemoveListener(EndNodeChanged);
+        private void StartNodeChanged(object sender, EventArgs e) {
+            end.Changed -= EndNodeChanged;
             end.Position = start.Position;
             end.Direction = start.Direction;
             end.Roll = start.Roll;
             end.Scale = start.Scale;
             end.Up = start.Up;
-            end.Changed.AddListener(EndNodeChanged);
+            end.Changed += EndNodeChanged;
         }
 
-        private void EndNodeChanged() {
-            start.Changed.RemoveListener(StartNodeChanged);
+        private void EndNodeChanged(object sender, EventArgs e) {
+            start.Changed -= StartNodeChanged;
             start.Position = end.Position;
             start.Direction = end.Direction;
             start.Roll = end.Roll;
             start.Scale = end.Scale;
             start.Up = end.Up;
-            start.Changed.AddListener(StartNodeChanged);
+            start.Changed += StartNodeChanged;
         }
     }
 
