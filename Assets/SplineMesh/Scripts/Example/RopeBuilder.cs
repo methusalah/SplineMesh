@@ -106,7 +106,7 @@ namespace SplineMesh {
                 wayPoints.Add(seg);
                 localSpacing += segmentSpacing;
             }
-            Destroy(joint);
+            UOUtility.Destroy(joint);
         }
     }
 }

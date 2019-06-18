@@ -30,6 +30,14 @@ namespace SplineMesh {
             }
         }
 
+        public static void Destroy(Component comp) {
+            if (Application.isPlaying) {
+                UnityEngine.Object.Destroy(comp);
+            } else {
+                UnityEngine.Object.DestroyImmediate(comp);
+            }
+        }
+
         public static void DestroyChildren(GameObject go) {
             var childList = go.transform.Cast<Transform>().ToList();
             foreach (Transform childTransform in childList) {
