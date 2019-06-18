@@ -22,6 +22,7 @@ namespace SplineMesh {
         }
 
         private Spline spline;
+        private GameObject firstSegment;
 
         [SerializeField]
         public List<GameObject> wayPoints = new List<GameObject>();
@@ -46,6 +47,11 @@ namespace SplineMesh {
                 UpdateSpline();
             }
             UpdateNodes();
+
+            // balancing
+            if (Application.isPlaying) {
+                firstSegment.transform.localPosition = new Vector3(Mathf.Sin(Time.time) * 3, 0, 0);
+            }
         }
 
         private void UpdateNodes() {
@@ -86,6 +92,7 @@ namespace SplineMesh {
                 var segRB = seg.GetComponent<Rigidbody>();
                 // we fix the first segment so that the rope won't fall
                 if (i == 0) {
+                    firstSegment = seg;
                     segRB.constraints = RigidbodyConstraints.FreezePosition;
                 }
 
