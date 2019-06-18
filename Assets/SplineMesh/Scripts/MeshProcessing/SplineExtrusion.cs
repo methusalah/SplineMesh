@@ -31,7 +31,7 @@ namespace SplineMesh {
         public List<ExtrusionSegment.Vertex> shapeVertices = new List<ExtrusionSegment.Vertex>();
         public Material material;
         public float textureScale = 1;
-        [Min(0.0001f)] public float sampleSpacing = 0.1f;
+        public float sampleSpacing = 0.1f;
 
         /// <summary>
         /// Clear shape vertices, then create three vertices with three normals for the extrusion to be visible
