@@ -14,6 +14,14 @@ namespace SplineMesh {
             return res;
         }
 
+        public static GameObject Instantiate(GameObject prefab, Transform parent) {
+            var res = UnityEngine.Object.Instantiate(prefab, parent);
+            res.transform.localPosition = Vector3.zero;
+            res.transform.localRotation = Quaternion.identity;
+            res.transform.localScale = Vector3.one;
+            return res;
+        }
+
         public static void Destroy(GameObject go) {
             if (Application.isPlaying) {
                 UnityEngine.Object.Destroy(go);
