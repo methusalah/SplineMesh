@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 namespace SplineMesh {
-    [ExecuteAlways]
+    [ExecuteInEditMode]
     [RequireComponent(typeof(Spline))]
     public class RopeBuilder : MonoBehaviour {
         private bool toUpdate = false;
@@ -106,7 +106,7 @@ namespace SplineMesh {
                 wayPoints.Add(seg);
                 localSpacing += segmentSpacing;
             }
-            Destroy(joint);
+            UOUtility.Destroy(joint);
         }
     }
 }
