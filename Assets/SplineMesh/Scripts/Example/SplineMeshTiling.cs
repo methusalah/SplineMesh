@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 
 namespace SplineMesh {
-
     /// <summary>
     /// Deform a mesh and place it along a spline, given various parameters.
     /// 
@@ -32,6 +31,9 @@ namespace SplineMesh {
         public Vector3 rotation;
         [Tooltip("Scale to apply on the mesh before bending it.")]
         public Vector3 scale = Vector3.one;
+
+        [Tooltip("If true, a mesh collider will be generated.")]
+        public bool generateCollider = true;
 
         [Tooltip("If true, the mesh will be bent on play mode. If false, the bent mesh will be kept from the editor mode, allowing lighting baking.")]
         public bool updateInPlayMode;
@@ -75,14 +77,16 @@ namespace SplineMesh {
 
             if (curveSpace) {
                 int i = 0;
-                foreach(var curve in spline.curves) {
+                foreach (var curve in spline.curves) {
                     var go = FindOrCreate("segment " + i++ + " mesh");
                     go.GetComponent<MeshBender>().SetInterval(curve);
+                    go.GetComponent<MeshCollider>().enabled = generateCollider;
                     used.Add(go);
                 }
             } else {
                 var go = FindOrCreate("segment 1 mesh");
                 go.GetComponent<MeshBender>().SetInterval(spline, 0);
+                go.GetComponent<MeshCollider>().enabled = generateCollider;
                 used.Add(go);
             }
 
