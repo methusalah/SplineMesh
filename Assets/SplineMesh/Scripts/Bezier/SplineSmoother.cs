@@ -38,7 +38,8 @@ namespace SplineMesh {
             }
         }
 
-        private void Update() {
+        private void LateUpdate() {
+            // smmoth occurs in late update to smooth spline on the frame it changes
             if (toUpdate) {
                 toUpdate = false;
                 Smooth();
