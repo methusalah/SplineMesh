@@ -11,6 +11,7 @@ namespace SplineMesh {
     [RequireComponent(typeof(Spline))]
     public class SplineSmoother : MonoBehaviour {
         private Spline spline;
+        private bool toUpdate = true;
 
         [Range(0, 1f)] public float curvature = 0.3f;
 
@@ -19,33 +20,50 @@ namespace SplineMesh {
         }
 
         private void OnValidate() {
-            Smooth(null, null);
+            toUpdate = true;
         }
 
         private void OnEnable() {
             spline.NodeListChanged += Spline_NodeListChanged;
             foreach(var node in spline.nodes) {
-                node.Changed += Smooth;
+                node.Changed += SetToUpdate;
             }
+            toUpdate = true;
         }
 
         private void OnDisable() {
             spline.NodeListChanged -= Spline_NodeListChanged;
             foreach (var node in spline.nodes) {
-                node.Changed -= Smooth;
+                node.Changed -= SetToUpdate;
+            }
+        }
+
+        private void Update() {
+            if (toUpdate) {
+                toUpdate = false;
+                Smooth();
             }
         }
 
         private void Spline_NodeListChanged(object sender, ListChangedEventArgs<SplineNode> args) {
-            foreach(var node in args.newItems) {
-                node.Changed += Smooth;
+            if(args.newItems != null) {
+                foreach (var node in args.newItems) {
+                    node.Changed += SetToUpdate;
+                }
             }
-            foreach(var node in args.removedItems) {
-                node.Changed -= Smooth;
+            if(args.removedItems != null) {
+                foreach (var node in args.removedItems) {
+                    node.Changed -= SetToUpdate;
+                }
             }
         }
 
-        private void Smooth(object sender, EventArgs e) {
+        private void SetToUpdate(object sender, EventArgs e) {
+            toUpdate = true;
+        }
+
+
+        private void Smooth() {
             int i = 0;
             foreach(var node in spline.nodes) {
                 var pos = node.Position;
