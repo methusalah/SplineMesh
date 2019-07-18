@@ -200,6 +200,10 @@ namespace SplineMesh {
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal),
                 bentVertices.Select(b => b.uv));
+            var mc = GetComponent<MeshCollider>();
+            if(mc != null) {
+                mc.sharedMesh = mf.sharedMesh;
+            }
         }
 
         [Serializable]
