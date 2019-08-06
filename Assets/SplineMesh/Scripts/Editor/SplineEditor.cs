@@ -124,7 +124,7 @@ namespace SplineMesh {
                     selection.Direction = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
                     break;
                 case SelectionType.Up:
-                    result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Position) + selection.Up, Quaternion.LookRotation(selection.Direction - selection.Position));
+                    result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Position + selection.Up), Quaternion.LookRotation(selection.Direction - selection.Position));
                     selection.Up = (spline.transform.InverseTransformPoint(result) - selection.Position).normalized;
                     break;
             }
