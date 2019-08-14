@@ -134,6 +134,7 @@ namespace SplineMesh {
         public void ComputeIfNeeded() {
             if (isDirty) {
                 Compute();
+                isDirty = false;
             }
         }
 
