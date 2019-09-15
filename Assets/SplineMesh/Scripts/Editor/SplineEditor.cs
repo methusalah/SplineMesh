@@ -26,8 +26,8 @@ namespace SplineMesh {
         private SplineNode selection;
         private SelectionType selectionType;
         private bool mustCreateNewNode = false;
-        private SerializedProperty nodesProp;
-        private Spline spline;
+        private SerializedProperty nodesProp { get { return serializedObject.FindProperty("nodes"); } }
+        private Spline spline { get { return (Spline)serializedObject.targetObject; } }
 
         private GUIStyle nodeButtonStyle, directionButtonStyle, upButtonStyle;
 
