@@ -71,23 +71,25 @@ LightmapSettings:
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
-    m_MixedBakeMode: 2
+    m_MixedBakeMode: 3
     m_BakeBackend: 0
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
-    m_PVRFilteringMode: 1
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVRFilteringMode: 2
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
   m_LightingDataAsset: {fileID: 0}
-  m_ShadowMaskMode: 2
+  m_ShadowMaskMode: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -170,40 +172,40 @@ MonoBehaviour:
   - position: {x: 0.98568577, y: 0.43299007, z: 0.29244265}
     direction: {x: 0.7412934, y: 0.8728734, z: 0.31067088}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.17012577, y: 0.17012577}
+    scale: {x: 0.29045486, y: 0.29045486}
     roll: 0
   - position: {x: 0.52324677, y: 0.72200584, z: 0.18689477}
     direction: {x: 0.27885437, y: 0.7987348, z: 0.205123}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.039867103, y: 0.039867103}
+    scale: {x: 0.1601962, y: 0.1601962}
     roll: 0
   - position: {x: 0.32932386, y: 0.8350123, z: 0.61059666}
     direction: {x: 0.41009626, y: 0.72716165, z: 0.71581763}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.08357929, y: -0.08357929}
+    scale: {x: 0.03674981, y: 0.03674981}
     roll: 0
   - position: {x: 0.4733312, y: 0.50501776, z: 0.94335675}
     direction: {x: 0.25768638, y: 0.50567293, z: 1.0010254}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.20422198, y: -0.20422198}
+    scale: {x: -0.08389288, y: -0.08389288}
     roll: 0
   - position: {x: 0.5210506, y: 0.31774458, z: 0.6044626}
     direction: {x: 0.81425077, y: 0.21535546, z: 0.4775508}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.32987422, y: -0.32987422}
+    scale: {x: -0.20954514, y: -0.20954514}
     roll: 0
   curves:
   - n1:
       position: {x: 0.98568577, y: 0.43299007, z: 0.29244265}
       direction: {x: 0.7412934, y: 0.8728734, z: 0.31067088}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.17012577, y: 0.17012577}
+      scale: {x: 0.29045486, y: 0.29045486}
       roll: 0
     n2:
       position: {x: 0.52324677, y: 0.72200584, z: 0.18689477}
       direction: {x: 0.27885437, y: 0.7987348, z: 0.205123}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.039867103, y: 0.039867103}
+      scale: {x: 0.1601962, y: 0.1601962}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -214,13 +216,13 @@ MonoBehaviour:
       position: {x: 0.52324677, y: 0.72200584, z: 0.18689477}
       direction: {x: 0.27885437, y: 0.7987348, z: 0.205123}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.039867103, y: 0.039867103}
+      scale: {x: 0.1601962, y: 0.1601962}
       roll: 0
     n2:
       position: {x: 0.32932386, y: 0.8350123, z: 0.61059666}
       direction: {x: 0.41009626, y: 0.72716165, z: 0.71581763}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.08357929, y: -0.08357929}
+      scale: {x: 0.03674981, y: 0.03674981}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -231,13 +233,13 @@ MonoBehaviour:
       position: {x: 0.32932386, y: 0.8350123, z: 0.61059666}
       direction: {x: 0.41009626, y: 0.72716165, z: 0.71581763}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.08357929, y: -0.08357929}
+      scale: {x: 0.03674981, y: 0.03674981}
       roll: 0
     n2:
       position: {x: 0.4733312, y: 0.50501776, z: 0.94335675}
       direction: {x: 0.25768638, y: 0.50567293, z: 1.0010254}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.20422198, y: -0.20422198}
+      scale: {x: -0.08389288, y: -0.08389288}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -248,13 +250,13 @@ MonoBehaviour:
       position: {x: 0.4733312, y: 0.50501776, z: 0.94335675}
       direction: {x: 0.25768638, y: 0.50567293, z: 1.0010254}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.20422198, y: -0.20422198}
+      scale: {x: -0.08389288, y: -0.08389288}
       roll: 0
     n2:
       position: {x: 0.5210506, y: 0.31774458, z: 0.6044626}
       direction: {x: 0.81425077, y: 0.21535546, z: 0.4775508}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.32987422, y: -0.32987422}
+      scale: {x: -0.20954514, y: -0.20954514}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -3329,45 +3331,45 @@ MonoBehaviour:
   - position: {x: 1.0965282, y: 0.44653305, z: 0.36017942}
     direction: {x: 1.21515, y: 0.72151184, z: 0.4662627}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.102075465, y: 0.102075465}
+    scale: {x: 0.17427292, y: 0.17427292}
     roll: 0
   - position: {x: 1.3681183, y: 0.54701877, z: 0.44029933}
     direction: {x: 1.4530716, y: 0.5783042, z: 0.5525289}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.04138638, y: 0.04138638}
+    scale: {x: 0.11358384, y: 0.11358384}
     roll: 0
   - position: {x: 1.0562744, y: 0.52288294, z: 0.7519206}
     direction: {x: 0.905365, y: 0.4941225, z: 0.616582}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.047977794, y: -0.047977794}
+    scale: {x: 0.02421967, y: 0.02421967}
     roll: 0
   - position: {x: 1.1648102, y: 0.5950213, z: 0.53383774}
     direction: {x: 1.239006, y: 0.59774375, z: 0.5441081}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.10467517, y: -0.10467517}
+    scale: {x: -0.032477707, y: -0.032477707}
     roll: 0
   - position: {x: 1.3726654, y: 0.6010011, z: 0.74389964}
     direction: {x: 1.3407974, y: 0.5449944, z: 0.87333804}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.15831688, y: -0.15831688}
+    scale: {x: -0.08611942, y: -0.08611942}
     roll: 0
   - position: {x: 1.2127914, y: 0.5345702, z: 0.8795549}
     direction: {x: 1.1109772, y: 0.5371272, z: 0.8941673}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.19792455, y: -0.19792455}
+    scale: {x: -0.12572709, y: -0.12572709}
     roll: 0
   curves:
   - n1:
       position: {x: 1.0965282, y: 0.44653305, z: 0.36017942}
       direction: {x: 1.21515, y: 0.72151184, z: 0.4662627}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.102075465, y: 0.102075465}
+      scale: {x: 0.17427292, y: 0.17427292}
       roll: 0
     n2:
       position: {x: 1.3681183, y: 0.54701877, z: 0.44029933}
       direction: {x: 1.4530716, y: 0.5783042, z: 0.5525289}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.04138638, y: 0.04138638}
+      scale: {x: 0.11358384, y: 0.11358384}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -3378,13 +3380,13 @@ MonoBehaviour:
       position: {x: 1.3681183, y: 0.54701877, z: 0.44029933}
       direction: {x: 1.4530716, y: 0.5783042, z: 0.5525289}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.04138638, y: 0.04138638}
+      scale: {x: 0.11358384, y: 0.11358384}
       roll: 0
     n2:
       position: {x: 1.0562744, y: 0.52288294, z: 0.7519206}
       direction: {x: 0.905365, y: 0.4941225, z: 0.616582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.047977794, y: -0.047977794}
+      scale: {x: 0.02421967, y: 0.02421967}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -3395,13 +3397,13 @@ MonoBehaviour:
       position: {x: 1.0562744, y: 0.52288294, z: 0.7519206}
       direction: {x: 0.905365, y: 0.4941225, z: 0.616582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.047977794, y: -0.047977794}
+      scale: {x: 0.02421967, y: 0.02421967}
       roll: 0
     n2:
       position: {x: 1.1648102, y: 0.5950213, z: 0.53383774}
       direction: {x: 1.239006, y: 0.59774375, z: 0.5441081}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.10467517, y: -0.10467517}
+      scale: {x: -0.032477707, y: -0.032477707}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -3412,13 +3414,13 @@ MonoBehaviour:
       position: {x: 1.1648102, y: 0.5950213, z: 0.53383774}
       direction: {x: 1.239006, y: 0.59774375, z: 0.5441081}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.10467517, y: -0.10467517}
+      scale: {x: -0.032477707, y: -0.032477707}
       roll: 0
     n2:
       position: {x: 1.3726654, y: 0.6010011, z: 0.74389964}
       direction: {x: 1.3407974, y: 0.5449944, z: 0.87333804}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.15831688, y: -0.15831688}
+      scale: {x: -0.08611942, y: -0.08611942}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -3429,13 +3431,13 @@ MonoBehaviour:
       position: {x: 1.3726654, y: 0.6010011, z: 0.74389964}
       direction: {x: 1.3407974, y: 0.5449944, z: 0.87333804}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.15831688, y: -0.15831688}
+      scale: {x: -0.08611942, y: -0.08611942}
       roll: 0
     n2:
       position: {x: 1.2127914, y: 0.5345702, z: 0.8795549}
       direction: {x: 1.1109772, y: 0.5371272, z: 0.8941673}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.19792455, y: -0.19792455}
+      scale: {x: -0.12572709, y: -0.12572709}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -6516,40 +6518,40 @@ MonoBehaviour:
   - position: {x: 1.0579845, y: 0.4121512, z: 0.28619385}
     direction: {x: 1.1208125, y: 0.85203457, z: 0.03419037}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.17012577, y: 0.17012577}
+    scale: {x: 0.29045486, y: 0.29045486}
     roll: 0
   - position: {x: 1.3743906, y: 0.9122891, z: 0.018990993}
     direction: {x: 1.5212258, y: 0.94871634, z: 0.06874582}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: 0.04148124, y: 0.04148124}
+    scale: {x: 0.16181034, y: 0.16181034}
     roll: 0
   - position: {x: 1.7120523, y: 0.74845743, z: 0.13280642}
     direction: {x: 1.6171173, y: 0.511441, z: 0.010301903}
     up: {x: 0.6152222, y: 0.40862685, z: -0.67418534}
-    scale: {x: -0.05565934, y: -0.05565934}
+    scale: {x: 0.06466976, y: 0.06466976}
     roll: 0
   - position: {x: 1.7505646, y: 0.5950213, z: 0.40189946}
     direction: {x: 1.4574203, y: 0.7395141, z: 0.6113548}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.16534658, y: -0.16534658}
+    scale: {x: -0.04501748, y: -0.04501748}
     roll: 0
   - position: {x: 1.5679932, y: 0.6711932, z: 1.1265873}
     direction: {x: 1.7545471, y: 0.42937827, z: 1.362588}
     up: {x: 0, y: 1, z: 0}
-    scale: {x: -0.32987422, y: -0.32987422}
+    scale: {x: -0.20954514, y: -0.20954514}
     roll: 0
   curves:
   - n1:
       position: {x: 1.0579845, y: 0.4121512, z: 0.28619385}
       direction: {x: 1.1208125, y: 0.85203457, z: 0.03419037}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.17012577, y: 0.17012577}
+      scale: {x: 0.29045486, y: 0.29045486}
       roll: 0
     n2:
       position: {x: 1.3743906, y: 0.9122891, z: 0.018990993}
       direction: {x: 1.5212258, y: 0.94871634, z: 0.06874582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.04148124, y: 0.04148124}
+      scale: {x: 0.16181034, y: 0.16181034}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -6560,13 +6562,13 @@ MonoBehaviour:
       position: {x: 1.3743906, y: 0.9122891, z: 0.018990993}
       direction: {x: 1.5212258, y: 0.94871634, z: 0.06874582}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: 0.04148124, y: 0.04148124}
+      scale: {x: 0.16181034, y: 0.16181034}
       roll: 0
     n2:
       position: {x: 1.7120523, y: 0.74845743, z: 0.13280642}
       direction: {x: 1.6171173, y: 0.511441, z: 0.010301903}
       up: {x: 0.6152222, y: 0.40862685, z: -0.67418534}
-      scale: {x: -0.05565934, y: -0.05565934}
+      scale: {x: 0.06466976, y: 0.06466976}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -6577,13 +6579,13 @@ MonoBehaviour:
       position: {x: 1.7120523, y: 0.74845743, z: 0.13280642}
       direction: {x: 1.6171173, y: 0.511441, z: 0.010301903}
       up: {x: 0.6152222, y: 0.40862685, z: -0.67418534}
-      scale: {x: -0.05565934, y: -0.05565934}
+      scale: {x: 0.06466976, y: 0.06466976}
       roll: 0
     n2:
       position: {x: 1.7505646, y: 0.5950213, z: 0.40189946}
       direction: {x: 1.4574203, y: 0.7395141, z: 0.6113548}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.16534658, y: -0.16534658}
+      scale: {x: -0.04501748, y: -0.04501748}
       roll: 0
     Changed:
       m_PersistentCalls:
@@ -6594,13 +6596,13 @@ MonoBehaviour:
       position: {x: 1.7505646, y: 0.5950213, z: 0.40189946}
       direction: {x: 1.4574203, y: 0.7395141, z: 0.6113548}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.16534658, y: -0.16534658}
+      scale: {x: -0.04501748, y: -0.04501748}
       roll: 0
     n2:
       position: {x: 1.5679932, y: 0.6711932, z: 1.1265873}
       direction: {x: 1.7545471, y: 0.42937827, z: 1.362588}
       up: {x: 0, y: 1, z: 0}
-      scale: {x: -0.32987422, y: -0.32987422}
+      scale: {x: -0.20954514, y: -0.20954514}
       roll: 0
     Changed:
       m_PersistentCalls:
