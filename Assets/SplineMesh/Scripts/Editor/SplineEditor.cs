@@ -32,9 +32,6 @@ namespace SplineMesh {
         private GUIStyle nodeButtonStyle, directionButtonStyle, upButtonStyle;
 
         private void OnEnable() {
-            spline = (Spline)target;
-            nodesProp = serializedObject.FindProperty("nodes");
-
             Texture2D t = new Texture2D(1, 1);
             t.SetPixel(0, 0, CURVE_BUTTON_COLOR);
             t.Apply();
@@ -213,7 +210,7 @@ namespace SplineMesh {
                 GUI.enabled = false;
             }
             if (GUILayout.Button("Add node after selected")) {
-                Undo.RegisterCompleteObjectUndo(spline, "add spline node");
+                Undo.RecordObject(spline, "add spline node");
                 SplineNode newNode = new SplineNode(selection.Direction, selection.Direction + selection.Direction - selection.Position);
                 var index = spline.nodes.IndexOf(selection);
                 if(index == spline.nodes.Count - 1) {
@@ -222,6 +219,7 @@ namespace SplineMesh {
                     spline.InsertNode(index + 1, newNode);
                 }
                 selection = newNode;
+                serializedObject.Update();
             }
             GUI.enabled = true;
 
@@ -230,9 +228,10 @@ namespace SplineMesh {
                 GUI.enabled = false;
             }
             if (GUILayout.Button("Delete selected node")) {
-                Undo.RegisterCompleteObjectUndo(spline, "delete spline node");
+                Undo.RecordObject(spline, "delete spline node");
                 spline.RemoveNode(selection);
                 selection = null;
+                serializedObject.Update();
             }
             GUI.enabled = true;
 
@@ -265,7 +264,7 @@ namespace SplineMesh {
             } else {
                 EditorGUILayout.LabelField("No selected node");
             }
-	    serializedObject.ApplyModifiedProperties();
+            serializedObject.ApplyModifiedProperties();
         }
 
         private void drawNodeData(SerializedProperty nodeProperty, SplineNode node) {
