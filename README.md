@@ -22,7 +22,7 @@ Get the asset on the Asset Store [here](https://assetstore.unity.com/packages/to
 Don't hesitate to contact the author via the store or github issue page.
 
 ## How to contribute?
-SplineMesh is free and open-source. You can support the author by buying [the 5$ paid version](https://assetstore.unity.com/packages/tools/modeling/splinemesh-paid-version-104998), which contains no additional feature.
+SplineMesh is free and open-source. You can support the author by buying [the paid version](https://assetstore.unity.com/packages/tools/modeling/splinemesh-paid-version-104998), which contains no additional feature.
 
 You can also contribute to the code itself by sending code, pull request or your own exemple components, the author will be glad to include your work on the store.
 
