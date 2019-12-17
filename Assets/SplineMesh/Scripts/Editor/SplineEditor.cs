@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace SplineMesh
-{
+namespace SplineMesh {
     [CustomEditor(typeof(Spline))]
-    public class SplineEditor : Editor
-    {
+    public class SplineEditor : Editor {
 
         private const int QUAD_SIZE = 12;
         private Color CURVE_COLOR = new Color(0.8f, 0.8f, 0.8f);
@@ -18,8 +16,7 @@ namespace SplineMesh
 
         private static bool showUpVector = false;
 
-        private enum SelectionType
-        {
+        private enum SelectionType {
             Node,
             Direction,
             InverseDirection,
@@ -34,8 +31,7 @@ namespace SplineMesh
 
         private GUIStyle nodeButtonStyle, directionButtonStyle, upButtonStyle;
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             spline = (Spline)target;
             nodesProp = serializedObject.FindProperty("nodes");
 
@@ -57,58 +53,41 @@ namespace SplineMesh
             upButtonStyle = new GUIStyle();
             upButtonStyle.normal.background = t;
             selection = null;
-
-            //Add UndoRedo callback
-            //Subtract first to be safe about adding multiple callbacks
-            Undo.undoRedoPerformed -= spline.RefreshCurves;
-            Undo.undoRedoPerformed += spline.RefreshCurves;
         }
 
-        SplineNode AddClonedNode(SplineNode node)
-        {
+        SplineNode AddClonedNode(SplineNode node) {
             int index = spline.nodes.IndexOf(node);
             SplineNode res = new SplineNode(node.Position, node.Direction);
-            if (index == spline.nodes.Count - 1)
-            {
+            if (index == spline.nodes.Count - 1) {
                 spline.AddNode(res);
-            }
-            else
-            {
+            } else {
                 spline.InsertNode(index + 1, res);
             }
             return res;
         }
 
-        void OnSceneGUI()
-        {
+        void OnSceneGUI() {
             Event e = Event.current;
-            if (e.type == EventType.MouseDown)
-            {
+            if (e.type == EventType.MouseDown) {
                 Undo.RegisterCompleteObjectUndo(spline, "change spline topography");
                 // if alt key pressed, we will have to create a new node if node position is changed
-                if (e.alt)
-                {
+                if (e.alt) {
                     mustCreateNewNode = true;
                 }
             }
-            if (e.type == EventType.MouseUp)
-            {
+            if (e.type == EventType.MouseUp) {
                 mustCreateNewNode = false;
             }
 
             // disable game object transform gyzmo
-            if (Selection.activeGameObject == spline.gameObject)
-            {
+            if (Selection.activeGameObject == spline.gameObject) {
                 Tools.current = Tool.None;
                 if (selection == null && spline.nodes.Count > 0)
-                {
                     selection = spline.nodes[0];
-                }
             }
 
             // draw a bezier curve for each curve in the spline
-            foreach (CubicBezierCurve curve in spline.GetCurves())
-            {
+            foreach (CubicBezierCurve curve in spline.GetCurves()) {
                 Handles.DrawBezier(spline.transform.TransformPoint(curve.n1.Position),
                     spline.transform.TransformPoint(curve.n2.Position),
                     spline.transform.TransformPoint(curve.n1.Direction),
@@ -119,23 +98,18 @@ namespace SplineMesh
             }
 
             // draw the selection handles
-            switch (selectionType)
-            {
+            switch (selectionType) {
                 case SelectionType.Node:
                     // place a handle on the node and manage position change
                     Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Position), Quaternion.identity));
-                    if (newPosition != selection.Position)
-                    {
+                    if (newPosition != selection.Position) {
                         // position handle has been moved
-                        if (mustCreateNewNode)
-                        {
+                        if (mustCreateNewNode) {
                             mustCreateNewNode = false;
                             selection = AddClonedNode(selection);
                             selection.Direction += newPosition - selection.Position;
                             selection.Position = newPosition;
-                        }
-                        else
-                        {
+                        } else {
                             selection.Direction += newPosition - selection.Position;
                             selection.Position = newPosition;
                         }
@@ -157,8 +131,7 @@ namespace SplineMesh
 
             // draw the handles of all nodes, and manage selection motion
             Handles.BeginGUI();
-            foreach (SplineNode n in spline.nodes)
-            {
+            foreach (SplineNode n in spline.nodes) {
                 var dir = spline.transform.TransformPoint(n.Direction);
                 var pos = spline.transform.TransformPoint(n.Position);
                 var invDir = spline.transform.TransformPoint(2 * n.Position - n.Direction);
@@ -167,14 +140,12 @@ namespace SplineMesh
                 if (!(CameraUtility.IsOnScreen(pos) ||
                     CameraUtility.IsOnScreen(dir) ||
                     CameraUtility.IsOnScreen(invDir) ||
-                    (showUpVector && CameraUtility.IsOnScreen(up))))
-                {
+                    (showUpVector && CameraUtility.IsOnScreen(up)))) {
                     continue;
                 }
 
                 Vector3 guiPos = HandleUtility.WorldToGUIPoint(pos);
-                if (n == selection)
-                {
+                if (n == selection) {
                     Vector3 guiDir = HandleUtility.WorldToGUIPoint(dir);
                     Vector3 guiInvDir = HandleUtility.WorldToGUIPoint(invDir);
                     Vector3 guiUp = HandleUtility.WorldToGUIPoint(up);
@@ -184,44 +155,32 @@ namespace SplineMesh
                     Handles.DrawLine(guiDir, guiInvDir);
 
                     // draw quads direction and inverse direction if they are not selected
-                    if (selectionType != SelectionType.Node)
-                    {
-                        if (Button(guiPos, directionButtonStyle))
-                        {
+                    if (selectionType != SelectionType.Node) {
+                        if (Button(guiPos, directionButtonStyle)) {
                             selectionType = SelectionType.Node;
                         }
                     }
-                    if (selectionType != SelectionType.Direction)
-                    {
-                        if (Button(guiDir, directionButtonStyle))
-                        {
+                    if (selectionType != SelectionType.Direction) {
+                        if (Button(guiDir, directionButtonStyle)) {
                             selectionType = SelectionType.Direction;
                         }
                     }
-                    if (selectionType != SelectionType.InverseDirection)
-                    {
-                        if (Button(guiInvDir, directionButtonStyle))
-                        {
+                    if (selectionType != SelectionType.InverseDirection) {
+                        if (Button(guiInvDir, directionButtonStyle)) {
                             selectionType = SelectionType.InverseDirection;
                         }
                     }
-                    if (showUpVector)
-                    {
+                    if (showUpVector) {
                         Handles.color = Color.green;
                         Handles.DrawLine(guiPos, guiUp);
-                        if (selectionType != SelectionType.Up)
-                        {
-                            if (Button(guiUp, upButtonStyle))
-                            {
+                        if (selectionType != SelectionType.Up) {
+                            if (Button(guiUp, upButtonStyle)) {
                                 selectionType = SelectionType.Up;
                             }
                         }
                     }
-                }
-                else
-                {
-                    if (Button(guiPos, nodeButtonStyle))
-                    {
+                } else {
+                    if (Button(guiPos, nodeButtonStyle)) {
                         selection = n;
                         selectionType = SelectionType.Node;
                     }
@@ -233,33 +192,26 @@ namespace SplineMesh
                 EditorUtility.SetDirty(target);
         }
 
-        bool Button(Vector2 position, GUIStyle style)
-        {
+        bool Button(Vector2 position, GUIStyle style) {
             return GUI.Button(new Rect(position - new Vector2(QUAD_SIZE / 2, QUAD_SIZE / 2), new Vector2(QUAD_SIZE, QUAD_SIZE)), GUIContent.none, style);
         }
 
-        public override void OnInspectorGUI()
-        {
+        public override void OnInspectorGUI() {
             serializedObject.Update();
             // hint
             EditorGUILayout.HelpBox("Hold Alt and drag a node to create a new one.", MessageType.Info);
 
             // add button
-            if (selection == null)
-            {
+            if (selection == null) {
                 GUI.enabled = false;
             }
-            if (GUILayout.Button("Add node after selected"))
-            {
+            if (GUILayout.Button("Add node after selected")) {
                 Undo.RegisterCompleteObjectUndo(spline, "add spline node");
                 SplineNode newNode = new SplineNode(selection.Direction, selection.Direction + selection.Direction - selection.Position);
                 var index = spline.nodes.IndexOf(selection);
-                if (index == spline.nodes.Count - 1)
-                {
+                if(index == spline.nodes.Count - 1) {
                     spline.AddNode(newNode);
-                }
-                else
-                {
+                } else {
                     spline.InsertNode(index + 1, newNode);
                 }
                 selection = newNode;
@@ -267,12 +219,10 @@ namespace SplineMesh
             GUI.enabled = true;
 
             // delete button
-            if (selection == null || spline.nodes.Count <= 2)
-            {
+            if (selection == null || spline.nodes.Count <= 2) {
                 GUI.enabled = false;
             }
-            if (GUILayout.Button("Delete selected node"))
-            {
+            if (GUILayout.Button("Delete selected node")) {
                 Undo.RegisterCompleteObjectUndo(spline, "delete spline node");
                 spline.RemoveNode(selection);
                 selection = null;
@@ -285,15 +235,12 @@ namespace SplineMesh
             // nodes
             EditorGUILayout.PropertyField(nodesProp);
             EditorGUI.indentLevel++;
-            if (nodesProp.isExpanded)
-            {
-                for (int i = 0; i < nodesProp.arraySize; i++)
-                {
+            if (nodesProp.isExpanded) {
+                for (int i = 0; i < nodesProp.arraySize; i++) {
                     SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(i);
                     EditorGUILayout.PropertyField(nodeProp);
                     EditorGUI.indentLevel++;
-                    if (nodeProp.isExpanded)
-                    {
+                    if (nodeProp.isExpanded) {
                         drawNodeData(nodeProp, spline.nodes[i]);
                     }
                     EditorGUI.indentLevel--;
@@ -301,90 +248,62 @@ namespace SplineMesh
             }
             EditorGUI.indentLevel--;
 
-            if (selection != null)
-            {
+            if (selection != null) {
                 int index = spline.nodes.IndexOf(selection);
-
-                //NEW
-                if (index == -1)
-                {
-                    selection = spline.nodes[0];
-                    index = spline.nodes.IndexOf(selection);
-                }
-                //
-
                 SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(index);
                 EditorGUILayout.LabelField("Selected node (node " + index + ")");
                 EditorGUI.indentLevel++;
                 drawNodeData(nodeProp, selection);
                 EditorGUI.indentLevel--;
-            }
-            else
-            {
+            } else {
                 EditorGUILayout.LabelField("No selected node");
             }
-
-            //NEW
-            serializedObject.ApplyModifiedProperties();
-            //
         }
 
-        private void drawNodeData(SerializedProperty nodeProperty, SplineNode node)
-        {
-            using (var check = new EditorGUI.ChangeCheckScope())
-            {
+        private void drawNodeData(SerializedProperty nodeProperty, SplineNode node) {
+            using (var check = new EditorGUI.ChangeCheckScope()) {
                 var positionProp = nodeProperty.FindPropertyRelative("position");
                 EditorGUILayout.PropertyField(positionProp, new GUIContent("Position"));
-                if (check.changed)
-                {
+                if (check.changed) {
                     node.Position = positionProp.vector3Value;
                 }
             }
 
-            using (var check = new EditorGUI.ChangeCheckScope())
-            {
+            using (var check = new EditorGUI.ChangeCheckScope()) {
                 var directionProp = nodeProperty.FindPropertyRelative("direction");
                 EditorGUILayout.PropertyField(directionProp, new GUIContent("Direction"));
-                if (check.changed)
-                {
+                if (check.changed) {
                     node.Direction = directionProp.vector3Value;
                 }
             }
 
-            using (var check = new EditorGUI.ChangeCheckScope())
-            {
+            using (var check = new EditorGUI.ChangeCheckScope()) {
                 var upProp = nodeProperty.FindPropertyRelative("up");
                 EditorGUILayout.PropertyField(upProp, new GUIContent("Up"));
-                if (check.changed)
-                {
+                if (check.changed) {
                     node.Up = upProp.vector3Value;
                 }
             }
 
-            using (var check = new EditorGUI.ChangeCheckScope())
-            {
+            using (var check = new EditorGUI.ChangeCheckScope()) {
                 var scaleProp = nodeProperty.FindPropertyRelative("scale");
                 EditorGUILayout.PropertyField(scaleProp, new GUIContent("Scale"));
-                if (check.changed)
-                {
+                if (check.changed) {
                     node.Scale = scaleProp.vector2Value;
                 }
             }
 
-            using (var check = new EditorGUI.ChangeCheckScope())
-            {
+            using (var check = new EditorGUI.ChangeCheckScope()) {
                 var rollProp = nodeProperty.FindPropertyRelative("roll");
                 EditorGUILayout.PropertyField(rollProp, new GUIContent("Roll"));
-                if (check.changed)
-                {
+                if (check.changed) {
                     node.Roll = rollProp.floatValue;
                 }
             }
         }
 
         [MenuItem("GameObject/3D Object/Spline")]
-        public static void CreateSpline()
-        {
+        public static void CreateSpline() {
             new GameObject("Spline", typeof(Spline));
         }
     }
