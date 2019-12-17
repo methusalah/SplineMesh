@@ -265,8 +265,7 @@ namespace SplineMesh {
             } else {
                 EditorGUILayout.LabelField("No selected node");
             }
-			
-			serializedObject.ApplyModifiedProperties();
+	    serializedObject.ApplyModifiedProperties();
         }
 
         private void drawNodeData(SerializedProperty nodeProperty, SplineNode node) {
