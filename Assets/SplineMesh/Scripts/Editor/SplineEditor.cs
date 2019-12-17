@@ -53,6 +53,9 @@ namespace SplineMesh {
             upButtonStyle = new GUIStyle();
             upButtonStyle.normal.background = t;
             selection = null;
+			
+            Undo.undoRedoPerformed -= spline.RefreshCurves;
+            Undo.undoRedoPerformed += spline.RefreshCurves;
         }
 
         SplineNode AddClonedNode(SplineNode node) {
@@ -201,6 +204,10 @@ namespace SplineMesh {
             // hint
             EditorGUILayout.HelpBox("Hold Alt and drag a node to create a new one.", MessageType.Info);
 
+            if(spline.nodes.IndexOf(selection) < 0) {
+                selection = null;
+            }
+
             // add button
             if (selection == null) {
                 GUI.enabled = false;
@@ -258,6 +265,8 @@ namespace SplineMesh {
             } else {
                 EditorGUILayout.LabelField("No selected node");
             }
+			
+			serializedObject.ApplyModifiedProperties();
         }
 
         private void drawNodeData(SerializedProperty nodeProperty, SplineNode node) {

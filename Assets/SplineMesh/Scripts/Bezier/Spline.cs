@@ -70,19 +70,7 @@ namespace SplineMesh {
         }
 
         private void OnEnable() {
-            curves.Clear();
-            for (int i = 0; i < nodes.Count - 1; i++) {
-                SplineNode n = nodes[i];
-                SplineNode next = nodes[i + 1];
-
-                CubicBezierCurve curve = new CubicBezierCurve(n, next);
-                curve.Changed.AddListener(UpdateAfterCurveChanged);
-                curves.Add(curve);
-            }
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
-                type = ListChangeType.clear
-            });
-            UpdateAfterCurveChanged();
+            RefreshCurves();
         }
 
         public ReadOnlyCollection<CubicBezierCurve> GetCurves() {
@@ -131,6 +119,28 @@ namespace SplineMesh {
             if (res == nodes.Count - 1)
                 res--;
             return res;
+        }
+		
+		/// <summary>
+		/// Refreshes the spline's internal list of curves.
+		// </summary>
+		public void RefreshCurves()
+        {
+            curves.Clear();
+            for (int i = 0; i < nodes.Count - 1; i++)
+            {
+                SplineNode n = nodes[i];
+                SplineNode next = nodes[i + 1];
+
+                CubicBezierCurve curve = new CubicBezierCurve(n, next);
+                curve.Changed.AddListener(UpdateAfterCurveChanged);
+                curves.Add(curve);
+            }
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
+            {
+                type = ListChangeType.clear
+            });
+            UpdateAfterCurveChanged();
         }
 
         /// <summary>
