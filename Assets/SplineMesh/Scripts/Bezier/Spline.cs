@@ -121,14 +121,12 @@ namespace SplineMesh {
             return res;
         }
 		
-		/// <summary>
-		/// Refreshes the spline's internal list of curves.
-		// </summary>
-		public void RefreshCurves()
-        {
+	/// <summary>
+	/// Refreshes the spline's internal list of curves.
+	// </summary>
+	public void RefreshCurves() {
             curves.Clear();
-            for (int i = 0; i < nodes.Count - 1; i++)
-            {
+            for (int i = 0; i < nodes.Count - 1; i++) {
                 SplineNode n = nodes[i];
                 SplineNode next = nodes[i + 1];
 
@@ -136,8 +134,7 @@ namespace SplineMesh {
                 curve.Changed.AddListener(UpdateAfterCurveChanged);
                 curves.Add(curve);
             }
-            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>()
-            {
+            RaiseNodeListChanged(new ListChangedEventArgs<SplineNode>() {
                 type = ListChangeType.clear
             });
             UpdateAfterCurveChanged();
