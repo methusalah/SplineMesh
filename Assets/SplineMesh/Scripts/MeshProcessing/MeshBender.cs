@@ -257,13 +257,13 @@ namespace SplineMesh {
                             sample = curve.GetSampleAtDistance(distance);
                         } else {
                             float distOnSpline = intervalStart + distance;
-                            if (true) { //spline.isLoop) {
+                            //if (true) { //spline.isLoop) {
                                 while (distOnSpline > spline.Length) {
                                     distOnSpline -= spline.Length;
                                 }
-                            } else if (distOnSpline > spline.Length) {
-                                continue;
-                            }
+                            //} else if (distOnSpline > spline.Length) {
+                            //    continue;
+                            //}
                             sample = spline.GetSampleAtDistance(distOnSpline);
                         }
                         sampleCache[distance] = sample;
