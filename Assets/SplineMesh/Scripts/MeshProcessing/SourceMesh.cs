@@ -12,17 +12,12 @@ namespace SplineMesh {
     /// To obtain an instance, call the static method <see cref="Build(Mesh)"/>.
     /// The building is made in a fluent way.
     /// </summary>
-    public class SourceMesh {
+    public struct SourceMesh {
         private Vector3 translation;
         private Quaternion rotation;
-        private Vector3 scale = Vector3.one;
+        private Vector3 scale;
 
-        private readonly Mesh mesh;
-        internal Mesh Mesh {
-            get {
-                return mesh;
-            }
-        }
+        internal Mesh Mesh { get; }
 
         private List<MeshVertex> vertices;
         internal List<MeshVertex> Vertices {
@@ -62,7 +57,14 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="mesh"></param>
         private SourceMesh(Mesh mesh) {
-            this.mesh = mesh;
+            Mesh = mesh;
+            translation = default;
+            rotation = default;
+            scale = default;
+            vertices = default;
+            triangles = default;
+            minX = default;
+            length = default;
         }
 
         /// <summary>
@@ -70,10 +72,14 @@ namespace SplineMesh {
         /// </summary>
         /// <param name="other"></param>
         private SourceMesh(SourceMesh other) {
-            mesh = other.mesh;
+            Mesh = other.Mesh;
             translation = other.translation;
             rotation = other.rotation;
             scale = other.scale;
+            vertices = default;
+            triangles = default;
+            minX = default;
+            length = default;
         }
 
         public static SourceMesh Build(Mesh mesh) {
@@ -115,13 +121,13 @@ namespace SplineMesh {
             bool reversed = scale.x < 0;
             if (scale.y < 0) reversed = !reversed;
             if (scale.z < 0) reversed = !reversed;
-            triangles = reversed ? MeshUtility.GetReversedTriangles(mesh) : mesh.triangles;
+            triangles = reversed ? MeshUtility.GetReversedTriangles(Mesh) : Mesh.triangles;
 
             // we transform the source mesh vertices according to rotation/translation/scale
             int i = 0;
-            vertices = new List<MeshVertex>(mesh.vertexCount);
-            foreach (Vector3 vert in mesh.vertices) {
-                var transformed = new MeshVertex(vert, mesh.normals[i++]);
+            vertices = new List<MeshVertex>(Mesh.vertexCount);
+            foreach (Vector3 vert in Mesh.vertices) {
+                var transformed = new MeshVertex(vert, Mesh.normals[i++]);
                 //  application of rotation
                 if (rotation != Quaternion.identity) {
                     transformed.position = rotation * transformed.position;
@@ -146,6 +152,28 @@ namespace SplineMesh {
                 minX = Math.Min(minX, p.x);
             }
             length = Math.Abs(maxX - minX);
+        }
+
+        public override bool Equals(object obj) {
+            if (obj == null || GetType() != obj.GetType()) {
+                return false;
+            }
+            var other = (SourceMesh)obj;
+            return Mesh == other.Mesh &&
+                translation == other.translation &&
+                rotation == other.rotation &&
+                scale == other.scale;
+        }
+
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
+
+        public static bool operator ==(SourceMesh sm1, SourceMesh sm2) {
+            return sm1.Equals(sm2);
+        }
+        public static bool operator !=(SourceMesh sm1, SourceMesh sm2) {
+            return sm1.Equals(sm2);
         }
     }
 }
