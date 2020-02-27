@@ -147,5 +147,17 @@ namespace SplineMesh {
             }
             length = Math.Abs(maxX - minX);
         }
+
+        public override bool Equals(object obj) {
+            if (obj == null || GetType() != obj.GetType()) {
+                return false;
+            }
+            var other = (SourceMesh)obj;
+            return mesh == other.mesh && translation == other.translation && rotation == other.rotation && scale == other.scale;
+        }
+
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
     }
 }
