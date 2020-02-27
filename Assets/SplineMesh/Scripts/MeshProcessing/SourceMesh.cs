@@ -58,13 +58,13 @@ namespace SplineMesh {
         /// <param name="mesh"></param>
         private SourceMesh(Mesh mesh) {
             Mesh = mesh;
-            translation = default;
-            rotation = default;
-            scale = default;
-            vertices = default;
-            triangles = default;
-            minX = default;
-            length = default;
+            translation = default(Vector3);
+            rotation = default(Quaternion);
+            scale = default(Vector3);
+            vertices = null;
+            triangles = null;
+            minX = 0;
+            length = 0;
         }
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace SplineMesh {
             translation = other.translation;
             rotation = other.rotation;
             scale = other.scale;
-            vertices = default;
-            triangles = default;
-            minX = default;
-            length = default;
+            vertices = null;
+            triangles = null;
+            minX = 0;
+            length = 0;
         }
 
         public static SourceMesh Build(Mesh mesh) {
