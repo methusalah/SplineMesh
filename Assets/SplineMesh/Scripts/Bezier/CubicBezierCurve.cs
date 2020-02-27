@@ -155,7 +155,7 @@ namespace SplineMesh {
         public CurveSample GetSample(float time) {
             AssertTimeInBounds(time);
             CurveSample previous = samples[0];
-            CurveSample next = null;
+            CurveSample next = default;
             foreach (CurveSample cp in samples) {
                 if (cp.timeInCurve >= time) {
                     next = cp;
@@ -163,7 +163,7 @@ namespace SplineMesh {
                 }
                 previous = cp;
             }
-            if (next == null) {
+            if (next == default) {
                 throw new Exception("Can't find curve samples.");
             }
             float t = next == previous ? 0 : (time - previous.timeInCurve) / (next.timeInCurve - previous.timeInCurve);
@@ -181,7 +181,7 @@ namespace SplineMesh {
                 throw new ArgumentException("Distance must be positive and less than curve length. Length = " + Length + ", given distance was " + d);
 
             CurveSample previous = samples[0];
-            CurveSample next = null;
+            CurveSample next = default;
             foreach (CurveSample cp in samples) {
                 if (cp.distanceInCurve >= d) {
                     next = cp;
@@ -189,7 +189,7 @@ namespace SplineMesh {
                 }
                 previous = cp;
             }
-            if (next == null) {
+            if (next == default) {
                 throw new Exception("Can't find curve samples.");
             }
             float t = next == previous ? 0 : (d - previous.distanceInCurve) / (next.distanceInCurve - previous.distanceInCurve);
