@@ -151,7 +151,7 @@ namespace SplineMesh {
                     Vector3 guiUp = HandleUtility.WorldToGUIPoint(up);
 
                     // for the selected node, we also draw a line and place two buttons for directions
-                    Handles.color = Color.red;
+                    Handles.color = DIRECTION_COLOR;
                     Handles.DrawLine(guiDir, guiInvDir);
 
                     // draw quads direction and inverse direction if they are not selected
