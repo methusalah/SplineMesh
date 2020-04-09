@@ -108,7 +108,7 @@ namespace SplineMesh {
                     typeof(MeshRenderer),
                     typeof(MeshBender),
                     typeof(MeshCollider));
-                res.isStatic = true;
+                res.isStatic = !updateInPlayMode;
             } else {
                 res = childTransform.gameObject;
             }
