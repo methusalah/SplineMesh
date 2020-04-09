@@ -17,6 +17,7 @@ namespace SplineMesh {
         public readonly float roll;
         public readonly float distanceInCurve;
         public readonly float timeInCurve;
+        public readonly CubicBezierCurve curve;
 
         private Quaternion rotation;
 
@@ -33,7 +34,7 @@ namespace SplineMesh {
             }
         }
 
-        public CurveSample(Vector3 location, Vector3 tangent, Vector3 up, Vector2 scale, float roll, float distanceInCurve, float timeInCurve) {
+        public CurveSample(Vector3 location, Vector3 tangent, Vector3 up, Vector2 scale, float roll, float distanceInCurve, float timeInCurve, CubicBezierCurve curve) {
             this.location = location;
             this.tangent = tangent;
             this.up = up;
@@ -41,6 +42,7 @@ namespace SplineMesh {
             this.scale = scale;
             this.distanceInCurve = distanceInCurve;
             this.timeInCurve = timeInCurve;
+            this.curve = curve;
             rotation = Quaternion.identity;
         }
 
