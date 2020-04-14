@@ -88,7 +88,8 @@ namespace SplineMesh {
                 Vector2.Lerp(a.scale, b.scale, t),
                 Mathf.Lerp(a.roll, b.roll, t),
                 Mathf.Lerp(a.distanceInCurve, b.distanceInCurve, t),
-                Mathf.Lerp(a.timeInCurve, b.timeInCurve, t));
+                Mathf.Lerp(a.timeInCurve, b.timeInCurve, t),
+                a.curve);
         }
 
         public MeshVertex GetBent(MeshVertex vert) {
