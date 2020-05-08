@@ -135,7 +135,10 @@ namespace SplineMesh {
                     FillOnce();
                     break;
                 case FillingMode.Repeat:
-                    FillRepeat();
+                    FillRepeat(false);
+                    break;
+                case FillingMode.MinimumStretch:
+                    FillRepeat(true);
                     break;
                 case FillingMode.StretchToInterval:
                     FillStretch();
@@ -165,6 +168,10 @@ namespace SplineMesh {
             /// place a whole mesh, leading to an empty interval.
             /// </summary>
             Repeat,
+            /// <summary>
+            /// In this mode, the mesh is repeated to fill the interval with the minimum
+            /// stretch applied required to avoid any gaps.
+            MinimumStretch,
             /// <summary>
             /// In this mode, the mesh is deformed along the X axis to fill exactly the interval.
             /// </summary>
@@ -208,12 +215,12 @@ namespace SplineMesh {
                 bentVertices.Select(b => b.normal));
         }
 
-        private void FillRepeat() {
+        private void FillRepeat(bool allowStretch) {
             float intervalLength = useSpline?
                 (intervalEnd == 0 ? spline.Length : intervalEnd) - intervalStart :
                 curve.Length;
             int repetitionCount = Mathf.FloorToInt(intervalLength / source.Length);
-
+            float totalStretchLength = allowStretch ? (intervalLength - (repetitionCount * source.Length)) : 0;
 
             // building triangles and UVs for the repeated mesh
             var triangles = new List<int>();
@@ -245,15 +252,18 @@ namespace SplineMesh {
             var bentVertices = new List<MeshVertex>(source.Vertices.Count);
             float offset = 0;
             for (int i = 0; i < repetitionCount; i++) {
-
                 sampleCache.Clear();
                 // for each mesh vertex, we found its projection on the curve
                 foreach (var vert in source.Vertices) {
-                    float distance = vert.position.x - source.MinX + offset;
+                    float distanceRate = source.Length == 0 ? 0 : Math.Abs(vert.position.x - source.MinX) / source.Length;
+                    float stretchOffset = totalStretchLength * distanceRate * ((i + 1) / repetitionCount);
+                    float distance = vert.position.x - source.MinX + offset + stretchOffset;
+
                     CurveSample sample;
                     if (!sampleCache.TryGetValue(distance, out sample)) {
                         if (!useSpline) {
-                            if (distance > curve.Length) continue;
+                            if (distance > curve.Length)
+                                distance = curve.Length;
                             sample = curve.GetSampleAtDistance(distance);
                         } else {
                             float distOnSpline = intervalStart + distance;
