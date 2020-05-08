@@ -18,9 +18,16 @@ namespace SplineMesh {
         private const int STEP_COUNT = 30;
         private const float T_STEP = 1.0f / STEP_COUNT;
 
-        private readonly List<CurveSample> samples = new List<CurveSample>(STEP_COUNT);
+        private List<CurveSample> samples = new List<CurveSample>(STEP_COUNT);
 
         public SplineNode n1, n2;
+        
+        // Initialise on deserialisation.
+        [OnDeserialized]
+        private void ResetSampleList()
+        {
+            samples = new List<CurveSample>(STEP_COUNT);
+        }
 
         /// <summary>
         /// Length of the curve in world unit.
