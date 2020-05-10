@@ -80,10 +80,15 @@ namespace SplineMesh {
             }
 
             // disable game object transform gyzmo
+            // if the spline script is active
             if (Selection.activeGameObject == spline.gameObject) {
-                Tools.current = Tool.None;
-                if (selection == null && spline.nodes.Count > 0)
-                    selection = spline.nodes[0];
+                if (!spline.enabled) {
+                    Tools.current = Tool.Move;
+                } else {
+                    Tools.current = Tool.None;
+                    if (selection == null && spline.nodes.Count > 0)
+                        selection = spline.nodes[0];
+                }
             }
 
             // draw a bezier curve for each curve in the spline
@@ -96,6 +101,9 @@ namespace SplineMesh {
                     null,
                     3);
             }
+
+            if (!spline.enabled)
+                return;
 
             // draw the selection handles
             switch (selectionType) {
