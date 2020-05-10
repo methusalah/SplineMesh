@@ -22,10 +22,10 @@ namespace SplineMesh {
 
         public SplineNode n1, n2;
         
-        // Initialise on deserialisation.
         [OnDeserialized]
         private void ResetSampleList()
         {
+            // samples is null by default after deserialisation.
             samples = new List<CurveSample>(STEP_COUNT);
         }
 
