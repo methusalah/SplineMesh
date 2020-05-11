@@ -170,11 +170,17 @@ namespace SplineMesh {
             var bentVertices = new List<MeshVertex>(vertsInShape * 2 * segmentCount * 3);
 
             foreach (var sample in path) {
-                foreach (Vertex v in shapeVertices) {
-                    bentVertices.Add(sample.GetBent(new MeshVertex(
-                        new Vector3(0, v.point.y, -v.point.x),
-                        new Vector3(0, v.normal.y, -v.normal.x),
-                        new Vector2(v.uCoord, textureScale * (sample.distanceInCurve + textureOffset)))));
+                for (int i = 0; i < shapeVertices.Count; i++)
+                {
+                    Vertex vertex = shapeVertices[i];
+                    Vector3 vert = new Vector3(0, vertex.point.y, -vertex.point.x);
+                    Vector3 normal = new Vector3(0, vertex.normal.y, -vertex.normal.x);
+
+                    float u = (1f / shapeVertices.Count) * i;
+                    float v = textureScale * (sample.distanceInCurve + textureOffset);
+                    Vector3 uv = new Vector2(u, v);
+
+                    bentVertices.Add(sample.GetBent(new MeshVertex(vert, normal, uv)));
                 }
             }
             var index = 0;
