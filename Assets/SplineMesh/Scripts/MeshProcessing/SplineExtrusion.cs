@@ -30,7 +30,8 @@ namespace SplineMesh {
 
         public List<ExtrusionSegment.Vertex> shapeVertices = new List<ExtrusionSegment.Vertex>();
         public Material material;
-        public float textureScale = 1;
+        public Vector2 textureScale = new Vector2(1, 1);
+        public bool flipUvs = false;
         public float sampleSpacing = 0.1f;
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace SplineMesh {
                 ExtrusionSegment mb = go.GetComponent<ExtrusionSegment>();
                 mb.ShapeVertices = shapeVertices;
                 mb.TextureScale = textureScale;
+                mb.FlipUvs = flipUvs;
                 mb.TextureOffset = textureOffset;
                 mb.SampleSpacing = sampleSpacing;
                 mb.SetInterval(curve);

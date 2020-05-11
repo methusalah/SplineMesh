@@ -33,16 +33,31 @@ namespace SplineMesh {
             }
         }
 
-        private float textureScale = 1;
+        private Vector2 textureScale = new Vector2(1, 1);
         /// <summary>
         /// 
         /// </summary>
-        public float TextureScale {
+        public Vector2 TextureScale {
             get { return textureScale; }
             set {
                 if (value == textureScale) return;
                 SetDirty();
                 textureScale = value;
+            }
+        }
+
+        private bool flipUvs = false;
+        /// <summary>
+        /// Flip the UVs
+        /// </summary>
+        public bool FlipUvs
+        {
+            get { return flipUvs; }
+            set
+            {
+                if (value == flipUvs) return;
+                SetDirty();
+                flipUvs = value;
             }
         }
 
@@ -170,11 +185,21 @@ namespace SplineMesh {
             var bentVertices = new List<MeshVertex>(vertsInShape * 2 * segmentCount * 3);
 
             foreach (var sample in path) {
-                foreach (Vertex v in shapeVertices) {
-                    bentVertices.Add(sample.GetBent(new MeshVertex(
-                        new Vector3(0, v.point.y, -v.point.x),
-                        new Vector3(0, v.normal.y, -v.normal.x),
-                        new Vector2(v.uCoord, textureScale * (sample.distanceInCurve + textureOffset)))));
+                for (int i = 0; i < shapeVertices.Count; i++)
+                {
+                    Vertex vertex = shapeVertices[i];
+                    Vector3 vert = new Vector3(0, vertex.point.y, -vertex.point.x);
+                    Vector3 normal = new Vector3(0, vertex.normal.y, -vertex.normal.x);
+
+                    float u = (1f / shapeVertices.Count) * i;
+                    float v = sample.distanceInCurve + textureOffset;
+
+                    Vector3 uv = new Vector2(
+                        (flipUvs ? v : u) * textureScale.y,
+                        (flipUvs ? u : v) * textureScale.x
+                    );
+
+                    bentVertices.Add(sample.GetBent(new MeshVertex(vert, normal, uv)));
                 }
             }
             var index = 0;
