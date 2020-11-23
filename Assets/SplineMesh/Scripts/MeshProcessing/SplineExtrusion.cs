@@ -78,12 +78,12 @@ namespace SplineMesh {
                     typeof(ExtrusionSegment),
                     typeof(MeshCollider));
                 go.GetComponent<MeshRenderer>().material = material;
-                ExtrusionSegment mb = go.GetComponent<ExtrusionSegment>();
-                mb.ShapeVertices = shapeVertices;
-                mb.TextureScale = textureScale;
-                mb.TextureOffset = textureOffset;
-                mb.SampleSpacing = sampleSpacing;
-                mb.SetInterval(curve);
+                ExtrusionSegment seg = go.GetComponent<ExtrusionSegment>();
+                seg.ShapeVertices = shapeVertices;
+                seg.TextureScale = textureScale;
+                seg.TextureOffset = textureOffset;
+                seg.SampleSpacing = sampleSpacing;
+                seg.SetInterval(curve);
 
                 textureOffset += curve.Length;
             }
