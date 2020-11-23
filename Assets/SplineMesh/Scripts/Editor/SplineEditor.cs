@@ -102,10 +102,6 @@ namespace SplineMesh {
                     3);
             }
 
-            if (!spline.enabled) {
-                return;
-            }
-
             if (!spline.enabled)
                 return;
 
