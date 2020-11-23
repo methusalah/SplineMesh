@@ -49,6 +49,10 @@ namespace SplineMesh {
             Init();
         }
 
+        private void Update() {
+            EditorUpdate();
+        }
+
         void EditorUpdate() {
             rate += Time.deltaTime / DurationInSecond;
             if (rate > 1) {
