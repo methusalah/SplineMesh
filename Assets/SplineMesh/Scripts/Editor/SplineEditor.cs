@@ -277,20 +277,19 @@ namespace SplineMesh
             if (GUILayout.Button("Add node after selected"))
             {
                 Undo.RecordObject(spline, "add spline node");
-                spline.SplitAtTime(5.25f);
 
-                //SplineNode newNode = new SplineNode(selection.Direction, selection.Direction + selection.Direction - selection.Position);
-                //var index = spline.nodes.IndexOf(selection);
-                //if (index == spline.nodes.Count - 1)
-                //{
-                //    spline.AddNode(newNode);
-                //}
-                //else
-                //{
-                //    spline.InsertNode(index + 1, newNode);
-                //}
-                //selection = newNode;
-                //serializedObject.Update();
+                SplineNode newNode = new SplineNode(selection.Direction, selection.Direction + selection.Direction - selection.Position);
+                var index = spline.nodes.IndexOf(selection);
+                if (index == spline.nodes.Count - 1)
+                {
+                    spline.AddNode(newNode);
+                }
+                else
+                {
+                    spline.InsertNode(index + 1, newNode);
+                }
+                selection = newNode;
+                serializedObject.Update();
             }
             GUI.enabled = true;
 
