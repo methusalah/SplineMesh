@@ -84,10 +84,19 @@ namespace SplineMesh {
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
+
+
+            // old version, before free tangents
+            //return
+            //    n1.Position * (omt2 * omt) +
+            //    n1.Direction * (3f * omt2 * t) +
+            //    GetInverseDirection() * (3f * omt * t2) +
+            //    n2.Position * (t2 * t);
+
             return
                 n1.Position * (omt2 * omt) +
-                n1.Direction * (3f * omt2 * t) +
-                GetInverseDirection() * (3f * omt * t2) +
+                n1.DirectionOut * (3f * omt2 * t) +
+                n2.DirectionIn * (3f * omt * t2) +
                 n2.Position * (t2 * t);
         }
 
@@ -100,11 +109,21 @@ namespace SplineMesh {
             float omt = 1f - t;
             float omt2 = omt * omt;
             float t2 = t * t;
+
+
+            // old version, before free tangents
+            //Vector3 tangent =
+            //    n1.Position * (-omt2) +
+            //    n1.Direction * (3 * omt2 - 2 * omt) +
+            //    GetInverseDirection() * (-3 * t2 + 2 * t) +
+            //    n2.Position * (t2);
+
             Vector3 tangent =
                 n1.Position * (-omt2) +
-                n1.Direction * (3 * omt2 - 2 * omt) +
-                GetInverseDirection() * (-3 * t2 + 2 * t) +
+                n1.DirectionOut * (3 * omt2 - 2 * omt) +
+                n2.DirectionIn * (-3 * t2 + 2 * t) +
                 n2.Position * (t2);
+
             return tangent.normalized;
         }
 
