@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -286,10 +286,12 @@ namespace SplineMesh {
         public CurveSample GetProjectionSample(Vector3 pointToProject) {
             CurveSample closest = default(CurveSample);
             float minSqrDistance = float.MaxValue;
-            foreach (var curve in curves) {
+            for (int i = 0; i < curves.Count; i++) {
+                var curve = curves[i];
                 var projection = curve.GetProjectionSample(pointToProject);
                 if (curve == curves[0]) {
                     closest = projection;
+                    closest.index = i;
                     minSqrDistance = (projection.location - pointToProject).sqrMagnitude;
                     continue;
                 }
@@ -297,6 +299,7 @@ namespace SplineMesh {
                 if (sqrDist < minSqrDistance) {
                     minSqrDistance = sqrDist;
                     closest = projection;
+                    closest.index = i;
                 }
             }
             return closest;
