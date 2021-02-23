@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
@@ -12,16 +12,22 @@ namespace SplineMesh {
         private SerializedProperty sampleSpacing;
         private SerializedProperty material;
         private SerializedProperty vertices;
+        private SerializedProperty layer;
+        private SerializedProperty visible;
+        private SerializedProperty collisionEnabled;
 
         private SplineExtrusion se;
         private ExtrusionSegment.Vertex selection = null;
 
-        private void OnEnable() {
+        protected void OnEnable() {
             se = (SplineExtrusion)target;
             textureScale = serializedObject.FindProperty("textureScale");
             sampleSpacing = serializedObject.FindProperty("sampleSpacing");
             material = serializedObject.FindProperty("material");
             vertices = serializedObject.FindProperty("shapeVertices");
+            layer = serializedObject.FindProperty("layer");
+            visible = serializedObject.FindProperty("visible");
+            collisionEnabled = serializedObject.FindProperty("collisionEnabled");
         }
 
         void OnSceneGUI() {
@@ -156,6 +162,9 @@ namespace SplineMesh {
                 }
             }
             EditorGUI.indentLevel -= 1;
+            EditorGUILayout.PropertyField(layer, true);
+            EditorGUILayout.PropertyField(visible, true);
+            EditorGUILayout.PropertyField(collisionEnabled, true);
 
             serializedObject.ApplyModifiedProperties();
         }
