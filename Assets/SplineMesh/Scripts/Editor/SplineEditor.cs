@@ -97,7 +97,9 @@ namespace SplineMesh {
             switch (selectionType) {
                 case SelectionType.Node:
                     // place a handle on the node and manage position change
-                    Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Position), Quaternion.identity));
+
+                    // TODO place the handle depending on user params (local or world)
+                    Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Position), spline.transform.rotation));
                     if (newPosition != selection.Position) {
                         // position handle has been moved
                         if (mustCreateNewNode) {
