@@ -281,5 +281,18 @@ namespace SplineMesh {
         public static void CreateSpline() {
             new GameObject("Spline", typeof(Spline));
         }
+
+        [DrawGizmo(GizmoType.InSelectionHierarchy)]
+        static void DisplayUnselected(Spline spline, GizmoType gizmoType) {
+            foreach (CubicBezierCurve curve in spline.GetCurves()) {
+                Handles.DrawBezier(spline.transform.TransformPoint(curve.n1.Position),
+                    spline.transform.TransformPoint(curve.n2.Position),
+                    spline.transform.TransformPoint(curve.n1.Direction),
+                    spline.transform.TransformPoint(curve.GetInverseDirection()),
+                    CURVE_COLOR,
+                    null,
+                    3);
+            }
+        }
     }
 }
