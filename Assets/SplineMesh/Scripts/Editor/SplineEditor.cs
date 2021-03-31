@@ -242,54 +242,38 @@ namespace SplineMesh {
             if (selection != null) {
                 int index = spline.nodes.IndexOf(selection);
                 SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(index);
+
                 EditorGUILayout.LabelField("Selected node (node " + index + ")");
+
                 EditorGUI.indentLevel++;
-                drawNodeData(nodeProp, selection);
+                DrawNodeData(nodeProp, selection);
                 EditorGUI.indentLevel--;
             } else {
                 EditorGUILayout.LabelField("No selected node");
             }
         }
 
-        private void drawNodeData(SerializedProperty nodeProperty, SplineNode node) {
-            using (var check = new EditorGUI.ChangeCheckScope()) {
-                var positionProp = nodeProperty.FindPropertyRelative("position");
-                EditorGUILayout.PropertyField(positionProp, new GUIContent("Position"));
-                if (check.changed) {
-                    node.Position = positionProp.vector3Value;
-                }
-            }
+        private void DrawNodeData(SerializedProperty nodeProperty, SplineNode node) {
+            var positionProp = nodeProperty.FindPropertyRelative("position");
+            var directionProp = nodeProperty.FindPropertyRelative("direction");
+            var upProp = nodeProperty.FindPropertyRelative("up");
+            var scaleProp = nodeProperty.FindPropertyRelative("scale");
+            var rollProp = nodeProperty.FindPropertyRelative("roll");
 
-            using (var check = new EditorGUI.ChangeCheckScope()) {
-                var directionProp = nodeProperty.FindPropertyRelative("direction");
-                EditorGUILayout.PropertyField(directionProp, new GUIContent("Direction"));
-                if (check.changed) {
-                    node.Direction = directionProp.vector3Value;
-                }
-            }
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(positionProp, new GUIContent("Position"));
+            EditorGUILayout.PropertyField(directionProp, new GUIContent("Direction"));
+            EditorGUILayout.PropertyField(upProp, new GUIContent("Up"));
+            EditorGUILayout.PropertyField(scaleProp, new GUIContent("Scale"));
+            EditorGUILayout.PropertyField(rollProp, new GUIContent("Roll"));
 
-            using (var check = new EditorGUI.ChangeCheckScope()) {
-                var upProp = nodeProperty.FindPropertyRelative("up");
-                EditorGUILayout.PropertyField(upProp, new GUIContent("Up"));
-                if (check.changed) {
-                    node.Up = upProp.vector3Value;
-                }
-            }
-
-            using (var check = new EditorGUI.ChangeCheckScope()) {
-                var scaleProp = nodeProperty.FindPropertyRelative("scale");
-                EditorGUILayout.PropertyField(scaleProp, new GUIContent("Scale"));
-                if (check.changed) {
-                    node.Scale = scaleProp.vector2Value;
-                }
-            }
-
-            using (var check = new EditorGUI.ChangeCheckScope()) {
-                var rollProp = nodeProperty.FindPropertyRelative("roll");
-                EditorGUILayout.PropertyField(rollProp, new GUIContent("Roll"));
-                if (check.changed) {
-                    node.Roll = rollProp.floatValue;
-                }
+            if (EditorGUI.EndChangeCheck()) {
+                node.Position = positionProp.vector3Value;
+                node.Direction = directionProp.vector3Value;
+                node.Up = upProp.vector3Value;
+                node.Scale = scaleProp.vector2Value;
+                node.Roll = rollProp.floatValue;
+                serializedObject.Update();
             }
         }
 
