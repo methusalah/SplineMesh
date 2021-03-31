@@ -235,20 +235,9 @@ namespace SplineMesh {
             spline.IsLoop = GUILayout.Toggle(spline.IsLoop, "Is loop");
 
             // nodes
+            GUI.enabled = false;
             EditorGUILayout.PropertyField(nodesProp);
-            EditorGUI.indentLevel++;
-            if (nodesProp.isExpanded) {
-                for (int i = 0; i < nodesProp.arraySize; i++) {
-                    SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(i);
-                    EditorGUILayout.PropertyField(nodeProp);
-                    EditorGUI.indentLevel++;
-                    if (nodeProp.isExpanded) {
-                        drawNodeData(nodeProp, spline.nodes[i]);
-                    }
-                    EditorGUI.indentLevel--;
-                }
-            }
-            EditorGUI.indentLevel--;
+            GUI.enabled = true;
 
             if (selection != null) {
                 int index = spline.nodes.IndexOf(selection);
