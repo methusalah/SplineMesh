@@ -67,18 +67,6 @@ namespace SplineMesh {
         }
 
         void OnSceneGUI() {
-            Event e = Event.current;
-            if (e.type == EventType.MouseDown) {
-                Undo.RegisterCompleteObjectUndo(spline, "change spline topography");
-                // if alt key pressed, we will have to create a new node if node position is changed
-                if (e.alt) {
-                    mustCreateNewNode = true;
-                }
-            }
-            if (e.type == EventType.MouseUp) {
-                mustCreateNewNode = false;
-            }
-
             // disable game object transform gyzmo
             // if the spline script is active
             if (Selection.activeGameObject == spline.gameObject) {
@@ -206,8 +194,6 @@ namespace SplineMesh {
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
-            // hint
-            EditorGUILayout.HelpBox("Hold Alt and drag a node to create a new one.", MessageType.Info);
 
             if(spline.nodes.IndexOf(selection) < 0) {
                 selection = null;
