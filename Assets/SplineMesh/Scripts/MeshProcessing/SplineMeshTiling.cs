@@ -100,7 +100,7 @@ namespace SplineMesh {
             // we destroy the unused objects. This is classic pooling to recycle game objects.
             foreach (var go in generated.transform
                 .Cast<Transform>()
-                .Select(child => child.gameObject).Except(used)) {
+                .Select(child => child.gameObject).Except(used).ToList()) {
                 UOUtility.Destroy(go);
             }
         }
