@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +32,9 @@ namespace SplineMesh {
         public Material material;
         public float textureScale = 1;
         public float sampleSpacing = 0.1f;
+        public string layer;
+        public bool visible = true;
+        public bool collisionEnabled = true;
 
         /// <summary>
         /// Clear shape vertices, then create three vertices with three normals for the extrusion to be visible
@@ -65,7 +68,7 @@ namespace SplineMesh {
             }
         }
 
-        private void GenerateMesh() {
+        protected void GenerateMesh() {
             UOUtility.DestroyChildren(generated);
 
             int i = 0;
@@ -77,13 +80,22 @@ namespace SplineMesh {
                     typeof(MeshRenderer),
                     typeof(ExtrusionSegment),
                     typeof(MeshCollider));
-                go.GetComponent<MeshRenderer>().material = material;
+                MeshRenderer goRenderer = go.GetComponent<MeshRenderer>();
+                goRenderer.material = material;
                 ExtrusionSegment seg = go.GetComponent<ExtrusionSegment>();
                 seg.ShapeVertices = shapeVertices;
                 seg.TextureScale = textureScale;
                 seg.TextureOffset = textureOffset;
                 seg.SampleSpacing = sampleSpacing;
                 seg.SetInterval(curve);
+                goRenderer.enabled = visible;
+                if (go.TryGetComponent(out MeshCollider meshCollider)) {
+                    meshCollider.enabled = collisionEnabled;
+                }
+                int layerNum = LayerMask.NameToLayer(layer);
+                if (layerNum > -1) {
+                    go.gameObject.layer = layerNum;
+                }
 
                 textureOffset += curve.Length;
             }

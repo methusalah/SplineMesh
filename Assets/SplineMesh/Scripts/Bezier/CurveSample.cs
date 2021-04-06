@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +18,7 @@ namespace SplineMesh {
         public readonly float distanceInCurve;
         public readonly float timeInCurve;
         public readonly CubicBezierCurve curve;
+        public int index;
 
         private Quaternion rotation;
 
@@ -43,6 +44,7 @@ namespace SplineMesh {
             this.distanceInCurve = distanceInCurve;
             this.timeInCurve = timeInCurve;
             this.curve = curve;
+            index = -1;
             rotation = Quaternion.identity;
         }
 
