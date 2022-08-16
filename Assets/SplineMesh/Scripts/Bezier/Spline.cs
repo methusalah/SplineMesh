@@ -14,6 +14,7 @@ namespace SplineMesh {
     /// </summary>
     [DisallowMultipleComponent]
     [ExecuteInEditMode]
+    [SelectionBaseAttribute]
     public class Spline : MonoBehaviour {
         /// <summary>
         /// The spline nodes.
