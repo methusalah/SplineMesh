@@ -15,6 +15,7 @@ namespace SplineMesh {
 
         private SplineExtrusion se;
         private ExtrusionSegment.Vertex selection = null;
+        private int selectionIndex = -1;
 
         private void OnEnable() {
             se = (SplineExtrusion)target;
@@ -22,13 +23,31 @@ namespace SplineMesh {
             sampleSpacing = serializedObject.FindProperty("sampleSpacing");
             material = serializedObject.FindProperty("material");
             vertices = serializedObject.FindProperty("shapeVertices");
+
+            if (se.shapeVertices.Count > 0) {
+                if (se.selectedVertexIndex < 0 || se.selectedVertexIndex > se.shapeVertices.Count - 1) {
+                    se.selectedVertexIndex = 0;
+                }
+                selection = se.shapeVertices[se.selectedVertexIndex];
+                selectionIndex = se.selectedVertexIndex;
+            } else {
+                selection = null;
+                selectionIndex = -1;
+            }
         }
 
         void OnSceneGUI() {
+            if (se.shapeVertices.Count > 0 && (selection == null || selectionIndex != se.selectedVertexIndex)) {
+                if (se.selectedVertexIndex < 0 || se.selectedVertexIndex > se.shapeVertices.Count - 1) {
+                    se.selectedVertexIndex = 0;
+                }
+                selection = se.shapeVertices[se.selectedVertexIndex];
+                selectionIndex = se.selectedVertexIndex;
+            }
+
             Event e = Event.current;
             if (e.type == EventType.MouseDown) {
-                Undo.RegisterCompleteObjectUndo(se, "change extruded shape");
-                // if control key pressed, we will have to create a new vertex if position is changed
+                // if alt key pressed, we will have to create a new vertex if position is changed
                 if (e.alt) {
                     mustCreateNewNode = true;
                 }
@@ -40,7 +59,9 @@ namespace SplineMesh {
 
             CurveSample startSample = spline.GetSample(0);
             Quaternion q = startSample.Rotation;
+            int vIdx = -1;
             foreach (ExtrusionSegment.Vertex v in se.shapeVertices) {
+                ++vIdx;
                 // we create point and normal relative to the spline start where the shape is drawn
                 Vector3 point = se.transform.TransformPoint(q * v.point + startSample.location);
                 Vector3 normal = se.transform.TransformPoint(q * (v.point + v.normal) + startSample.location);
@@ -59,17 +80,22 @@ namespace SplineMesh {
                         // position has been moved
                         Vector2 newVertexPoint = Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedPoint) - startSample.location);
                         if (mustCreateNewNode) {
+                            Undo.RecordObject(se, $"Created new vertex {vIdx+1} in {se.name}");
+
                             // We must create a new node
                             mustCreateNewNode = false;
                             ExtrusionSegment.Vertex newVertex = new ExtrusionSegment.Vertex(newVertexPoint, v.normal, v.uCoord);
-                            int i = se.shapeVertices.IndexOf(v);
-                            if (i == se.shapeVertices.Count - 1) {
+                            if (vIdx == se.shapeVertices.Count - 1) {
                                 se.shapeVertices.Add(newVertex);
                             } else {
-                                se.shapeVertices.Insert(i + 1, newVertex);
+                                se.shapeVertices.Insert(vIdx + 1, newVertex);
                             }
                             selection = newVertex;
+                            se.selectedVertexIndex = vIdx + 1;
+                            selectionIndex = vIdx + 1;
                         } else {
+                            Undo.RecordObject(se, $"Moved vertex {vIdx} in {se.name}");
+
                             v.point = newVertexPoint;
                             // normal must be updated if point has been moved
                             normal = se.transform.TransformPoint(q * (v.point + v.normal) + startSample.location);
@@ -80,6 +106,8 @@ namespace SplineMesh {
                         // create a handle for normal
                         Vector3 movedNormal = Handles.Slider2D(normal, startSample.tangent, Vector3.right, Vector3.up, size, Handles.CircleHandleCap, snap);
                         if (movedNormal != normal) {
+                            Undo.RecordObject(se, $"Moved normal of vertex {vIdx} in {se.name}");
+
                             // normal has been moved
                             v.normal = (Vector2)(Quaternion.Inverse(q) * (se.transform.InverseTransformPoint(movedNormal) - startSample.location)) - v.point;
                             se.SetToUpdate();
@@ -95,7 +123,10 @@ namespace SplineMesh {
                     Handles.BeginGUI();
                     Vector2 p = HandleUtility.WorldToGUIPoint(point);
                     if (GUI.Button(new Rect(p - new Vector2(QUAD_SIZE / 2, QUAD_SIZE / 2), new Vector2(QUAD_SIZE, QUAD_SIZE)), GUIContent.none)) {
+                        Undo.RecordObject(se, $"Selected vertex {vIdx} of {se.name}");
                         selection = v;
+                        se.selectedVertexIndex = vIdx;
+                        selectionIndex = vIdx;
                     }
                     Handles.EndGUI();
                 }
@@ -139,6 +170,8 @@ namespace SplineMesh {
                 Undo.RegisterCompleteObjectUndo(se, "delete vertex");
                 se.shapeVertices.Remove(selection);
                 selection = null;
+                se.selectedVertexIndex = -1;
+                selectionIndex = -1;
                 se.SetToUpdate();
             }
             GUI.enabled = true;

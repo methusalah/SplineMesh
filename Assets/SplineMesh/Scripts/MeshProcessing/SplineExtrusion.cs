@@ -24,6 +24,14 @@ namespace SplineMesh {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Spline))]
     public class SplineExtrusion : MonoBehaviour {
+#if UNITY_EDITOR
+        /// <summary>
+        /// Used by SplineExtrusionEditor to know which vertex was last selected for this SplineExtrusion.
+        /// Editor only (not included in runtime).
+        /// </summary>
+        [HideInInspector]
+        public int selectedVertexIndex;
+#endif
         private Spline spline;
         private bool toUpdate = true;
         private GameObject generated;
