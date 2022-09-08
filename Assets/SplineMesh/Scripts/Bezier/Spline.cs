@@ -14,7 +14,16 @@ namespace SplineMesh {
     /// </summary>
     [DisallowMultipleComponent]
     [ExecuteInEditMode]
+    [SelectionBaseAttribute]
     public class Spline : MonoBehaviour {
+#if UNITY_EDITOR
+        /// <summary>
+        /// Used by SplineEditor to know which node was last selected for this Spline.
+        /// Editor only (not included in runtime).
+        /// </summary>
+        [HideInInspector]
+        public int selectedNodeIndex;
+#endif
         /// <summary>
         /// The spline nodes.
         /// Warning, this collection shouldn't be changed manualy. Use specific methods to add and remove nodes.

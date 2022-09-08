@@ -24,6 +24,7 @@ namespace SplineMesh {
         }
 
         private SplineNode selection;
+        private int selectionIndex = -1;
         private SelectionType selectionType;
         private bool mustCreateNewNode = false;
         private SerializedProperty nodesProp { get { return serializedObject.FindProperty("nodes"); } }
@@ -49,8 +50,17 @@ namespace SplineMesh {
             t.Apply();
             upButtonStyle = new GUIStyle();
             upButtonStyle.normal.background = t;
-            selection = null;
-			
+            if (spline.nodes.Count > 0) {
+                if (spline.selectedNodeIndex < 0 || spline.selectedNodeIndex > spline.nodes.Count - 1) {
+                    spline.selectedNodeIndex = 0;
+                }
+                selection = spline.nodes[spline.selectedNodeIndex];
+                selectionIndex = spline.selectedNodeIndex;
+            } else {
+                selection = null;
+                selectionIndex = -1;
+            }
+
             Undo.undoRedoPerformed -= spline.RefreshCurves;
             Undo.undoRedoPerformed += spline.RefreshCurves;
         }
@@ -74,8 +84,13 @@ namespace SplineMesh {
                     Tools.current = Tool.Move;
                 } else {
                     Tools.current = Tool.None;
-                    if (selection == null && spline.nodes.Count > 0)
-                        selection = spline.nodes[0];
+                    if (spline.nodes.Count > 0 && (selection == null || selectionIndex != spline.selectedNodeIndex)) {
+                        if (spline.selectedNodeIndex < 0 || spline.selectedNodeIndex > spline.nodes.Count - 1) {
+                            spline.selectedNodeIndex = 0;
+                        }
+                        selection = spline.nodes[spline.selectedNodeIndex];
+                        selectionIndex = spline.selectedNodeIndex;
+                    }
                 }
             }
 
@@ -103,33 +118,54 @@ namespace SplineMesh {
                     if (newPosition != selection.Position) {
                         // position handle has been moved
                         if (mustCreateNewNode) {
+                            Undo.RecordObject(target, $"Cloned and moved node {selectionIndex} of {spline.name}");
                             mustCreateNewNode = false;
                             selection = AddClonedNode(selection);
+                            selectionIndex = spline.selectedNodeIndex;
+                            spline.selectedNodeIndex = spline.nodes.IndexOf(selection);
                             selection.Direction += newPosition - selection.Position;
                             selection.Position = newPosition;
                         } else {
+                            Undo.RecordObject(target, $"Moved node {selectionIndex} of {spline.name}");
                             selection.Direction += newPosition - selection.Position;
                             selection.Position = newPosition;
                         }
                     }
                     break;
-                case SelectionType.Direction:
+                case SelectionType.Direction: {
                     var result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
-                    selection.Direction = spline.transform.InverseTransformPoint(result);
+                    var localResult = spline.transform.InverseTransformPoint(result);
+                    if (localResult != selection.Direction) {
+                        Undo.RecordObject(target, $"Changed direction of node {selectionIndex} in {spline.name}");
+                        selection.Direction = localResult;
+                    }
                     break;
-                case SelectionType.InverseDirection:
-                    result = Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
-                    selection.Direction = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
+                }
+                case SelectionType.InverseDirection: {
+                    var result = Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
+                    var localResult = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
+                    if (localResult != selection.Direction) {
+                        Undo.RecordObject(target, $"Changed inverse-direction of node {selectionIndex} in {spline.name}");
+                        selection.Direction = localResult;
+                    }
                     break;
-                case SelectionType.Up:
-                    result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Position + selection.Up), Quaternion.LookRotation(selection.Direction - selection.Position));
-                    selection.Up = (spline.transform.InverseTransformPoint(result) - selection.Position).normalized;
+                }
+                case SelectionType.Up: {
+                    var result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Position + selection.Up), Quaternion.LookRotation(selection.Direction - selection.Position));
+                    var localResult = (spline.transform.InverseTransformPoint(result) - selection.Position).normalized;
+                    if (localResult != selection.Up) {
+                        Undo.RecordObject(target, $"Changed up of node {selectionIndex} in {spline.name}");
+                        selection.Up = localResult;
+                    }
                     break;
+                }
             }
 
             // draw the handles of all nodes, and manage selection motion
             Handles.BeginGUI();
+            int nIdx = -1;
             foreach (SplineNode n in spline.nodes) {
+                ++nIdx;
                 var dir = spline.transform.TransformPoint(n.Direction);
                 var pos = spline.transform.TransformPoint(n.Position);
                 var invDir = spline.transform.TransformPoint(2 * n.Position - n.Direction);
@@ -179,8 +215,12 @@ namespace SplineMesh {
                     }
                 } else {
                     if (Button(guiPos, nodeButtonStyle)) {
+                        Undo.RecordObject(target, $"Selected node {nIdx} of {spline.name}");
                         selection = n;
+                        selectionIndex = nIdx;
+                        spline.selectedNodeIndex = nIdx;
                         selectionType = SelectionType.Node;
+                        EditorUtility.SetDirty(target);
                     }
                 }
             }
@@ -199,6 +239,8 @@ namespace SplineMesh {
 
             if(spline.nodes.IndexOf(selection) < 0) {
                 selection = null;
+                selectionIndex = -1;
+                spline.selectedNodeIndex = 0;
             }
 
             // add button
@@ -215,6 +257,8 @@ namespace SplineMesh {
                     spline.InsertNode(index + 1, newNode);
                 }
                 selection = newNode;
+                selectionIndex = index + 1;
+                spline.selectedNodeIndex = index + 1;
                 serializedObject.Update();
             }
             GUI.enabled = true;
@@ -227,6 +271,8 @@ namespace SplineMesh {
                 Undo.RecordObject(spline, "delete spline node");
                 spline.RemoveNode(selection);
                 selection = null;
+                selectionIndex = -1;
+                spline.selectedNodeIndex = 0;
                 serializedObject.Update();
             }
             GUI.enabled = true;
@@ -240,10 +286,9 @@ namespace SplineMesh {
             GUI.enabled = true;
 
             if (selection != null) {
-                int index = spline.nodes.IndexOf(selection);
-                SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(index);
+                SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(selectionIndex);
 
-                EditorGUILayout.LabelField("Selected node (node " + index + ")");
+                EditorGUILayout.LabelField("Selected node (node " + selectionIndex + ")");
 
                 EditorGUI.indentLevel++;
                 DrawNodeData(nodeProp, selection);
