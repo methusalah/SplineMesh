@@ -1,6 +1,6 @@
 ![please report broken links](https://s9.postimg.cc/5rf3y5lxr/bandeau_github.png)
 
-**<a href="https://twitter.com/dumas181" target="_blank">Follow me on twitter !</a>**
+**<a href="https://twitter.com/methusalah0" target="_blank">Follow me on twitter !</a>**
 
 **<a href="https://www.youtube.com/watch?v=-iQj0lYbqLE">Watch SplineMesh in action</a>**
 
