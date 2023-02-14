@@ -86,6 +86,7 @@ namespace SplineMesh {
                     typeof(ExtrusionSegment),
                     typeof(MeshCollider));
                 go.GetComponent<MeshRenderer>().material = material;
+                go.layer = this.gameObject.layer;
                 ExtrusionSegment seg = go.GetComponent<ExtrusionSegment>();
                 seg.ShapeVertices = shapeVertices;
                 seg.TextureScale = textureScale;
