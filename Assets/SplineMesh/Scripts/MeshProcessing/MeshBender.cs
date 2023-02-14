@@ -206,6 +206,7 @@ namespace SplineMesh {
                 source.Triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal));
+            CreateCollider(result);
         }
 
         private void FillRepeat() {
@@ -286,6 +287,7 @@ namespace SplineMesh {
                 uv6,
                 uv7,
                 uv8);
+            CreateCollider(result);
         }
 
         private void FillStretch() {
@@ -319,11 +321,13 @@ namespace SplineMesh {
                 source.Triangles,
                 bentVertices.Select(b => b.position),
                 bentVertices.Select(b => b.normal));
+            CreateCollider(result);
+        }
+
+        void CreateCollider(Mesh result) {
             if (TryGetComponent(out MeshCollider collider)) {
                 collider.sharedMesh = result;
             }
         }
-
-
     }
 }
