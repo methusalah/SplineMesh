@@ -77,8 +77,12 @@ namespace SplineMesh {
 
         public void CreateMeshes() {
 #if UNITY_EDITOR
+#if UNITY_2021_3_OR_NEWER
+            if (UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+#else
             // we don't update if we are in prefab mode
             if (PrefabStageUtility.GetCurrentPrefabStage() != null) return;
+#endif
 #endif
             var used = new List<GameObject>();
 

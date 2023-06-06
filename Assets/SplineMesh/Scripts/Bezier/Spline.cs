@@ -16,6 +16,13 @@ namespace SplineMesh {
     [ExecuteInEditMode]
     [SelectionBaseAttribute]
     public class Spline : MonoBehaviour {
+
+        public enum HandleType {
+            Symmetric,
+            Corner
+        }
+
+
 #if UNITY_EDITOR
         /// <summary>
         /// Used by SplineEditor to know which node was last selected for this Spline.
@@ -43,6 +50,9 @@ namespace SplineMesh {
         public float Length;
 
         [SerializeField]
+        private HandleType handleType = HandleType.Symmetric;
+
+        [SerializeField]
         private bool isLoop;
 
         public bool IsLoop {
@@ -50,6 +60,13 @@ namespace SplineMesh {
             set {
                 isLoop = value;
                 updateLoopBinding();
+            }
+        }
+
+        public HandleType Handle {
+            get { return handleType; }
+            set {
+                handleType = value;
             }
         }
 
@@ -138,6 +155,8 @@ namespace SplineMesh {
             for (int i = 0; i < nodes.Count - 1; i++) {
                 SplineNode n = nodes[i];
                 SplineNode next = nodes[i + 1];
+                n.HandleType = handleType;
+                next.HandleType = handleType;
 
                 CubicBezierCurve curve = new CubicBezierCurve(n, next);
                 curve.Changed.AddListener(UpdateAfterCurveChanged);
