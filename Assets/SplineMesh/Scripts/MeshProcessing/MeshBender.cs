@@ -75,7 +75,7 @@ namespace SplineMesh {
         /// outside the given interval.
         /// </summary>
         /// <param name="spline">The <see cref="SplineMesh"/> to bend the source mesh along.</param>
-        /// <param name="intervalStart">Distance from the spline start to place the mesh minimum X.<param>
+        /// <param name="intervalStart">Distance from the spline start to place the mesh minimum X.</param>
         /// <param name="intervalEnd">Distance from the spline start to stop deforming the source mesh.</param>
         public void SetInterval(Spline spline, float intervalStart, float intervalEnd = 0) {
             if (this.spline == spline && this.intervalStart == intervalStart && this.intervalEnd == intervalEnd) return;
