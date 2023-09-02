@@ -44,6 +44,29 @@ namespace SplineMesh {
         [SerializeField]
         private Vector3 direction;
 
+        public Vector3 InverseDirection {
+            get {
+                // TODO esto est mal
+                return this.position - (this.position - this.direction).Abs();
+            }
+        }
+
+        /// <summary>
+        /// Node direction at the end point. Used if handle type is set to corner
+        /// </summary>
+        public Vector3 Direction2 {
+            get { return direction2; }
+            set {
+                if (direction2.Equals(value)) return;
+                direction2.x = value.x;
+                direction2.y = value.y;
+                direction2.z = value.z;
+                if (Changed != null) Changed(this, EventArgs.Empty);
+            }
+        }
+        [SerializeField]
+        private Vector3 direction2;
+
         /// <summary>
         /// Up vector to apply at this node.
         /// Usefull to specify the orientation when the tangent blend with the world UP (gimball lock)
@@ -93,6 +116,17 @@ namespace SplineMesh {
         [SerializeField]
         private float roll;
 
+        public Spline.HandleType HandleType {
+            get { return handleType; }
+            set {
+                if (handleType == value) return;
+                handleType = value;
+                if (Changed != null) Changed(this, EventArgs.Empty);
+            }
+        }
+
+        [SerializeField]
+        private Spline.HandleType handleType;
         public SplineNode(Vector3 position, Vector3 direction) {
             Position = position;
             Direction = direction;

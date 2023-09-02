@@ -72,6 +72,9 @@ namespace SplineMesh {
         /// </summary>
         /// <returns></returns>
         public Vector3 GetInverseDirection() {
+            if (n2.HandleType == Spline.HandleType.Corner)
+                return n2.Direction2;
+                
             return (2 * n2.Position) - n2.Direction;
         }
 

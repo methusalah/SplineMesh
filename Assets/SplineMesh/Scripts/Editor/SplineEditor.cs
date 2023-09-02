@@ -124,10 +124,12 @@ namespace SplineMesh {
                             selectionIndex = spline.selectedNodeIndex;
                             spline.selectedNodeIndex = spline.nodes.IndexOf(selection);
                             selection.Direction += newPosition - selection.Position;
+                            selection.Direction2 = selection.InverseDirection; 
                             selection.Position = newPosition;
                         } else {
                             Undo.RecordObject(target, $"Moved node {selectionIndex} of {spline.name}");
                             selection.Direction += newPosition - selection.Position;
+                            selection.Direction2 = selection.InverseDirection; 
                             selection.Position = newPosition;
                         }
                     }
@@ -138,15 +140,27 @@ namespace SplineMesh {
                     if (localResult != selection.Direction) {
                         Undo.RecordObject(target, $"Changed direction of node {selectionIndex} in {spline.name}");
                         selection.Direction = localResult;
+                        if (selection.HandleType == Spline.HandleType.Symmetric) {
+                            selection.Direction2 = selection.InverseDirection;
+                        }
                     }
                     break;
                 }
                 case SelectionType.InverseDirection: {
-                    var result = Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
-                    var localResult = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
-                    if (localResult != selection.Direction) {
-                        Undo.RecordObject(target, $"Changed inverse-direction of node {selectionIndex} in {spline.name}");
-                        selection.Direction = localResult;
+                    if (selection.HandleType == Spline.HandleType.Symmetric){
+                        var result = Handles.PositionHandle(2 * spline.transform.TransformPoint(selection.Position) - spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
+                        var localResult = 2 * selection.Position - spline.transform.InverseTransformPoint(result);
+                        if (localResult != selection.Direction) {
+                            Undo.RecordObject(target, $"Changed inverse-direction of node {selectionIndex} in {spline.name}");
+                            selection.Direction = localResult;
+                        }
+                    } else if (selection.HandleType == Spline.HandleType.Corner) {
+                        var result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction2), Quaternion.identity);
+                        var localResult = spline.transform.InverseTransformPoint(result);
+                        if (localResult != selection.Direction) {
+                            Undo.RecordObject(target, $"Changed direction of node {selectionIndex} in {spline.name}");
+                            selection.Direction2 = localResult;
+                        }
                     }
                     break;
                 }
@@ -168,8 +182,9 @@ namespace SplineMesh {
                 ++nIdx;
                 var dir = spline.transform.TransformPoint(n.Direction);
                 var pos = spline.transform.TransformPoint(n.Position);
-                var invDir = spline.transform.TransformPoint(2 * n.Position - n.Direction);
+                var invDir = spline.Handle == Spline.HandleType.Symmetric ? spline.transform.TransformPoint(2 * n.Position - n.Direction) : spline.transform.TransformPoint(n.Direction2);
                 var up = spline.transform.TransformPoint(n.Position + n.Up);
+                var dir2 = spline.transform.TransformPoint(n.Direction2); 
                 // first we check if at least one thing is in the camera field of view
                 if (!(CameraUtility.IsOnScreen(pos) ||
                     CameraUtility.IsOnScreen(dir) ||
@@ -186,7 +201,9 @@ namespace SplineMesh {
 
                     // for the selected node, we also draw a line and place two buttons for directions
                     Handles.color = DIRECTION_COLOR;
-                    Handles.DrawLine(guiDir, guiInvDir);
+                    Handles.DrawLine(guiDir, guiPos); 
+                    Handles.DrawLine(guiPos, guiInvDir);
+                    Handles.DrawWireCube(dir2, Vector3.one * 5); 
 
                     // draw quads direction and inverse direction if they are not selected
                     if (selectionType != SelectionType.Node) {
@@ -277,6 +294,13 @@ namespace SplineMesh {
             }
             GUI.enabled = true;
 
+            Spline.HandleType newHandle = (Spline.HandleType)EditorGUILayout.EnumPopup("Handle type", spline.Handle);
+            if (newHandle != spline.Handle) {
+                spline.Handle = newHandle;
+                foreach (var node in spline.nodes) {
+                    node.HandleType = newHandle;
+                }
+            } 
             showUpVector = GUILayout.Toggle(showUpVector, "Show up vector");
             spline.IsLoop = GUILayout.Toggle(spline.IsLoop, "Is loop");
 
@@ -301,6 +325,7 @@ namespace SplineMesh {
         private void DrawNodeData(SerializedProperty nodeProperty, SplineNode node) {
             var positionProp = nodeProperty.FindPropertyRelative("position");
             var directionProp = nodeProperty.FindPropertyRelative("direction");
+            var direction2Prop = nodeProperty.FindPropertyRelative("direction2"); 
             var upProp = nodeProperty.FindPropertyRelative("up");
             var scaleProp = nodeProperty.FindPropertyRelative("scale");
             var rollProp = nodeProperty.FindPropertyRelative("roll");
@@ -308,6 +333,8 @@ namespace SplineMesh {
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(positionProp, new GUIContent("Position"));
             EditorGUILayout.PropertyField(directionProp, new GUIContent("Direction"));
+            if (node.HandleType == Spline.HandleType.Corner)
+                EditorGUILayout.PropertyField(direction2Prop, new GUIContent("Direction2")); 
             EditorGUILayout.PropertyField(upProp, new GUIContent("Up"));
             EditorGUILayout.PropertyField(scaleProp, new GUIContent("Scale"));
             EditorGUILayout.PropertyField(rollProp, new GUIContent("Roll"));
@@ -315,6 +342,8 @@ namespace SplineMesh {
             if (EditorGUI.EndChangeCheck()) {
                 node.Position = positionProp.vector3Value;
                 node.Direction = directionProp.vector3Value;
+                if (node.HandleType == Spline.HandleType.Corner)
+                    node.Direction2 = direction2Prop.vector3Value;
                 node.Up = upProp.vector3Value;
                 node.Scale = scaleProp.vector2Value;
                 node.Roll = rollProp.floatValue;

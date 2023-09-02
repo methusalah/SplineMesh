@@ -3,7 +3,7 @@
 * SplineMesh documentation *
 
 // What is it?
-    A spline is a set of nodes connected by bezier curves. Each node is defined by a position and a direction.
+    A spline is a set of nodes connected by bezier curves. Each node is defined by a position, a direction, and if set as a corner node, a second direction.
 	The MeshBender component create a mesh from a source mesh by moving its vertices accordingly to a bezier curve.
 
 // How to create a spline object?
@@ -18,6 +18,11 @@
 	when a node is selected, the directions appear. Select one of them and move it
 	hold alt key and drag a node to duplicate it
 	use delete button in the inspector to delete selected node (you can't have less than two nodes)
+
+// How to draw a corner?
+    select an object with Spline component (and make sure the component is opened)
+	change the Handle type to Corner
+	when a node is selected, the two directions can be moved separately.
 
 // How to bend a mesh?
     you will probably need a script to create the GameObjects holding curved meshes
